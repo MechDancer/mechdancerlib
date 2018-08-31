@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'kotlin-android'
+
 android {
     compileSdkVersion 27
 
@@ -28,7 +30,7 @@ dependencies {
     implementation "org.mechdancer:filters:0.1.0"
     implementation(name: 'RobotCore-release', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+   // implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.2.61"
 }

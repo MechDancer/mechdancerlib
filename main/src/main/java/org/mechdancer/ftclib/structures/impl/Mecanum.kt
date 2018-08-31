@@ -1,4 +1,6 @@
-package org.mechdancer.ftclib.structures
+package org.mechdancer.ftclib.structures.impl
+
+import org.mechdancer.ftclib.structures.Omnidirectinal
 
 class Mecanum(enable: Boolean)
 	: Omnidirectinal(arrayOf("左前", "左后", "右前", "右后"), enable) {

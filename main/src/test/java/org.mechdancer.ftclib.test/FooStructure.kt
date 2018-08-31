@@ -8,7 +8,7 @@ import org.mechdancer.ftclib.structures.MotorWithEncoder
 import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
 import kotlin.math.PI
 
-object FooStructure : AbstractStructure({
+class FooStructure : AbstractStructure({
 	motorWithEncoder("fooMotor") {
 		enable = true
 		radians = 2.0 * PI
@@ -22,7 +22,7 @@ object FooStructure : AbstractStructure({
 }) {
 
 	@Inject
-	private lateinit var fooMotor: MotorWithEncoder
+	lateinit var fooMotor: MotorWithEncoder
 
 	@Inject
 	private lateinit var barServo: Servo

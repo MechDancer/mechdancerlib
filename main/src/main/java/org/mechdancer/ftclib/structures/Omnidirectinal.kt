@@ -1,11 +1,12 @@
 package org.mechdancer.ftclib.structures
 
+import org.mechdancer.ftclib.structures.impl.ChassisImpl
 import kotlin.math.cos
 import kotlin.math.sin
 
 abstract class Omnidirectinal
 (names: Array<String>, enable: Boolean)
-	: Chassis(names, enable) {
+	: ChassisImpl(names, enable) {
 	data class Descartes(var x: Double,
 	                     var y: Double,
 	                     var w: Double) {
