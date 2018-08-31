@@ -1,5 +1,6 @@
 package org.mechdancer.ftclib.devices
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.mechdancer.ftclib.core.structure.Device
 import org.mechdancer.ftclib.core.structure.DeviceConfig
@@ -13,25 +14,45 @@ class Motor(name: String, enable: Boolean)
 
 	constructor(config: Config) : this(config.name, config.enable)
 
-	/**
-	 * 功率
-	 * 范围：[-1, 1]
-	 */
-	var power
-		get() = _power.value
-		set(value) {
-			_power.value = value
-		}
-
 	private val _power = PropertyBuffer(
 			tag = "power",
 			origin = .0,
 			setter = { this.power = it },
 			isValid = { it in -1..1 })
 
-	override fun DcMotorEx.output() = _power.sendTo(this)
+	private val _zeroBehavior = PropertyBuffer(
+			tag = "zeroBehavior",
+			origin = DcMotor.ZeroPowerBehavior.FLOAT,
+			setter = { this.zeroPowerBehavior = it }
+	)
 
-	override fun resetData() = run { power = .0 }
+	private val _runMode = PropertyBuffer(
+			tag = "runMode",
+			origin = DcMotor.RunMode.RUN_USING_ENCODER,
+			setter = { this.mode = it }
+	)
+	/**
+	 * 功率
+	 * 范围：[-1, 1]
+	 */
+	var power by _power
+
+	var runMode by _runMode
+		internal set
+
+	var zeroPowerBehavior by _zeroBehavior
+		internal set
+
+
+	override fun DcMotorEx.output() {
+		_power.sendTo(this)
+		_zeroBehavior.sendTo(this)
+		_runMode.sendTo(this)
+	}
+
+	override fun resetData() {
+		power = .0
+	}
 
 	override fun toString() =
 			"电机[$name] | ${if (enable) "功率：${100 * power}%" else "关闭"}"

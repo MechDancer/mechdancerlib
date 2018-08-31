@@ -14,10 +14,11 @@ object StructureInjector {
 		val flatten = structure.flatten()
 
 		properties.forEach { p ->
+			val ignoreName = p.second.name == "#ingore#"
 			val expectName = if (p.second.name == "") p.first.name else p.second.name
 			val expectType = p.second.type
 			p.first.set(structure, flatten.find {
-				(it.name == expectName)
+				(it.name == expectName || ignoreName)
 						&& ((expectType == Inject::class) || expectType.isInstance(it))
 			}?.let {
 				if (!it.javaClass.isAssignableFrom(p.first.type))

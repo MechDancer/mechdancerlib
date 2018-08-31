@@ -58,7 +58,7 @@ class Servo(
 	override fun resetData() = run { position = .0 }
 
 	override fun toString() =
-			"舵机[$name] | ${if (enable) "位置：$position" else "关闭"}"
+			"舵机[$name] | ${if (enable) "位置: $position" else "关闭"}"
 
 	class Config(
 			name: String,

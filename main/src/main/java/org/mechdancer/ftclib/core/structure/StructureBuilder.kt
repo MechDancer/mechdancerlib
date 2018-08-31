@@ -3,7 +3,9 @@ package org.mechdancer.ftclib.core.structure
 import org.mechdancer.ftclib.devices.ContinuousServo
 import org.mechdancer.ftclib.devices.Motor
 import org.mechdancer.ftclib.devices.Servo
-import org.mechdancer.ftclib.sensors.REVColorSensor
+import org.mechdancer.ftclib.sensors.Encoder
+import org.mechdancer.ftclib.sensors.RevColorSensor
+import org.mechdancer.ftclib.structures.MotorWithEncoder
 
 class StructureBuilder(private val structureName: String) {
 
@@ -13,6 +15,14 @@ class StructureBuilder(private val structureName: String) {
 
 	fun motor(name: String, config: Motor.Config.() -> Unit) {
 		Motor(Motor.Config(name).apply(config)).let(_subStructures::add)
+	}
+
+	fun encoder(name: String, config: Encoder.Config.() -> Unit) {
+		Encoder(Encoder.Config(name).apply(config)).let(_subStructures::add)
+	}
+
+	fun motorWithEncoder(name: String, config: MotorWithEncoder.Config.() -> Unit) {
+		MotorWithEncoder(MotorWithEncoder.Config(name).apply(config))
 	}
 
 	fun subStructure(name: String, block: StructureBuilder.() -> Unit) {
@@ -31,8 +41,9 @@ class StructureBuilder(private val structureName: String) {
 		ContinuousServo(ContinuousServo.Config(name).apply(config)).let(_subStructures::add)
 	}
 
-	fun revColor(name: String, config: REVColorSensor.Config.() -> Unit) {
-		REVColorSensor(REVColorSensor.Config(name).apply(config)).let(_subStructures::add)
+
+	fun revColor(name: String, config: RevColorSensor.Config.() -> Unit) {
+		RevColorSensor(RevColorSensor.Config(name).apply(config)).let(_subStructures::add)
 	}
 
 

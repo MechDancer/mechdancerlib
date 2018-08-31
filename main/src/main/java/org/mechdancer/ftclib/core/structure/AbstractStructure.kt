@@ -9,6 +9,7 @@ abstract class AbstractStructure(structure: Structure) : Structure by structure 
 
 	constructor() : this(structure { })
 	constructor(block: StructureBuilder.() -> Unit) : this(structure(block = block))
+	constructor(name: String, block: StructureBuilder.() -> Unit) : this(structure(name, block))
 
 	init {
 		@Suppress("LeakingThis")

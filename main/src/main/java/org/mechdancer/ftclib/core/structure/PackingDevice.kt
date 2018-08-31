@@ -6,6 +6,8 @@ import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.logging.Level
 import java.util.logging.Logger
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
  * 设备
@@ -140,7 +142,13 @@ sealed class PackingDevice<in T : HardwareDevice>
 			private val tag: String,
 			origin: U,
 			private val setter: T.(U) -> Unit,
-			private val isValid: (U) -> Boolean) {
+			private val isValid: (U) -> Boolean = { true }) : ReadWriteProperty<Any?, U> {
+		override fun getValue(thisRef: Any?, property: KProperty<*>): U = value
+
+		override fun setValue(thisRef: Any?, property: KProperty<*>, value: U) {
+			this.value = value
+		}
+
 		private var changed = AtomicBoolean(false)
 
 		fun sendTo(device: T) {

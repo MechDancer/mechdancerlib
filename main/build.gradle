@@ -1,9 +1,8 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 27
-
-
 
     defaultConfig {
         minSdkVersion 23
@@ -26,9 +25,23 @@ android {
 
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation (name:'RobotCore-release', ext: 'aar')
+    implementation "org.mechdancer:filters:0.1.0"
+    implementation(name: 'RobotCore-release', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.2.61"
+}
+publish {
+    userOrg = 'mechdancer'
+    groupId = 'org.mechdancer'
+    artifactId = 'mechdancerlib'
+    publishVersion = '0.1.0'
+    desc = 'ftc programming library by mechdancer'
+    website = 'https://github.com/MechDancer/mechdancerlib'
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
 }

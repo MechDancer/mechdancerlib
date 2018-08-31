@@ -17,11 +17,6 @@ interface Structure {
 internal fun Structure.flatten(): List<Structure> =
 		subStructures.flatMap { it.flatten() }.let { it + this }
 
-/**
- * 带父展开
- */
-internal fun Structure.flattenWithParent(): Map<Structure, Structure> =
-		TODO()
 
 /**
  * 找到所有符合类型参数的结构
@@ -54,6 +49,6 @@ fun Structure.treeView(indent: Int = 0): String {
 /**
  * 构造匿名Structure
  */
-fun structure(name: String = "Unnamed", block: StructureBuilder.() -> Unit) =
+inline fun structure(name: String = "Unnamed", block: StructureBuilder.() -> Unit) =
 		StructureBuilder(name).apply(block).build()
 

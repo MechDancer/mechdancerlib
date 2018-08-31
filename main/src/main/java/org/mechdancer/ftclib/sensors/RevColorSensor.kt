@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor
 import org.mechdancer.ftclib.core.structure.DeviceConfig
 import org.mechdancer.ftclib.core.structure.Sensor
 
-class REVColorSensor(name: String, enable: Boolean)
+class RevColorSensor(name: String, enable: Boolean)
 	: Sensor<ColorSensor>(name, enable) {
 
 	constructor(config: Config) : this(config.name, config.enable)
@@ -44,7 +44,7 @@ class REVColorSensor(name: String, enable: Boolean)
 	}
 
 	override fun toString(): String =
-			"Rev颜色传感器[$name] | ${if (enable) "颜色值：$colorValue" else "关闭"}"
+			"Rev颜色传感器[$name] | ${if (enable) "颜色值: $colorValue" else "关闭"}"
 
 	class Config(name: String, enable: Boolean = false) : DeviceConfig(name, enable)
 
