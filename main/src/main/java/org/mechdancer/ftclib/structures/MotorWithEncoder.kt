@@ -18,7 +18,7 @@ interface MotorWithEncoder : Motor, Encoder {
 
 	class Config(name: String, enable: Boolean = false,
 	             var radians: Double = .0,
-	             var direction: DcMotorSimple.Direction,
+	             var direction: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD,
 	             var pidPosition: PID = PID(1.0, .0, .0, .0, .0),
 	             var pidSpeed: PID = PID(1.0, .0, .0, .0, .0)) : DeviceConfig(name, enable)
 

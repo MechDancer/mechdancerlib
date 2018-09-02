@@ -193,7 +193,7 @@ object OpModeFlow {
 
 Structure 的 `run()` 理应由自己的父结构调用，直至最上层的 Robot 由 OpMode 调用。在大部分情况下，从最底层的设备到上层的机器人结构，如果一层一层向上传递难免过于繁琐，并且可能会出现错误。我们定义了这三个接口，作为一种标记（类似 `Serializable`）。实现这三个接口的 Structure 会直接参与到 OpMode 相应的生命周期之中，直接被 OpMode 调用。
 
-## 实例
+## 示例
 
 可以在 [这里](https://github.com/MechDancer/mechdancerlib/tree/master/main/src/test/java/org.mechdancer.ftclib.test/dummy) 找到示例代码。目前库还在完善中，暂无 release。
 
@@ -265,4 +265,92 @@ class FooStructure : AbstractStructure({
 annotation class Inject(val name: String = "", val type: KClass<*> = Inject::class)
 ```
 
-注释中已经解释的十分相近。
+注释中已经解释的十分详尽。
+
+### 声明设备
+
+在上文提到的 `structure(name){...}` 中，您可以使用 DSL 直接声明设备，若不想这样，我们还提供了 `DeviceFactory` 工厂类帮助您声明设备。
+
+下面是在相应设备 DSL 中（构造器中）可配置的属性。
+
+| Motor    | 说明     | 默认值  |
+| ----------- | -------- | -------- |
+| `name`      | 设备名   | `""` |
+| `direction` | 电机方向 | `FORWARD` |
+| `enable`    | 是否启用 | `false` |
+
+
+
+| Encoder    | 说明     | 默认值  |
+| ----------- | -------- | -------- |
+| `name`      | 设备名   | `""` |
+| `radians` | 编码器一圈的弧度值 | `.0` |
+| `enable`    | 是否启用 | `false` |
+
+
+
+| MotorWithEncoder    | 说明     | 默认值  |
+| ----------- | -------- | -------- |
+| `name`      | 设备名   | `""` |
+| `radians` | 编码器一圈的弧度值 | `.0` |
+| `direction` | 电机方向 | `FORWARD` |
+| `enable`    | 是否启用 | `false` |
+
+
+
+| Servo | 说明     | 默认值  |
+| ----------- | -------- | -------- |
+| `name`      | 设备名   | `""` |
+| `origin` | 舵机初始角度 | `.0` |
+| `ending` | 舵机结束角度 | `.0` |
+| `enable`    | 是否启用 | `false` |
+
+
+
+| ContinuousServo | 说明     | 默认值  |
+| ----------- | -------- | -------- |
+| `name`      | 设备名   | `""` |
+| `enable`    | 是否启用 | `false` |
+
+
+
+| RevColorSensor | 说明     | 默认值  |
+| ----------- | -------- | -------- |
+| `name`      | 设备名   | `""` |
+| `enable`    | 是否启用 | `false` |
+
+### 电机
+
+您可以使用 `power = xxx` 直接给电机功率 `xx`。
+
+### 编码器
+
+编码器提供了以下方法：
+
+*  `getPosition()` —— 返回当前弧度
+*  `getSpeed()` —— 返回当前角速度
+*  `reset(off: Double)` —— 位置清零
+
+### 电机 x 编码器
+
+这里的电机具有 `mode` —— 电机模式，可以取以下值：
+
+* `SPEED_CLOSE_LOOP` —— 闭速度环
+* `OPEN_LOOP` —— 开环
+* `POSITION_CLOSE_LOOP` —— 闭位置环
+* `LOCK` —— 锁定
+* `STOP` —— 停止
+
+同时它还有以下成员：
+
+* `power` —— 直接给电机功率，仅在 `mode = OPEN_LOOP` 下有效
+* `targetSpeed` —— 目标速度，仅在 `mode = SPEED_CLOSE_LOOP` 下有效
+* `targetPosition` —— 目标位置，仅在 `mode = POSITION_CLOSE_LOOP` 下有效
+
+### 舵机
+
+修改 `position` 的值可以直接控制舵机位置。
+
+### 连续舵机
+
+修改 `power` 可为其指定功率。

@@ -11,7 +11,7 @@ interface Motor : Structure {
 
 	class Config(
 			name: String,
-			var direction: DcMotorSimple.Direction,
+			var direction: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD,
 			enable: Boolean = false
 	) : DeviceConfig(name, enable)
 }
