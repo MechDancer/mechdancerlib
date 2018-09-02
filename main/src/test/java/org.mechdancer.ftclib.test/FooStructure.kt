@@ -27,7 +27,7 @@ class FooStructure : AbstractStructure({
 	@Inject
 	private lateinit var barServo: Servo
 
-	override fun invoke() {
+	override fun run() {
 		fooMotor.mode = Mode.POSITION_CLOSE_LOOP
 		fooMotor.targetPosition = 2 * PI
 		barServo.position = 100.0

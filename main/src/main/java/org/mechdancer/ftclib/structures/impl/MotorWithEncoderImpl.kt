@@ -85,7 +85,7 @@ class MotorWithEncoderImpl(override val name: String, val enable: Boolean,
 	}
 
 
-	override fun invoke() {
+	override fun run() {
 		if (mode == Mode.LOCK && getSpeed() <= 0.05) {
 			mode = Mode.POSITION_CLOSE_LOOP
 			targetPosition = getPosition()

@@ -40,7 +40,7 @@ open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, Structu
 				else this.map { p -> p / it * maxPower }.toDoubleArray()
 			}
 
-	override fun invoke() {
+	override fun run() {
 		subStructures.forEachIndexed { index, motor ->
 			motor.power = powers[index]
 		}

@@ -66,9 +66,9 @@ abstract class Omnidirectinal
 	 */
 	protected abstract fun Descartes.transform(): DoubleArray
 
-	final override fun invoke() {
+	final override fun run() {
 		if (!advancedControlMode)
 			powers = (weights * descartes).transform()
-		super.invoke()
+		super.run()
 	}
 }

@@ -107,7 +107,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 	/**
 	 * 执行所有传递指令的操作
 	 */
-	final override operator fun invoke() {
+	final override fun run() {
 		//设备不可用，跳出
 		if (!available) return
 		//等待设备上一轮传递完成

@@ -58,7 +58,7 @@ class StructureBuilder(private val structureName: String) {
 
 		override val subStructures = ArrayList(_subStructures)
 
-		override fun invoke() = action(subStructures)
+		override fun run() = action(subStructures)
 
 		override fun toString() = "AnonymousStructure[$name]"
 	}

@@ -7,9 +7,16 @@ interface Structure {
 	val name: String
 	val subStructures: List<Structure>
 
-	operator fun invoke()
+	fun run()
 	override fun toString(): String
 }
+
+
+/**
+ *被该接口标注的 Structure 不需要手动调用 `run()`
+ * TODO:未实现
+ */
+interface IAutoCallable
 
 /**
  * 展平为列表
@@ -52,3 +59,7 @@ fun Structure.treeView(indent: Int = 0): String {
 inline fun structure(name: String = "Unnamed", block: StructureBuilder.() -> Unit) =
 		StructureBuilder(name).apply(block).build()
 
+/**
+ * 为 `run` 提供语法糖
+ */
+operator fun Structure.invoke() = run()

@@ -32,7 +32,7 @@ abstract class BaseOpMode(protected val robot: Robot) : OpMode() {
 		//TODO calculate suggestions
 		//TODO generate and execute commands
 		loopTask()
-		robot.devices.forEach { it() }
+		robot.devices.forEach { it.run() }
 	}
 
 	final override fun stop() {
