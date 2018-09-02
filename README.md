@@ -72,11 +72,6 @@ interface Servo : Structure {
 ```kotlin
 interface ContinuousServo : Structure {
    var power: Double
-
-   class Config(
-         name: String,
-         enable: Boolean = false
-   ) : DeviceConfig(name, enable)
 }
 ```
 
@@ -117,15 +112,14 @@ interface RevColorSensor : Structure {
 若把整个机器人结构作为一棵树，`Robot` 就是其根部。它将所有子结构包含在其中，叶子就是最底层的设备。库中 `Robot` 是这样定义的：
 
 ```kotlin
-abstract class Robot(name: String, vararg subStructs: Structure)
+abstract class Robot(name: String, val chassis: Chassis, vararg subStructs: Structure)
 	: AbstractStructure(name, {
+	subStructure(chassis)
 	subStructs.forEach { subStructure(it) }
-}) {
-	abstract val chassis: Chassis
-}
+}) 
 ```
 
-在这里我们仅仅关注它唯一的抽象成员 `chassis`。这要求了一个机器人必须要有一个底盘（尽管有些特例）。我们一起设想一下，这是一台具有一个单电机机械臂、一个麦克纳姆底盘的简单机器人。机械臂是一个复合结构，它包含一个子结构 —— 那个电机。麦克纳姆底盘也是同样的道理。Robot 对于其子结构是上层的。这意味着上层不应该直接控制电机等设备，而是告诉自己的子结构此时应处于何种状态以及如何运行。举个例子：机械臂结构有三种状态 —— 下降、平行、上升。Robot 仅仅告诉它当前状态应该是什么，控制那个电机转到哪种角度则有机械臂结构负责。
+在这里我们仅仅关注它的构造器成员 `chassis`。这要求了一个机器人必须要有一个底盘（尽管有些特例）。我们一起设想一下，这是一台具有一个单电机机械臂、一个麦克纳姆底盘的简单机器人。机械臂是一个复合结构，它包含一个子结构 —— 那个电机。麦克纳姆底盘也是同样的道理。Robot 对于其子结构是上层的。这意味着上层不应该直接控制电机等设备，而是告诉自己的子结构此时应处于何种状态以及如何运行。举个例子：机械臂结构有三种状态 —— 下降、平行、上升。Robot 仅仅告诉它当前状态应该是什么，控制那个电机转到哪种角度则有机械臂结构负责。
 
 ## 一些定义好的结构
 
@@ -202,3 +196,73 @@ Structure 的 `run()` 理应由自己的父结构调用，直至最上层的 Rob
 ## 实例
 
 可以在 [这里](https://github.com/MechDancer/mechdancerlib/tree/master/main/src/test/java/org.mechdancer.ftclib.test/dummy) 找到示例代码。目前库还在完善中，暂无 release。
+
+## 使用说明
+
+### 定义一个结构
+
+您可以直接实现 `CompositeStructure` 接口：
+
+```kotlin
+class BarStructure : CompositeStructure {
+   override val name: String = TODO()
+
+   override fun run() = TODO()
+   override fun toString(): String = TODO()
+
+   override val subStructures: List<Structure> = TODO()
+}
+```
+
+我们并不推荐这样做，因为有些麻烦。我们提供了 DSL 用于快速建造结构。如果您不了解 DSL，可以上网查询一下。我们提供了 `structure(name){...}` 函数用于建造匿名结构：
+
+```kotlin
+structure("bar") {
+	continuousServo("barServo") {
+		enable = true
+	}
+    servo("barServo2") {
+		enable = true
+		origin = .0
+		ending = 130.0
+	}
+}
+```
+
+该 DSL Scope 内可直接定义设备，且设备的 Config 同样由 DSL 定义。注意，这里的匿名指的不是该结构没有名字，而是的类型没有名字。结构可以被复用，也可以不被复用。为了保证建立非匿名结构也同样快速，我们提供了抽象类 `AbstractStructure`。举个例子：
+
+```kotlin
+class FooStructure : AbstractStructure({
+	motorWithEncoder("fooMotor") {
+		enable = true
+		radians = 2.0 * PI
+		pidPosition = PID(0.233, .0, .0, .0, .0)
+	}
+	servo("barServo") {
+		enable = true
+		origin = .0
+		ending = 130.0
+	}
+}) {
+
+	@Inject
+	lateinit var fooMotor: MotorWithEncoder
+
+	@Inject
+	private lateinit var barServo: Servo
+
+}
+```
+
+这样以来，这类结构就有了自己的名字 —— `FooStructure`，可实现复用。请注意一下 `@Inject`。在 DSL 中定义的设备仅仅会加到属于自己的子结构中，若想找到这个子结构还需费一番功夫。现在，`StructureInjector` 的帮助下，你可以直接在成员上标注 `@Inject`，即可获得子结构的引用。我们可以一起看一下这个注解：
+
+```kotlin
+/**
+ * 注入子结构成员
+ * @param name 子结构名字 空代表使用定义的成员名，`#ignore#` 代表忽略名字匹配。
+ * @param type 子结构类型 为 `Inject::class` 时代表使用定义的成员类型
+ */
+annotation class Inject(val name: String = "", val type: KClass<*> = Inject::class)
+```
+
+注释中已经解释的十分相近。
