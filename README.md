@@ -95,7 +95,7 @@ interface Encoder : Structure {
 
 在 FIRST 提供的设备中，并没有单独分离编码器这一概念，而是将其归于 `DCMotor` 之中。我们认为这是设计的不合理之处，编码器可能单独出现，与电机无关。我们将编码器单独归于传感器，但为了正常使用，它内部的设备引用依然是 FIRST 的电机。
 
-#### Rev Color Sensor
+#### RevColorSensor
 
 ```kotlin
 interface RevColorSensor : Structure {
@@ -119,14 +119,14 @@ abstract class Robot(name: String, val chassis: Chassis, vararg subStructs: Stru
 }) 
 ```
 
-在这里我们仅仅关注它的构造器成员 `chassis`。这要求了一个机器人必须要有一个底盘（尽管有些特例）。我们一起设想一下，这是一台具有一个单电机机械臂、一个麦克纳姆底盘的简单机器人。机械臂是一个复合结构，它包含一个子结构 —— 那个电机。麦克纳姆底盘也是同样的道理。Robot 对于其子结构是上层的。这意味着上层不应该直接控制电机等设备，而是告诉自己的子结构此时应处于何种状态以及如何运行。举个例子：机械臂结构有三种状态 —— 下降、平行、上升。Robot 仅仅告诉它当前状态应该是什么，控制那个电机转到哪种角度则有机械臂结构负责。
+在这里我们仅仅关注它的构造器成员 `chassis`。这要求了一个机器人必须要有一个底盘（尽管有些特例）。我们一起设想一下，这是一台具有一个单电机机械臂、一个麦克纳姆底盘的简单机器人。机械臂是一个复合结构，它包含一个子结构 —— 那个电机。麦克纳姆底盘也是同样的道理。Robot 对于其子结构是上层的。这意味着上层不应该直接控制电机等设备，而是告诉自己的子结构此时应处于何种状态以及如何运行。举个例子：机械臂结构有三种状态 —— 下降、平行、上升。Robot 仅仅告诉它当前状态应该是什么，控制那个电机转到哪种角度则由机械臂结构负责。
 
 ## 一些定义好的结构
 
 ### Chassis
 
 ```kotlin
-interface Chassis : CompositeStructure {
+interface Chassis : Structure {
 	var powers: DoubleArray
 
 	var maxPower: Double
@@ -135,12 +135,12 @@ interface Chassis : CompositeStructure {
 
 底盘仅仅包含以上两种行为，这有些过于抽象。我们给出了最简单的底盘实现 `ChassisImpl`。同时，我们定义了全向底盘 `Omnidirectinal` 它拥有抽象函数 `Descartes.transform()`，将最终结果映射为电机的功率并输出。在库中目前它仅有一个实现 —— `Mecanum` 麦克纳姆底盘。
 
-### Motor With Encoder
+### MotorWithEncoder
 
 如前文所述，我们将电机和编码器根据行为拆分成两个部分。虽然这是符合逻辑的行为，不过在某些情况下带来了许多不便。电机 x 编码器 —— `MotorWithEncoder` 就这样诞生了。它是一个复合结构，子结构为一个电机和一个编码器。在设计之初，我们思考了很久这个类是否应该多态。换句话说 `MotorWithEncoder` 是否可以强转为 `Motor` 或 `Encoder`？（也就是具有以上二者的行为）听起来这是正确的，但这的确是个特例。思考一下，仅有一个电机的机械臂是否可以强转为电机？`MotorWithEncoder` 是二者纯粹的组合，恰恰完全拥有了其二者的行为，使多态变得合理。但这实际上是错误的。不过为了约定行为，我们还是让 `MotorWithEncoder` 实现了 `Motor` 和 `Encoder` 结构，将其代理给它的两个子结构。**~~真香~~** 是时候看一下 `MotorWithEncoder` 的行为定义了：
 
 ```kotlin
-interface MotorWithEncoder : Motor, Encoder {
+interface MotorWithEncoder : Motor, Encoder, Structure {
    var mode: Mode
 
    var targetSpeed: Double
@@ -161,7 +161,7 @@ interface MotorWithEncoder : Motor, Encoder {
 
 ## OpMode
 
-我们定义了抽象类 `BaseOpMode`，继承 FIRST 提供的 `OpMode` 作为程序入口。在其中，我们将 `HardwareMap` 提供的设备绑定到我们定义的设备中，并对一些设备和结构调用了 `init()`,`run()` 等函数。一个 OpMode 接收一个 Robot 实例，用于控制定义好的机器人。
+我们定义了抽象类 `BaseOpMode`，继承 FIRST 提供的 `OpMode` 作为程序入口。在其中，我们将 `HardwareMap` 提供的设备绑定到我们定义的设备中，并对一些设备和结构调用了 `init()` , `run()` 等函数。一个 OpMode 接收一个 Robot 实例，用于控制定义好的机器人。为了配合封装的手柄，我们还提供了 `RemoteControlOpMode`，用于遥控程序继承。
 
 ### OpModeFlow
 
@@ -214,7 +214,7 @@ class BarStructure : CompositeStructure {
 }
 ```
 
-我们并不推荐这样做，因为有些麻烦。我们提供了 DSL 用于快速建造结构。如果您不了解 DSL，可以上网查询一下。我们提供了 `structure(name){...}` 函数用于建造匿名结构：
+我们并不推荐这样做，因为有些麻烦。我们提供了 DSL 用于快速建造结构。如果您不了解什么是 DSL，可以咨询一下度娘。我们提供了 `structure(name){...}` 函数用于建造匿名结构：
 
 ```kotlin
 structure("bar") {
@@ -229,7 +229,7 @@ structure("bar") {
 }
 ```
 
-该 DSL Scope 内可直接定义设备，且设备的 Config 同样由 DSL 定义。注意，这里的匿名指的不是该结构没有名字，而是的类型没有名字。结构可以被复用，也可以不被复用。为了保证建立非匿名结构也同样快速，我们提供了抽象类 `AbstractStructure`。举个例子：
+该 DSL Scope 内可直接定义设备，且设备的 Config 同样由 DSL 定义。注意，这里的匿名指的不是该结构没有名字，而是的类型没有名字。结构可以被复用，也可以不被复用。显然，没有名字的结构是无法复用的。为了保证建立非匿名结构也同样快速，我们提供了抽象类 `AbstractStructure`。举个例子：
 
 ```kotlin
 class FooStructure : AbstractStructure({
@@ -254,7 +254,7 @@ class FooStructure : AbstractStructure({
 }
 ```
 
-这样以来，这类结构就有了自己的名字 —— `FooStructure`，可实现复用。请注意一下 `@Inject`。在 DSL 中定义的设备仅仅会加到属于自己的子结构中，若想找到这个子结构还需费一番功夫。现在，`StructureInjector` 的帮助下，你可以直接在成员上标注 `@Inject`，即可获得子结构的引用。我们可以一起看一下这个注解：
+这样以来，这类结构就有了自己的名字 —— `FooStructure`，可实现复用。请注意一下 `@Inject`。在 DSL 中定义的设备仅仅会加到属于自己的子结构中，若想找到这个子结构还需费一番功夫。现在，`StructureInjector` 的帮助下，您可以将子结构定义为自己的一个成员，直接在成员上标注 `@Inject`，即可获得子结构的引用。我们可以一起看一下这个注解：
 
 ```kotlin
 /**
@@ -333,7 +333,7 @@ annotation class Inject(val name: String = "", val type: KClass<*> = Inject::cla
 
 ### 电机 x 编码器
 
-这里的电机具有 `mode` —— 电机模式，可以取以下值：
+该结构具有电机和编码器提供的所有功能。除了这些外，这里的电机具有 `mode` —— 电机模式，可以取以下值：
 
 * `SPEED_CLOSE_LOOP` —— 闭速度环
 * `OPEN_LOOP` —— 开环

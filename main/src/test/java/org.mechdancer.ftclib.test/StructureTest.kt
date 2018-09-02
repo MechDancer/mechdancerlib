@@ -6,6 +6,5 @@ class StructureTest {
 	@Test
 	fun test() {
 		val foo = FooStructure()
-		//println(foo.flatten())
 	}
 }

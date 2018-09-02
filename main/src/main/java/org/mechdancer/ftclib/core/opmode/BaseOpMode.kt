@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.mechdancer.ftclib.core.structure.PackingDevice
 import org.mechdancer.ftclib.core.structure.Robot
 
+/**
+ * 程序入口
+ * 所有 OpMode 应在该类的继承树下
+ */
 @Disabled
 abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 	final override fun init() {

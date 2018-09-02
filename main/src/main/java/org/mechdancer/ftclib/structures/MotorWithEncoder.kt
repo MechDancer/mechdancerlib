@@ -3,10 +3,11 @@ package org.mechdancer.ftclib.structures
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.DeviceConfig
+import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.devices.Motor
 import org.mechdancer.ftclib.sensors.Encoder
 
-interface MotorWithEncoder : Motor, Encoder {
+interface MotorWithEncoder : Motor, Encoder, Structure {
 	var mode: Mode
 
 	var targetSpeed: Double

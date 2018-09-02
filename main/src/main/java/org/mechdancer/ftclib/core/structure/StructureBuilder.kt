@@ -8,6 +8,9 @@ import org.mechdancer.ftclib.sensors.Encoder
 import org.mechdancer.ftclib.sensors.RevColorSensor
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 
+/**
+ * 使用 DSL 建立匿名 [CompositeStructure]
+ */
 class StructureBuilder(private val structureName: String) {
 
 	private val _subStructures = mutableListOf<Structure>()

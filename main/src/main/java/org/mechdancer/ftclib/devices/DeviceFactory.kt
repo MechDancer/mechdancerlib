@@ -10,6 +10,9 @@ import org.mechdancer.ftclib.sensors.impl.RevColorSensorImpl
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 import org.mechdancer.ftclib.structures.impl.MotorWithEncoderImpl
 
+/**
+ * DSL 设备工厂
+ */
 object DeviceFactory {
 	fun motor(name: String, config: Motor.Config.() -> Unit): Motor =
 			MotorImpl(Motor.Config(name).apply(config))
