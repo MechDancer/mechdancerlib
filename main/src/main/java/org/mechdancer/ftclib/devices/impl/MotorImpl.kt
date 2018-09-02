@@ -11,10 +11,11 @@ import org.mechdancer.ftclib.devices.TCMotor
  * 电机
  * 输出设备
  */
-class MotorImpl(name: String, enable: Boolean)
+class MotorImpl(name: String, direction: DcMotorSimple.Direction,
+                enable: Boolean)
 	: Motor, Device<TCMotor>(name, enable) {
 
-	constructor(config: Motor.Config) : this(config.name, config.enable)
+	constructor(config: Motor.Config) : this(config.name, config.direction, config.enable)
 
 	private val _power = PropertyBuffer(
 			tag = "power",
@@ -35,7 +36,7 @@ class MotorImpl(name: String, enable: Boolean)
 	)
 	private val _direction = PropertyBuffer(
 			tag = "direction",
-			origin = DcMotorSimple.Direction.FORWARD,
+			origin = direction,
 			setter = { this.direction = it }
 	)
 	/**

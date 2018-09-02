@@ -6,12 +6,11 @@ import org.mechdancer.ftclib.devices.DeviceFactory
 import org.mechdancer.ftclib.sensors.RevColorSensor
 import org.mechdancer.ftclib.structures.impl.Mecanum
 
-object DummyRobot : Robot("dummyRobot", DummyArm,
+object DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm,
 		DeviceFactory.revColor("colorSensor") {
 			enable = true
 		}
 ) {
-	override val chassis: Mecanum = Mecanum(true)
 
 	@Inject
 	private lateinit var arm: DummyArm

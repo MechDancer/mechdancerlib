@@ -1,5 +1,6 @@
 package org.mechdancer.ftclib.structures
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.DeviceConfig
 import org.mechdancer.ftclib.devices.Motor
@@ -17,6 +18,7 @@ interface MotorWithEncoder : Motor, Encoder {
 
 	class Config(name: String, enable: Boolean = false,
 	             var radians: Double = .0,
+	             var direction: DcMotorSimple.Direction,
 	             var pidPosition: PID = PID(1.0, .0, .0, .0, .0),
 	             var pidSpeed: PID = PID(1.0, .0, .0, .0, .0)) : DeviceConfig(name, enable)
 

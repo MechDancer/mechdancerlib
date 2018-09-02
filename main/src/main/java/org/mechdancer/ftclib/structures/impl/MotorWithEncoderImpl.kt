@@ -14,13 +14,15 @@ import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
 
 class MotorWithEncoderImpl(override val name: String, val enable: Boolean,
                            totalRadians: Double,
+                           direction: DcMotorSimple.Direction,
                            private val pidPosition: PID,
-                           private val pidSpeed: PID) : MotorWithEncoder, CompositeStructure, OpModeFlow.AutoCallable {
+                           private val pidSpeed: PID) : MotorWithEncoder,
+                                                        CompositeStructure, OpModeFlow.AutoCallable {
 	constructor(config: MotorWithEncoder.Config) : this(config.name, config.enable,
-			config.radians, config.pidPosition, config.pidSpeed)
+			config.radians, config.direction, config.pidPosition, config.pidSpeed)
 
 
-	private val motor = MotorImpl(name, enable)
+	private val motor = MotorImpl(name, direction, enable)
 
 	private val encoder = EncoderImpl(name, enable, totalRadians)
 
