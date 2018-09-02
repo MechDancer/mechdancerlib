@@ -23,11 +23,6 @@ sealed class PackingDevice<in T : HardwareDevice>
 	private val id get() = "$prefix$name"
 
 	/**
-	 * 一台设备不再具有子结构
-	 */
-	override val subStructures = listOf<Structure>()
-
-	/**
 	 * 对真实设备的引用
 	 */
 	private var device: T? = null

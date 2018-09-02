@@ -3,7 +3,7 @@ package org.mechdancer.ftclib.core.opmode
 import org.mechdancer.ftclib.core.structure.Robot
 import org.mechdancer.ftclib.gamepad.GamePad
 
-abstract class RemoteControlOpMode(robot: Robot) : BaseOpMode(robot) {
+abstract class RemoteControlOpMode<T : Robot>(robot: T) : BaseOpMode<T>(robot) {
 
 	private val master = GamePad()
 

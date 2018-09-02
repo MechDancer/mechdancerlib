@@ -1,17 +1,19 @@
 package org.mechdancer.ftclib.core.structure.injector
 
+import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.flatten
 
 object StructureInjector {
 
-	fun inject(structure: Structure) {
+	fun inject(structure: CompositeStructure) {
 		val properties = structure.javaClass.declaredFields.filter {
 			it.isAnnotationPresent(Inject::class.java)
-			/*&&Structure::class.java.isAssignableFrom(it.type)*/true
+					&& Structure::class.java.isAssignableFrom(it.type)
 		}.map { it to it.getAnnotation(Inject::class.java) }
 
 		val flatten = structure.flatten()
+		println(flatten.joinToString())
 		properties.forEach { p ->
 			p.first.isAccessible = true
 			val expectName = if (p.second.name == "") p.first.name else p.second.name
@@ -25,8 +27,7 @@ object StructureInjector {
 							"实际: ${p.first.type.simpleName}")
 				it
 			}
-					?: throw IllegalStateException(
-							"未找到 $expectType: $expectName"))
+					?: throw IllegalStateException("未找到 [$expectName: ${expectType.name}]"))
 		}
 	}
 

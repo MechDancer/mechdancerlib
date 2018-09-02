@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.filters.signalAndSystem.Limiter
 import org.mechdancer.filters.signalAndSystem.PID
+import org.mechdancer.ftclib.core.structure.CompositeStructure
+import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.devices.impl.MotorImpl
 import org.mechdancer.ftclib.sensors.impl.EncoderImpl
@@ -13,7 +15,7 @@ import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
 class MotorWithEncoderImpl(override val name: String, val enable: Boolean,
                            totalRadians: Double,
                            private val pidPosition: PID,
-                           private val pidSpeed: PID) : MotorWithEncoder, Structure {
+                           private val pidSpeed: PID) : MotorWithEncoder, CompositeStructure, OpModeFlow.AutoCallable {
 	constructor(config: MotorWithEncoder.Config) : this(config.name, config.enable,
 			config.radians, config.pidPosition, config.pidSpeed)
 

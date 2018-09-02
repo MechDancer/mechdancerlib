@@ -6,11 +6,12 @@ import org.mechdancer.ftclib.core.structure.PackingDevice
 import org.mechdancer.ftclib.core.structure.Robot
 
 @Disabled
-abstract class BaseOpMode(protected val robot: Robot) : OpMode() {
+abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 	final override fun init() {
 		PackingDevice.count = robot.devices.size
 		PackingDevice.prefix = robot.name
 		robot.devices.forEach { it.bind(hardwareMap) }
+		robot.initialisable.forEach { it.init() }
 		//TODO ask for resources
 		initTask()
 	}
@@ -32,10 +33,13 @@ abstract class BaseOpMode(protected val robot: Robot) : OpMode() {
 		//TODO calculate suggestions
 		//TODO generate and execute commands
 		loopTask()
+		robot.run()
+		robot.autoCallable.forEach { it.run() }
 		robot.devices.forEach { it.run() }
 	}
 
 	final override fun stop() {
+		robot.stoppable.forEach { it.stop() }
 		robot.devices.forEach { it.unbind() }
 		PackingDevice.count = 0
 		//TODO release resources

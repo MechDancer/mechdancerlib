@@ -1,12 +1,13 @@
 package org.mechdancer.ftclib.structures.impl
 
-import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.core.structure.CompositeStructure
+import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.devices.impl.MotorImpl
 import org.mechdancer.ftclib.structures.Chassis
 import java.util.logging.Logger
 import kotlin.math.abs
 
-open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, Structure {
+open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, CompositeStructure, OpModeFlow.AutoCallable {
 	override val name = "Chassis"
 	override fun toString() = name
 

@@ -1,8 +1,9 @@
 package org.mechdancer.ftclib.devices
 
 import org.mechdancer.ftclib.core.structure.DeviceConfig
+import org.mechdancer.ftclib.core.structure.Structure
 
-interface ContinuousServo {
+interface ContinuousServo : Structure {
 	var power: Double
 
 	class Config(

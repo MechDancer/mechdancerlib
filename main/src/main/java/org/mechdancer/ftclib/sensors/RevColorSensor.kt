@@ -1,8 +1,9 @@
 package org.mechdancer.ftclib.sensors
 
 import org.mechdancer.ftclib.core.structure.DeviceConfig
+import org.mechdancer.ftclib.core.structure.Structure
 
-interface RevColorSensor {
+interface RevColorSensor : Structure {
 	fun getColorData(): ColorData
 
 	fun enableLed(boolean: Boolean)

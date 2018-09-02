@@ -5,50 +5,75 @@ package org.mechdancer.ftclib.core.structure
  */
 interface Structure {
 	val name: String
-	val subStructures: List<Structure>
 
 	fun run()
 	override fun toString(): String
 }
 
+interface CompositeStructure : Structure {
+	val subStructures: List<Structure>
+}
 
 /**
- *被该接口标注的 Structure 不需要手动调用 `run()`
- * TODO:未实现
+ * 其中接口标识参与 OpMode 标准状态流程，会被 OpMode 调用
  */
-interface IAutoCallable
+object OpModeFlow {
+	/**
+	 *参与 OpMode 的 `init()`
+	 */
+	interface Initialisable {
+		fun init()
+	}
+
+	/**
+	 *参与 OpMode 的 `loop()`
+	 */
+	interface AutoCallable {
+		fun run()
+	}
+
+	/**
+	 *参与 OpMode 的 `stop()`
+	 */
+	interface Stoppable {
+		fun stop()
+	}
+
+}
+
 
 /**
  * 展平为列表
  */
-internal fun Structure.flatten(): List<Structure> =
-		subStructures.flatMap { it.flatten() }.let { it + this }
+internal fun CompositeStructure.flatten(): List<CompositeStructure> =
+		subStructures.flatMap { (it as? CompositeStructure)?.flatten() ?: listOf() }
+				.let { it + this }
 
 
 /**
  * 找到所有符合类型参数的结构
  */
-internal inline fun <reified T> Structure.takeAll(): List<T> =
+internal inline fun <reified T> CompositeStructure.takeAll(): List<T> =
 		this.flatten().filter { it is T }.map { it as T }
 
 /**
  * 转化为树状图
  * @param indent 缩进
  */
-fun Structure.treeView(indent: Int = 0): String {
+fun CompositeStructure.treeView(indent: Int = 0): String {
 	val builder = StringBuilder()
 	builder.append("$this\n")
 	subStructures.dropLast(1).forEach {
 		builder
 				.append(" |".repeat(indent))
 				.append(" ├")
-				.append(it.treeView(indent + 1))
+				.append((it as? CompositeStructure)?.treeView(indent + 1))
 	}
 	subStructures.takeLast(1).forEach {
 		builder
 				.append("  ".repeat(indent))
 				.append(" └")
-				.append(it.treeView(indent + 1))
+				.append((it as? CompositeStructure)?.treeView(indent + 1))
 	}
 	return builder.toString()
 }

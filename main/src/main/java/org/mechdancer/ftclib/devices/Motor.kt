@@ -2,8 +2,9 @@ package org.mechdancer.ftclib.devices
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.ftclib.core.structure.DeviceConfig
+import org.mechdancer.ftclib.core.structure.Structure
 
-interface Motor {
+interface Motor : Structure {
 	var power: Double
 
 	var direction: DcMotorSimple.Direction

@@ -2,6 +2,7 @@ package org.mechdancer.ftclib.test.dummy
 
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.AbstractStructure
+import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.injector.Inject
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 import kotlin.math.PI
@@ -12,7 +13,7 @@ object DummyArm : AbstractStructure("dummyArm", {
 		pidPosition = PID(0.233, .0, .0, .0, .0)
 		radians = 2 * PI
 	}
-}) {
+}), OpModeFlow.Initialisable {
 
 	@Inject
 	private lateinit var core: MotorWithEncoder
@@ -29,6 +30,10 @@ object DummyArm : AbstractStructure("dummyArm", {
 
 	fun lock() {
 		core.mode = MotorWithEncoder.Mode.LOCK
+	}
+
+	override fun init() {
+		core.mode = MotorWithEncoder.Mode.POSITION_CLOSE_LOOP
 	}
 
 	enum class ArmState { UP, PARALLEL, DOWN }

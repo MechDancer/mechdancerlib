@@ -9,6 +9,10 @@ abstract class Robot(name: String, vararg subStructs: Structure)
 
 	internal val devices = takeAll<PackingDevice<*>>()
 
+	internal val initialisable = takeAll<OpModeFlow.Initialisable>()
+	internal val autoCallable = takeAll<OpModeFlow.AutoCallable>()
+	internal val stoppable = takeAll<OpModeFlow.Stoppable>()
+
 	abstract val chassis: Chassis
 
 }

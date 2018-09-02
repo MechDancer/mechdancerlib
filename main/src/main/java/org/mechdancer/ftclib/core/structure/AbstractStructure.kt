@@ -5,7 +5,7 @@ import org.mechdancer.ftclib.core.structure.injector.StructureInjector
 /**
  * 用于构造非匿名Structure
  */
-abstract class AbstractStructure(structure: Structure) : Structure by structure {
+abstract class AbstractStructure(structure: CompositeStructure) : CompositeStructure by structure {
 
 	constructor() : this(structure { })
 	constructor(block: StructureBuilder.() -> Unit) : this(structure(block = block))
