@@ -1,6 +1,8 @@
 package org.mechdancer.ftclib.structures
 
-interface Chassis {
+import org.mechdancer.ftclib.core.structure.CompositeStructure
+
+interface Chassis : CompositeStructure {
 	var powers: DoubleArray
 
 	var maxPower: Double
