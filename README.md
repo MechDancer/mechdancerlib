@@ -156,11 +156,6 @@ interface MotorWithEncoder : Motor, Encoder {
 
    enum class Mode { SPEED_CLOSE_LOOP, OPEN_LOOP, POSITION_CLOSE_LOOP, LOCK, STOP }
 
-   class Config(name: String, enable: Boolean = false,
-                var radians: Double = .0,
-                var pidPosition: PID = PID(1.0, .0, .0, .0, .0),
-                var pidSpeed: PID = PID(1.0, .0, .0, .0, .0)) : DeviceConfig(name, enable)
-
 }
 ```
 
@@ -203,3 +198,7 @@ object OpModeFlow {
 ```
 
 Structure 的 `run()` 理应由自己的父结构调用，直至最上层的 Robot 由 OpMode 调用。在大部分情况下，从最底层的设备到上层的机器人结构，如果一层一层向上传递难免过于繁琐，并且可能会出现错误。我们定义了这三个接口，作为一种标记（类似 `Serializable`）。实现这三个接口的 Structure 会直接参与到 OpMode 相应的生命周期之中，直接被 OpMode 调用。
+
+## 实例
+
+可以在 [这里](https://github.com/MechDancer/mechdancerlib/tree/master/main/src/test/java/org.mechdancer.ftclib.test/dummy) 找到示例代码。目前库还在完善中，暂无 release。
