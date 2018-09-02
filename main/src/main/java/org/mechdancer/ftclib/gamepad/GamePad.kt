@@ -50,5 +50,4 @@ class GamePad {
 				origin.right_stick_x.toDouble(),
 				origin.right_stick_y.toDouble())
 	}
-
 }

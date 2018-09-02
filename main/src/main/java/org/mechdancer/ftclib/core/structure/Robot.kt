@@ -7,11 +7,9 @@ abstract class Robot(name: String, val chassis: Chassis, vararg subStructs: Stru
 	subStructure(chassis)
 	subStructs.forEach { subStructure(it) }
 }) {
-
 	internal val devices = takeAll<PackingDevice<*>>()
 
 	internal val initialisable = takeAll<OpModeFlow.Initialisable>()
 	internal val autoCallable = takeAll<OpModeFlow.AutoCallable>()
 	internal val stoppable = takeAll<OpModeFlow.Stoppable>()
-
 }

@@ -10,12 +10,9 @@ class Button : IGamePadComponent<Boolean> {
 
 	fun isReleasing() = last && bePressed()
 
-
 	override var value: Boolean = false
 		set(value) {
 			last = field
 			field = value
 		}
-
-
 }

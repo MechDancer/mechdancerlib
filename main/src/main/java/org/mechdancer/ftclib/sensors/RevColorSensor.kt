@@ -13,5 +13,4 @@ interface RevColorSensor : Structure {
 	}
 
 	class Config(name: String, enable: Boolean = false) : DeviceConfig(name, enable)
-
 }

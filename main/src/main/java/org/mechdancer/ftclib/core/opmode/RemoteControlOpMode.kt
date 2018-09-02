@@ -4,9 +4,7 @@ import org.mechdancer.ftclib.core.structure.Robot
 import org.mechdancer.ftclib.gamepad.GamePad
 
 abstract class RemoteControlOpMode<T : Robot>(robot: T) : BaseOpMode<T>(robot) {
-
 	private val master = GamePad()
-
 	private val helper = GamePad()
 
 	final override fun loopTask() {
@@ -16,6 +14,4 @@ abstract class RemoteControlOpMode<T : Robot>(robot: T) : BaseOpMode<T>(robot) {
 	}
 
 	abstract fun loop(master: GamePad, helper: GamePad)
-
-
 }
