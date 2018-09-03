@@ -1,6 +1,6 @@
 package org.mechdancer.ftclib.structures.impl
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.devices.Motor
@@ -13,7 +13,7 @@ open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, Composi
 	override val name = "Chassis"
 	override fun toString() = name
 
-	final override val subStructures = names.map { MotorImpl(it, FORWARD, enable) }
+	final override val subStructures = names.map { MotorImpl(it, enable, DcMotorSimple.Direction.FORWARD) }
 
 	override var powers = DoubleArray(names.size) { .0 }
 		get() = field.standardizeBy(maxPower)
@@ -38,10 +38,10 @@ open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, Composi
 	 * @param maxPower 最大功率约束∈[0,1]
 	 */
 	private fun DoubleArray.standardizeBy(maxPower: Double) =
-		(this.maxBy { abs(it) } ?: 1.0).let {
-			if (it <= maxPower) this
-			else this.map { p -> p / it * maxPower }.toDoubleArray()
-		}
+			(this.maxBy { abs(it) } ?: 1.0).let {
+				if (it <= maxPower) this
+				else this.map { p -> p / it * maxPower }.toDoubleArray()
+			}
 
 	override fun run() {
 		subStructures.forEachIndexed { index: Int, motor: Motor ->

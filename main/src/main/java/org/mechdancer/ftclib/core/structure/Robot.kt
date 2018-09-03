@@ -11,10 +11,7 @@ import org.mechdancer.ftclib.structures.Chassis
  * @param subStructs 可添加子结构
  */
 abstract class Robot(name: String, val chassis: Chassis, vararg subStructs: Structure)
-	: AbstractStructure(name, {
-	subStructure(chassis)
-	subStructs.forEach { subStructure(it) }
-}) {
+	: AbstractStructure(name, chassis, *subStructs) {
 	internal val devices = takeAll<PackingDevice<*>>()
 
 	internal val initialisable = takeAll<OpModeFlow.Initialisable>()

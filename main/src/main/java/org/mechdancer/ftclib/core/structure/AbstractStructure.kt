@@ -23,6 +23,16 @@ abstract class AbstractStructure(structure: CompositeStructure) : CompositeStruc
 	 */
 	constructor(name: String, block: StructureBuilder.() -> Unit) : this(structure(name, block))
 
+	/**
+	 * 带名，可将子结构直接加入构造器
+	 */
+	constructor(name: String, vararg subStructs: Structure) : this(structure(name) { subStructs.forEach { subStructure(it) } })
+
+	/**
+	 * 可将子结构直接加入构造器
+	 */
+	constructor(vararg subStructs: Structure) : this({ subStructs.forEach { subStructure(it) } })
+
 	init {
 		@Suppress("LeakingThis")
 		StructureInjector.inject(this)

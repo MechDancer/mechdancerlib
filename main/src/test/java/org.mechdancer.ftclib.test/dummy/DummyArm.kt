@@ -4,16 +4,17 @@ import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.AbstractStructure
 import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.injector.Inject
+import org.mechdancer.ftclib.devices.DeviceFactory
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 import kotlin.math.PI
 
-object DummyArm : AbstractStructure("dummyArm", {
-	motorWithEncoder("core") {
-		enable = true
-		pidPosition = PID(0.233, .0, .0, .0, .0)
-		radians = 2 * PI
-	}
-}), OpModeFlow.Initialisable {
+object DummyArm : AbstractStructure("dummyArm",
+		DeviceFactory.motorWithEncoder("core") {
+			enable = true
+			pidPosition = PID(0.233, .0, .0, .0, .0)
+			radians = 2 * PI
+		}
+), OpModeFlow.Initialisable {
 
 	@Inject
 	private lateinit var core: MotorWithEncoder

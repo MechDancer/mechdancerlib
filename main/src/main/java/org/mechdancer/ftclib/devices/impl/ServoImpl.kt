@@ -14,12 +14,12 @@ import kotlin.math.abs
  */
 class ServoImpl(
 		name: String,
+		enable: Boolean,
 		origin: Double,
-		ending: Double,
-		enable: Boolean)
+		ending: Double)
 	: Servo, Device<TCServo>(name, enable) {
 
-	constructor(config: Servo.Config) : this(config.name, config.origin, config.ending, config.enable)
+	constructor(config: Servo.Config) : this(config.name, config.enable, config.origin, config.ending)
 
 	private val _position = PropertyBuffer(
 			tag = "position",

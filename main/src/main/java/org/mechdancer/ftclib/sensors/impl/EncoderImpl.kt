@@ -7,7 +7,7 @@ import org.mechdancer.ftclib.sensors.Encoder
 import kotlin.math.PI
 
 class EncoderImpl(name: String, enable: Boolean,
-                  totalRadians: Double)
+                  radians: Double)
 	: Encoder, Sensor<DcMotorEx>(name, enable) {
 
 	constructor(config: Encoder.Config) : this(config.name, config.enable, config.radians)
@@ -18,7 +18,7 @@ class EncoderImpl(name: String, enable: Boolean,
 
 	private var speed = .0
 
-	private val scalar = 2 * PI / totalRadians
+	private val scalar = 2 * PI / radians
 
 	override fun DcMotorEx.input() {
 		position = scalar * currentPosition - offset

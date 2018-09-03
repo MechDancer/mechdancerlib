@@ -11,11 +11,12 @@ import org.mechdancer.ftclib.devices.TCMotor
  * 电机
  * 输出设备
  */
-class MotorImpl(name: String, direction: DcMotorSimple.Direction,
-                enable: Boolean)
+class MotorImpl(name: String,
+                enable: Boolean,
+                direction: DcMotorSimple.Direction)
 	: Motor, Device<TCMotor>(name, enable) {
 
-	constructor(config: Motor.Config) : this(config.name, config.direction, config.enable)
+	constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
 
 	private val _power = PropertyBuffer(
 			tag = "power",

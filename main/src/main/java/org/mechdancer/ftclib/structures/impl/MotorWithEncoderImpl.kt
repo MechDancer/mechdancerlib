@@ -12,23 +12,25 @@ import org.mechdancer.ftclib.sensors.impl.EncoderImpl
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
 
-class MotorWithEncoderImpl(override val name: String, val enable: Boolean,
-                           totalRadians: Double,
+class MotorWithEncoderImpl(override val name: String,
+                           val enable: Boolean,
+                           radians: Double,
                            direction: DcMotorSimple.Direction,
                            private val pidPosition: PID,
-                           private val pidSpeed: PID) : MotorWithEncoder,
-                                                        CompositeStructure, OpModeFlow.AutoCallable {
+                           private val pidSpeed: PID
+) : MotorWithEncoder,
+    CompositeStructure, OpModeFlow.AutoCallable {
 	constructor(config: MotorWithEncoder.Config) : this(config.name, config.enable,
 			config.radians, config.direction, config.pidPosition, config.pidSpeed)
 
 
-	private val motor = MotorImpl(name, direction, enable)
+	private val motor = MotorImpl(name, enable, direction)
 
-	private val encoder = EncoderImpl(name, enable, totalRadians)
+	private val encoder = EncoderImpl(name, enable, radians)
 
 	override val subStructures: List<Structure> = listOf(motor, encoder)
 
-	private val positionLimiter = Limiter(totalRadians)
+	private val positionLimiter = Limiter(radians)
 
 	override var power
 		get() = motor.power

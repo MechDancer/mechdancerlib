@@ -17,7 +17,8 @@ interface MotorWithEncoder : Motor, Encoder, Structure {
 
 	enum class Mode { SPEED_CLOSE_LOOP, OPEN_LOOP, POSITION_CLOSE_LOOP, LOCK, STOP }
 
-	class Config(name: String, enable: Boolean = false,
+	class Config(name: String,
+	             enable: Boolean = false,
 	             var radians: Double = .0,
 	             var direction: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD,
 	             var pidPosition: PID = PID(1.0, .0, .0, .0, .0),

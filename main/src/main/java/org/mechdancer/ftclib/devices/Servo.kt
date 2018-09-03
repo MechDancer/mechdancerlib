@@ -8,8 +8,8 @@ interface Servo : Structure {
 
 	class Config(
 			name: String,
+			enable: Boolean = false,
 			var origin: Double = .0,
-			var ending: Double = .0,
-			enable: Boolean = false
+			var ending: Double = .0
 	) : DeviceConfig(name, enable)
 }
