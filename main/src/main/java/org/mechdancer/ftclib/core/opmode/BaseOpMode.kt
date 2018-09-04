@@ -3,7 +3,7 @@ package org.mechdancer.ftclib.core.opmode
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.mechdancer.ftclib.core.structure.PackingDevice
-import org.mechdancer.ftclib.core.structure.Robot
+import org.mechdancer.ftclib.core.structure.model.Robot
 
 /**
  * 程序入口

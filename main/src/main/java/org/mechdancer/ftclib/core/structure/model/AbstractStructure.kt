@@ -1,6 +1,10 @@
-package org.mechdancer.ftclib.core.structure
+package org.mechdancer.ftclib.core.structure.model
 
+import org.mechdancer.ftclib.core.structure.CompositeStructure
+import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.core.structure.StructureBuilder
 import org.mechdancer.ftclib.core.structure.injector.StructureInjector
+import org.mechdancer.ftclib.core.structure.structure
 
 /**
  * 用于构造非匿名 Structure

@@ -1,5 +1,9 @@
-package org.mechdancer.ftclib.core.structure
+package org.mechdancer.ftclib.core.structure.model
 
+import org.mechdancer.ftclib.core.structure.OpModeFlow
+import org.mechdancer.ftclib.core.structure.PackingDevice
+import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.structures.Chassis
 
 /**

@@ -15,7 +15,7 @@ object StructureInjector {
 			it.isAnnotationPresent(Inject::class.java)
 					&& Structure::class.java.isAssignableFrom(it.type)
 		}.map { it to it.getAnnotation(Inject::class.java) }
-
+		if (properties.isEmpty()) return
 		val flatten = structure.flatten()
 		properties.forEach { p ->
 			p.first.isAccessible = true

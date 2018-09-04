@@ -1,7 +1,7 @@
 package org.mechdancer.ftclib.test
 
 import org.mechdancer.filters.signalAndSystem.PID
-import org.mechdancer.ftclib.core.structure.AbstractStructure
+import org.mechdancer.ftclib.core.structure.model.AbstractStructure
 import org.mechdancer.ftclib.core.structure.injector.Inject
 import org.mechdancer.ftclib.devices.Servo
 import org.mechdancer.ftclib.devices.motorWithEncoder

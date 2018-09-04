@@ -1,7 +1,9 @@
 # MechDancer Lib
 
-由 Kotlin 语言编写的 FTC 机器人程序库
+[![Build Status](https://www.travis-ci.org/MechDancer/mechdancerlib.svg?branch=master)](https://www.travis-ci.org/MechDancer/mechdancerlib)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7f1b33196cf94481b1065151df1f4040)](https://www.codacy.com/app/berberman/mechdancerlib?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MechDancer/mechdancerlib&amp;utm_campaign=Badge_Grade)
 
+由 Kotlin 语言编写的 FTC 机器人程序库
 
 
 对于 FTC 比赛而言，FIRST 官方提供的库虽然易用（脱离了嵌入式开发范畴），但有些过于简单。在比赛程序的编写上，往往不能优雅的解决一些常用的需求。为了解决该问题，我们换了一种思路，重新定义了从单个设备到机器人整体。我们尽力保证库的独立性，使其不仅应用于 FTC 赛事机器人程序编写。不过为了在 FTC 程序编写中本库拆封即用，我们依赖了 RobotCore 中 `HardwareDevice` 和 `OpMode`。
