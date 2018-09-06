@@ -1,5 +1,7 @@
 # MechDancer Lib
 
+## 项目已遗弃
+
 [![Build Status](https://www.travis-ci.org/MechDancer/mechdancerlib.svg?branch=master)](https://www.travis-ci.org/MechDancer/mechdancerlib)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7f1b33196cf94481b1065151df1f4040)](https://www.codacy.com/app/berberman/mechdancerlib?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MechDancer/mechdancerlib&amp;utm_campaign=Badge_Grade)
 

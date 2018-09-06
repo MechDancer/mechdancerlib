@@ -38,7 +38,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 	/**
 	 * 解除设备绑定
 	 */
-	internal fun unbind() = run { device = null }
+	internal fun unbind()  { device = null }
 
 	/**
 	 * 操作是否有效
@@ -187,7 +187,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 		/**
 		 * 名字前缀，与使用此设备的机器人一致
 		 */
-		internal var prefix = ""
+		internal var prefix = "$"
 
 		/**
 		 * 输出抑制级别
