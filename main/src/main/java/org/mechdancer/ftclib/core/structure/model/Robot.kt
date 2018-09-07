@@ -1,8 +1,8 @@
 package org.mechdancer.ftclib.core.structure.model
 
 import org.mechdancer.ftclib.core.structure.OpModeFlow
-import org.mechdancer.ftclib.core.structure.PackingDevice
 import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.core.structure.findAllDevices
 import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.structures.Chassis
 
@@ -16,7 +16,7 @@ import org.mechdancer.ftclib.structures.Chassis
  */
 abstract class Robot(name: String, val chassis: Chassis, vararg subStructs: Structure)
 	: AbstractStructure(name, chassis, *subStructs) {
-	internal val devices = takeAll<PackingDevice<*>>()
+	internal val devices = findAllDevices()
 
 	internal val initialisable = takeAll<OpModeFlow.Initialisable>()
 	internal val autoCallable = takeAll<OpModeFlow.AutoCallable>()

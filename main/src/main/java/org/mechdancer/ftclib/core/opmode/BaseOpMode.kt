@@ -13,8 +13,7 @@ import org.mechdancer.ftclib.core.structure.model.Robot
 abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 	final override fun init() {
 		PackingDevice.count = robot.devices.size
-		PackingDevice.prefix = robot.name
-		robot.devices.forEach { it.bind(hardwareMap) }
+		robot.devices.forEach { it.second.bind(hardwareMap, it.first) }
 		robot.initialisable.forEach { it.init() }
 		//TODO ask for resources
 		initTask()
@@ -27,24 +26,24 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 	}
 
 	final override fun start() {
-		robot.devices.forEach { it.reset() }
+		robot.devices.forEach { it.second.reset() }
 		startTask()
 	}
 
 	final override fun loop() {
-		while (robot.devices.any { it.available && !it.ready })
+		while (robot.devices.any { it.second.available && !it.second.ready })
 			Thread.yield()
 		//TODO calculate suggestions
 		//TODO generate and execute commands
 		loopTask()
 		robot.run()
 		robot.autoCallable.forEach { it.run() }
-		robot.devices.forEach { it.run() }
+		robot.devices.forEach { it.second.run() }
 	}
 
 	final override fun stop() {
 		robot.stoppable.forEach { it.stop() }
-		robot.devices.forEach { it.unbind() }
+		robot.devices.forEach { it.second.unbind() }
 		PackingDevice.count = 0
 		//TODO release resources
 		stopTask()

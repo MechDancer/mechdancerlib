@@ -11,6 +11,7 @@ import org.mechdancer.ftclib.core.structure.structure
  * 将一个现有的 structure 作为代理
  * @param delegate 匿名 structure
  */
+@Suppress("LeakingThis")
 abstract class AbstractStructure(private val delegate: CompositeStructure) : CompositeStructure(delegate.name) {
 	/**
 	 * 建立全新的 Structure
@@ -40,7 +41,7 @@ abstract class AbstractStructure(private val delegate: CompositeStructure) : Com
 	final override val subStructures: List<Structure> = delegate.subStructures
 
 	init {
-		StructureInjector.inject(javaClass, subStructures)
+		StructureInjector.inject(this)
 	}
 
 	override fun run() {

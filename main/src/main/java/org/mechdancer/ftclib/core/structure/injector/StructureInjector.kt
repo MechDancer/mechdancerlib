@@ -9,7 +9,8 @@ import org.mechdancer.ftclib.core.structure.Structure
  */
 object StructureInjector {
 
-	fun inject(clazz: Class<out CompositeStructure>, subStructure: List<Structure>) {
+	fun inject(structure: CompositeStructure) {
+		val clazz=structure::class.java
 		val properties = clazz.declaredFields.filter {
 			it.isAnnotationPresent(Inject::class.java)
 					&& Structure::class.java.isAssignableFrom(it.type)
@@ -24,22 +25,21 @@ object StructureInjector {
 			val expectType =
 					if (p.second.type == Inject::class) p.first.type
 					else p.second.type.java
-			p.first.set(
-					clazz,
-					subStructure
-							.find { (it.name == expectName || ignoreName) && (expectType.isInstance(it)) }
-							?.let {
-								if (it.javaClass.isAssignableFrom(p.first.type)
-										|| p.first.type.isAssignableFrom(it.javaClass))
-									it
-								else
-									throw IllegalStateException("""
+			val result = structure.subStructures
+					.find { (it.name == expectName || ignoreName) && (expectType.isInstance(it)) }
+					?.let {
+						if (it.javaClass.isAssignableFrom(p.first.type)
+								|| p.first.type.isAssignableFrom(it.javaClass))
+							it
+						else
+							throw IllegalStateException("""
 							注入类型错误
 							预期: ${expectType.simpleName}
 							实际: ${p.first.type.simpleName}
 						""".trimIndent())
-							}
-							?: throw IllegalStateException("未找到 [$expectName: ${expectType.name}]"))
+					}
+					?: throw IllegalStateException("未找到 [$expectName: ${expectType.name}]")
+			p.first.set(structure, result)
 		}
 	}
 }

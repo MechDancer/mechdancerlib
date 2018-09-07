@@ -18,11 +18,6 @@ sealed class PackingDevice<in T : HardwareDevice>
 (name: String, val enable: Boolean) : MonomericStructure(name) {
 
 	/**
-	 * 真名
-	 */
-	private val id get() = "$prefix$name"
-
-	/**
 	 * 对真实设备的引用
 	 */
 	private var device: T? = null
@@ -30,7 +25,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 	/**
 	 * 绑定设备
 	 */
-	internal fun bind(hardwareMap: HardwareMap) {
+	internal fun bind(hardwareMap: HardwareMap,id:String) {
 		@Suppress("UNCHECKED_CAST")
 		if (enable) device = hardwareMap[id] as T
 	}
@@ -38,7 +33,9 @@ sealed class PackingDevice<in T : HardwareDevice>
 	/**
 	 * 解除设备绑定
 	 */
-	internal fun unbind()  { device = null }
+	internal fun unbind() {
+		device = null
+	}
 
 	/**
 	 * 操作是否有效
@@ -185,11 +182,6 @@ sealed class PackingDevice<in T : HardwareDevice>
 		private val logger = Logger.getLogger("PackingDevice")
 
 		/**
-		 * 名字前缀，与使用此设备的机器人一致
-		 */
-		internal var prefix = "$"
-
-		/**
 		 * 输出抑制级别
 		 */
 		var logLevel: Level
@@ -218,3 +210,14 @@ abstract class Sensor<in T : HardwareDevice>
 	: PackingDevice<T>(name, enable) {
 	final override fun T.output() = Unit
 }
+
+fun CompositeStructure.findAllDevices(prefix: String = name): List<Pair<String, PackingDevice<*>>> =
+		subStructures.fold(mutableListOf()) { acc, structure ->
+			acc.addAll((structure as? CompositeStructure)?.let {
+				structure.findAllDevices("$prefix.${structure.name}")
+			} ?: if (structure is PackingDevice<*>) listOf(
+					(if (prefix.split(".").last() != structure.name
+					) "$prefix.${structure.name}" else prefix) to structure)
+			else listOf())
+			acc
+		}

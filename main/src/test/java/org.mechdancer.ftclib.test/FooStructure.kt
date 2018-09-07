@@ -1,8 +1,8 @@
 package org.mechdancer.ftclib.test
 
 import org.mechdancer.filters.signalAndSystem.PID
-import org.mechdancer.ftclib.core.structure.model.AbstractStructure
 import org.mechdancer.ftclib.core.structure.injector.Inject
+import org.mechdancer.ftclib.core.structure.model.AbstractStructure
 import org.mechdancer.ftclib.devices.Servo
 import org.mechdancer.ftclib.devices.motorWithEncoder
 import org.mechdancer.ftclib.devices.servo
@@ -10,7 +10,7 @@ import org.mechdancer.ftclib.structures.MotorWithEncoder
 import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
 import kotlin.math.PI
 
-class FooStructure : AbstractStructure({
+class FooStructure : AbstractStructure("fooo",{
 	motorWithEncoder("fooMotor") {
 		enable = true
 		radians = 2.0 * PI
