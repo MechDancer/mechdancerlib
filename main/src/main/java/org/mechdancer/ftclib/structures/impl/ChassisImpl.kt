@@ -9,9 +9,7 @@ import org.mechdancer.ftclib.structures.Chassis
 import java.util.logging.Logger
 import kotlin.math.abs
 
-open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, CompositeStructure, OpModeFlow.AutoCallable {
-	override val name = "Chassis"
-	override fun toString() = name
+open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, CompositeStructure("Chassis"), OpModeFlow.AutoCallable {
 
 	final override val subStructures = names.map { MotorImpl(it, enable, DcMotorSimple.Direction.FORWARD) }
 
@@ -48,6 +46,8 @@ open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, Composi
 			motor.power = powers[index]
 		}
 	}
+
+	override fun toString() = name
 
 	protected companion object {
 		val logger: Logger = Logger.getLogger("Chassis")

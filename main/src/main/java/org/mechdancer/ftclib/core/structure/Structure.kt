@@ -1,27 +1,29 @@
 package org.mechdancer.ftclib.core.structure
 
-/** 结构 */
-interface Structure {
-	/**
-	 * 结构名
-	 */
-	val name: String
+interface Structure{
+	val name:String
 
-	/**
-	 * 结构执行的动作
-	 */
 	fun run()
 
-
-	override fun toString(): String
+	override fun toString():String
 }
 
-/** 复合结构 */
-interface CompositeStructure : Structure {
+/** 结构 */
+sealed class StructureSealed(override val name: String):Structure
+
+/**
+ * 单体结构
+ */
+abstract class MonomericStructure(name: String) : StructureSealed(name)
+
+/**
+ * 复合结构
+ */
+abstract class CompositeStructure(name: String) : StructureSealed(name) {
 	/**
 	 * 子结构
 	 */
-	val subStructures: List<Structure>
+	abstract val subStructures: List<Structure>
 }
 
 /**

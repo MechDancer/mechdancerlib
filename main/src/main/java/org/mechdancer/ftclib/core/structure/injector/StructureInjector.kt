@@ -2,7 +2,6 @@ package org.mechdancer.ftclib.core.structure.injector
 
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
-import org.mechdancer.ftclib.core.structure.flatten
 
 /**
  * 子结构注入器
@@ -10,13 +9,12 @@ import org.mechdancer.ftclib.core.structure.flatten
  */
 object StructureInjector {
 
-	fun inject(structure: CompositeStructure) {
-		val properties = structure.javaClass.declaredFields.filter {
+	fun inject(clazz: Class<out CompositeStructure>, subStructure: List<Structure>) {
+		val properties = clazz.declaredFields.filter {
 			it.isAnnotationPresent(Inject::class.java)
 					&& Structure::class.java.isAssignableFrom(it.type)
 		}.map { it to it.getAnnotation(Inject::class.java) }
 		if (properties.isEmpty()) return
-		val flatten = structure.flatten()
 		properties.forEach { p ->
 			p.first.isAccessible = true
 			val ignoreName = p.second.name == "#ignore#"
@@ -27,8 +25,8 @@ object StructureInjector {
 					if (p.second.type == Inject::class) p.first.type
 					else p.second.type.java
 			p.first.set(
-					structure,
-					flatten
+					clazz,
+					subStructure
 							.find { (it.name == expectName || ignoreName) && (expectType.isInstance(it)) }
 							?.let {
 								if (it.javaClass.isAssignableFrom(p.first.type)

@@ -20,8 +20,7 @@ class StructureBuilder(private val structureName: String) {
 	}
 
 
-	fun build() = object : CompositeStructure {
-		override val name = structureName
+	fun build() = object : CompositeStructure(structureName) {
 		override val subStructures: List<Structure> = ArrayList(_subStructures)
 		override fun run() = action(subStructures)
 

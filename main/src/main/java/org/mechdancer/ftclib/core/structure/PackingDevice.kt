@@ -15,7 +15,7 @@ import kotlin.reflect.KProperty
  * @param enable 使能
  */
 sealed class PackingDevice<in T : HardwareDevice>
-(override val name: String, val enable: Boolean) : Structure {
+(name: String, val enable: Boolean) : MonomericStructure(name) {
 
 	/**
 	 * 真名
