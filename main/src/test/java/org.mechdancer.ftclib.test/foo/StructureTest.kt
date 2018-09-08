@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.test
+package org.mechdancer.ftclib.test.foo
 
 import org.junit.Test
 import org.mechdancer.ftclib.core.structure.PackingDevice

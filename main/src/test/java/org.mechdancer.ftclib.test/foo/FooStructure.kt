@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.test
+package org.mechdancer.ftclib.test.foo
 
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.injector.Inject

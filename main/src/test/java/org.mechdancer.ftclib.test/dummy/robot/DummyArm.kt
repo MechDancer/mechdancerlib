@@ -1,9 +1,9 @@
-package org.mechdancer.ftclib.test.dummy
+package org.mechdancer.ftclib.test.dummy.robot
 
 import org.mechdancer.filters.signalAndSystem.PID
-import org.mechdancer.ftclib.core.structure.model.AbstractStructure
 import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.injector.Inject
+import org.mechdancer.ftclib.core.structure.model.AbstractStructure
 import org.mechdancer.ftclib.devices.DeviceFactory
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 import kotlin.math.PI
