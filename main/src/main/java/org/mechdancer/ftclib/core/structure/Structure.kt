@@ -1,15 +1,15 @@
 package org.mechdancer.ftclib.core.structure
 
-interface Structure{
-	val name:String
+interface Structure {
+	val name: String
 
 	fun run()
 
-	override fun toString():String
+	override fun toString(): String
 }
 
 /** 结构 */
-sealed class StructureSealed(override val name: String):Structure
+sealed class StructureSealed(override val name: String) : Structure
 
 /**
  * 单体结构

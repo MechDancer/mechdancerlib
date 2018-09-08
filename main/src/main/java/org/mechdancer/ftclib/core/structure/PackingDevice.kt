@@ -25,7 +25,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 	/**
 	 * 绑定设备
 	 */
-	internal fun bind(hardwareMap: HardwareMap,id:String) {
+	internal fun bind(hardwareMap: HardwareMap, id: String) {
 		@Suppress("UNCHECKED_CAST")
 		if (enable) device = hardwareMap[id] as T
 	}

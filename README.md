@@ -1,7 +1,5 @@
 # MechDancer Lib
 
-## 项目已遗弃
-
 [![Build Status](https://www.travis-ci.org/MechDancer/mechdancerlib.svg?branch=master)](https://www.travis-ci.org/MechDancer/mechdancerlib)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7f1b33196cf94481b1065151df1f4040)](https://www.codacy.com/app/berberman/mechdancerlib?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MechDancer/mechdancerlib&amp;utm_campaign=Badge_Grade)
 
@@ -12,31 +10,40 @@
 
 ## Structure
 
-在库中，我们抽象出了 *结构* 这个概念。结构分为两种 —— 单体结构、复合结构。
-
-### 单体结构
-
-一个单体结构十分简单，它的定义如下：
+在库中，我们抽象出了 *结构* 这个概念。结构分为两种 —— 单体结构、复合结构。结构源于以下接口和密封类：
 
 ```kotlin
 interface Structure {
 	val name: String
 
 	fun run()
+    
 	override fun toString(): String
 }
+sealed class StructureSealed(override val name: String) : Structure
 ```
 
-它包含了名字，和一个 `run()` 方法，以及 `toString()`。拥有这些特性的事物都可被看作一个单体结构，例如一个电机。
+
+
+### 单体结构
+
+一个单体结构十分简单，它的定义如下：
+
+```kotlin
+abstract class MonomericStructure(name: String) : StructureSealed(name)
+```
+
+它和结构的概念完全相同 —— 包含了名字，和一个 `run()` 方法，以及 `toString()`。拥有这些特性的事物都可被看作一个单体结构，例如一个电机。
 
 ### 复合结构
 
 复合结构与单体结构的不同之处在于复合结构可以拥有属于它的子结构：
 
 ```kotlin
-interface CompositeStructure : Structure {
-	val subStructures: List<Structure>
+abstract class CompositeStructure(name: String) : StructureSealed(name) {
+	abstract val subStructures: List<Structure>
 }
+
 ```
 
 相比于单体结构，它多出了 `subStructures`。一个麦克纳姆底盘就是一个复合结构 —— 它的子结构为四个电机。
