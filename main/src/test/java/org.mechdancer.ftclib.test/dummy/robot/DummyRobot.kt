@@ -13,14 +13,12 @@ object DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm,
 ) {
 
 	@Inject
-	private lateinit var arm: DummyArm
-
-	@Inject
 	lateinit var colorSensor: RevColorSensor
 
 	var armState: DummyArm.ArmState = DummyArm.ArmState.DOWN
 
 	override fun run() {
 		DummyArm.armState = armState
+
 	}
 }
