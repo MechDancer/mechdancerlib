@@ -7,7 +7,7 @@ class ConfigTest {
 	@Test
 	fun testConfig() {
 
-		robotConfig {
+		val xml = robotConfig {
 			lynxUsbDevice {
 				name = "Expansion Hub Portal 1"
 				parentModuleAddress = 3
@@ -32,4 +32,5 @@ class ConfigTest {
 		}
 
 	}
+
 }

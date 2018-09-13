@@ -9,7 +9,7 @@ import org.mechdancer.ftclib.test.dummy.robot.DummyRobot
 
 @TeleOp(name = "DummyRemoteControl", group = "dummy")
 @Disabled
-class DummyRemoteControl : RemoteControlOpMode<DummyRobot>(DummyRobot) {
+class DummyRemoteControl : RemoteControlOpMode<DummyRobot>(DummyRobot()) {
 
 	override fun initTask() {
 
@@ -17,7 +17,7 @@ class DummyRemoteControl : RemoteControlOpMode<DummyRobot>(DummyRobot) {
 
 	override fun loop(master: GamePad, helper: GamePad) {
 		if (master.a.isPressing())
-			when (DummyRobot.armState) {
+			when (robot.armState) {
 				DummyArm.ArmState.DOWN     -> DummyArm.ArmState.PARALLEL
 				DummyArm.ArmState.PARALLEL -> DummyArm.ArmState.UP
 				DummyArm.ArmState.UP       -> DummyArm.ArmState.DOWN

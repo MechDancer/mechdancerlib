@@ -8,7 +8,7 @@ import org.mechdancer.ftclib.devices.DeviceFactory
 import org.mechdancer.ftclib.structures.MotorWithEncoder
 import kotlin.math.PI
 
-object DummyArm : AbstractStructure("dummyArm",
+class DummyArm : AbstractStructure("dummyArm",
 		DeviceFactory.motorWithEncoder("core") {
 			enable = true
 			pidPosition = PID(0.233, .0, .0, .0, .0)
