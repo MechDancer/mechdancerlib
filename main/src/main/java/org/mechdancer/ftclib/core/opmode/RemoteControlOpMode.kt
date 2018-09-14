@@ -1,6 +1,6 @@
 package org.mechdancer.ftclib.core.opmode
 
-import org.mechdancer.ftclib.core.structure.model.Robot
+import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.gamepad.GamePad
 
 /**

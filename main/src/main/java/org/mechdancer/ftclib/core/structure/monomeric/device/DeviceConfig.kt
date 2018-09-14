@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.core.structure
+package org.mechdancer.ftclib.core.structure.monomeric.device
 
 /**
  * 设备配置

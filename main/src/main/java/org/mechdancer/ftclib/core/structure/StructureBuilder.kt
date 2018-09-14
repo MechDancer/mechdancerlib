@@ -27,3 +27,9 @@ class StructureBuilder(private val structureName: String) {
 		override fun toString() = "AnonymousStructure[$name]"
 	}
 }
+
+/**
+ * 构造匿名 Structure
+ */
+inline fun structure(name: String = "Unnamed", block: StructureBuilder.() -> Unit) =
+		StructureBuilder(name).apply(block).build()

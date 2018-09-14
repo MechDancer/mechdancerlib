@@ -1,8 +1,9 @@
-package org.mechdancer.ftclib.devices.impl
+package org.mechdancer.ftclib.internal.impl.effector
 
-import org.mechdancer.ftclib.core.structure.Device
-import org.mechdancer.ftclib.devices.Servo
-import org.mechdancer.ftclib.devices.TCServo
+import com.qualcomm.robotcore.hardware.ServoControllerEx
+import org.mechdancer.ftclib.core.structure.monomeric.device.Effector
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Servo
+import org.mechdancer.ftclib.internal.impl.TCServo
 import kotlin.math.abs
 
 /**
@@ -17,7 +18,7 @@ class ServoImpl(
 		enable: Boolean,
 		origin: Double,
 		ending: Double)
-	: Servo, Device<TCServo>(name, enable) {
+	: Servo, Effector<TCServo>(name, enable) {
 
 	constructor(config: Servo.Config) : this(config.name, config.enable, config.origin, config.ending)
 
@@ -27,11 +28,27 @@ class ServoImpl(
 			setter = { this.position = map(it) },
 			isValid = { it in range })
 
+	private val _pwmOutput = PropertyBuffer(
+			tag = "pwmOutput",
+			origin = true,
+			setter = {
+				(controller as ServoControllerEx).let { ctr ->
+					if (it) ctr.setServoPwmEnable(portNumber)
+					else ctr.setServoPwmDisable(portNumber)
+				}
+			}
+
+	)
 	/**
 	 * 目标位置
 	 * 范围：起点到终点的区间
 	 */
 	override var position by _position
+
+	/**
+	 * 是否开启 pwm 信号输出
+	 */
+	override var pwmOutput: Boolean by _pwmOutput
 
 	/**
 	 * 映射方案

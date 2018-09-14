@@ -1,10 +1,10 @@
-package org.mechdancer.ftclib.core.structure.model
+package org.mechdancer.ftclib.core.structure.composite
 
 import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.Structure
-import org.mechdancer.ftclib.core.structure.findAllDevices
+import org.mechdancer.ftclib.core.structure.composite.chassis.Chassis
+import org.mechdancer.ftclib.core.structure.monomeric.device.findAllDevices
 import org.mechdancer.ftclib.core.structure.takeAll
-import org.mechdancer.ftclib.structures.Chassis
 
 /**
  * 机器人结构树根部

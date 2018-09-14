@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.core.structure.model
+package org.mechdancer.ftclib.core.structure.composite
 
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure

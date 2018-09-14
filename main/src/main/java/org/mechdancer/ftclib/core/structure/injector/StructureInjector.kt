@@ -10,7 +10,7 @@ import org.mechdancer.ftclib.core.structure.Structure
 object StructureInjector {
 
 	fun inject(structure: CompositeStructure) {
-		val clazz=structure::class.java
+		val clazz = structure::class.java
 		val properties = clazz.declaredFields.filter {
 			it.isAnnotationPresent(Inject::class.java)
 					&& Structure::class.java.isAssignableFrom(it.type)

@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.devices
+package org.mechdancer.ftclib.internal.impl
 
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotorEx

@@ -2,12 +2,12 @@ package org.mechdancer.ftclib.test.foo
 
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.injector.Inject
-import org.mechdancer.ftclib.core.structure.model.AbstractStructure
-import org.mechdancer.ftclib.devices.Servo
-import org.mechdancer.ftclib.devices.motorWithEncoder
-import org.mechdancer.ftclib.devices.servo
-import org.mechdancer.ftclib.structures.MotorWithEncoder
-import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
+import org.mechdancer.ftclib.core.structure.composite.AbstractStructure
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Servo
+import org.mechdancer.ftclib.core.structure.monomeric.device.motorWithEncoder
+import org.mechdancer.ftclib.core.structure.monomeric.device.servo
+import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
+import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder.Mode
 import kotlin.math.PI
 
 class FooStructure : AbstractStructure("fooo",{

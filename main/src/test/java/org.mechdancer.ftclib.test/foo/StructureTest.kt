@@ -1,8 +1,8 @@
 package org.mechdancer.ftclib.test.foo
 
 import org.junit.Test
-import org.mechdancer.ftclib.core.structure.PackingDevice
-import org.mechdancer.ftclib.core.structure.findAllDevices
+import org.mechdancer.ftclib.core.structure.monomeric.device.PackingDevice
+import org.mechdancer.ftclib.core.structure.monomeric.device.findAllDevices
 import org.mechdancer.ftclib.core.structure.takeAll
 
 class StructureTest {

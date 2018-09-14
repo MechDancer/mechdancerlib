@@ -1,9 +1,9 @@
-package org.mechdancer.ftclib.sensors.impl
+package org.mechdancer.ftclib.internal.impl.sensor
 
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
-import org.mechdancer.ftclib.core.structure.Sensor
-import org.mechdancer.ftclib.sensors.Encoder
+import org.mechdancer.ftclib.core.structure.monomeric.device.Sensor
+import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.Encoder
 import kotlin.math.PI
 
 class EncoderImpl(name: String, enable: Boolean,
@@ -14,9 +14,11 @@ class EncoderImpl(name: String, enable: Boolean,
 
 	private var offset = .0
 
-	private var position = .0
+	override var position = .0
+		private set
 
-	private var speed = .0
+	override var speed = .0
+		private set
 
 	private val scalar = 2 * PI / radians
 
@@ -40,9 +42,6 @@ class EncoderImpl(name: String, enable: Boolean,
 		offset = off
 	}
 
-	override fun getPosition(): Double = position
-
-	override fun getSpeed(): Double = speed
 
 	override fun toString(): String = "编码器[$name] | " +
 			if (enable) "位置: $position, 速度: $speed" else "关闭"

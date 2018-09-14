@@ -1,25 +1,26 @@
-package org.mechdancer.ftclib.structures.impl
+package org.mechdancer.ftclib.internal.impl
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.filters.signalAndSystem.Limiter
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.Structure
-import org.mechdancer.ftclib.devices.impl.MotorImpl
-import org.mechdancer.ftclib.sensors.impl.EncoderImpl
-import org.mechdancer.ftclib.structures.MotorWithEncoder
-import org.mechdancer.ftclib.structures.MotorWithEncoder.Mode
+import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
+import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder.Mode
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
+import org.mechdancer.ftclib.internal.impl.sensor.EncoderImpl
 
 class MotorWithEncoderImpl(name: String,
                            val enable: Boolean,
                            radians: Double,
-                           direction: DcMotorSimple.Direction,
+                           direction: Motor.Direction,
                            private val pidPosition: PID,
                            private val pidSpeed: PID
 ) : MotorWithEncoder,
     CompositeStructure(name), OpModeFlow.AutoCallable {
+
 	constructor(config: MotorWithEncoder.Config) : this(config.name, config.enable,
 			config.radians, config.direction, config.pidPosition, config.pidSpeed)
 
@@ -36,13 +37,13 @@ class MotorWithEncoderImpl(name: String,
 		get() = motor.power
 		set(value) {
 			motor.power = when (mode) {
-				Mode.SPEED_CLOSE_LOOP    -> pidSpeed(targetSpeed - getSpeed())
+				Mode.SPEED_CLOSE_LOOP    -> pidSpeed(targetSpeed - speed)
 				Mode.OPEN_LOOP           -> value
-				Mode.POSITION_CLOSE_LOOP -> pidPosition(targetPosition - getPosition())
+				Mode.POSITION_CLOSE_LOOP -> pidPosition(targetPosition - position)
 				Mode.STOP, Mode.LOCK     -> .0
 			}
 		}
-	override var direction: DcMotorSimple.Direction
+	override var direction: Motor.Direction
 		get() = motor.direction
 		set(value) {
 			motor.direction = value
@@ -80,11 +81,11 @@ class MotorWithEncoderImpl(name: String,
 			field = positionLimiter(value)
 		}
 
+	override val position: Double
+		get() =  encoder.position
 
-	override fun getPosition(): Double = encoder.getPosition()
-
-	override fun getSpeed(): Double = encoder.getSpeed()
-
+	override val speed: Double
+		get() = encoder.speed
 
 	override fun reset(off: Double) {
 		encoder.reset(off)
@@ -92,13 +93,13 @@ class MotorWithEncoderImpl(name: String,
 
 
 	override fun run() {
-		if (mode == Mode.LOCK && getSpeed() <= 0.05) {
+		if (mode == Mode.LOCK && speed <= 0.05) {
 			mode = Mode.POSITION_CLOSE_LOOP
-			targetPosition = getPosition()
+			targetPosition = position
 		}
 	}
 
 	override fun toString(): String = "电机x编码器[$name] | ${if (enable) "功率: ${100 * power}% " +
-			"位置: ${getPosition()} 速度: ${getSpeed()}" else "关闭"}"
+			"位置: $position 速度: $speed" else "关闭"}"
 
 }

@@ -1,10 +1,10 @@
 package org.mechdancer.ftclib.test.dummy.robot
 
 import org.mechdancer.ftclib.core.structure.injector.Inject
-import org.mechdancer.ftclib.core.structure.model.Robot
-import org.mechdancer.ftclib.devices.DeviceFactory
-import org.mechdancer.ftclib.sensors.RevColorSensor
-import org.mechdancer.ftclib.structures.impl.Mecanum
+import org.mechdancer.ftclib.core.structure.composite.Robot
+import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceFactory
+import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.RevColorSensor
+import org.mechdancer.ftclib.core.structure.composite.chassis.Mecanum
 
 class DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm(),
 		DeviceFactory.revColor("colorSensor") {

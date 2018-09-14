@@ -1,11 +1,10 @@
-package org.mechdancer.ftclib.structures
+package org.mechdancer.ftclib.core.structure.monomeric
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.filters.signalAndSystem.PID
-import org.mechdancer.ftclib.core.structure.DeviceConfig
 import org.mechdancer.ftclib.core.structure.Structure
-import org.mechdancer.ftclib.devices.Motor
-import org.mechdancer.ftclib.sensors.Encoder
+import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceConfig
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.Encoder
 
 interface MotorWithEncoder : Motor, Encoder, Structure {
 	var mode: Mode
@@ -20,7 +19,7 @@ interface MotorWithEncoder : Motor, Encoder, Structure {
 	class Config(name: String,
 	             enable: Boolean = false,
 	             var radians: Double = .0,
-	             var direction: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD,
+	             var direction: Motor.Direction = Motor.Direction.FORWARD,
 	             var pidPosition: PID = PID(1.0, .0, .0, .0, .0),
 	             var pidSpeed: PID = PID(1.0, .0, .0, .0, .0)) : DeviceConfig(name, enable)
 }

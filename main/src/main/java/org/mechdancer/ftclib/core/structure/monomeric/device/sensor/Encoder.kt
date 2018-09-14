@@ -1,12 +1,12 @@
-package org.mechdancer.ftclib.sensors
+package org.mechdancer.ftclib.core.structure.monomeric.device.sensor
 
-import org.mechdancer.ftclib.core.structure.DeviceConfig
+import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceConfig
 import org.mechdancer.ftclib.core.structure.Structure
 
 interface Encoder : Structure {
-	fun getPosition(): Double
+	val position: Double
 
-	fun getSpeed(): Double
+	val speed:Double
 
 	fun reset(off: Double)
 

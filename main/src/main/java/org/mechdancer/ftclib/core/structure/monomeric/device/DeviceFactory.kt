@@ -1,17 +1,20 @@
 @file:JvmName("DeviceFactoryDsl")
 
-package org.mechdancer.ftclib.devices
+package org.mechdancer.ftclib.core.structure.monomeric.device
 
 import org.mechdancer.ftclib.core.structure.StructureBuilder
-import org.mechdancer.ftclib.devices.impl.ContinuousServoImpl
-import org.mechdancer.ftclib.devices.impl.MotorImpl
-import org.mechdancer.ftclib.devices.impl.ServoImpl
-import org.mechdancer.ftclib.sensors.Encoder
-import org.mechdancer.ftclib.sensors.RevColorSensor
-import org.mechdancer.ftclib.sensors.impl.EncoderImpl
-import org.mechdancer.ftclib.sensors.impl.RevColorSensorImpl
-import org.mechdancer.ftclib.structures.MotorWithEncoder
-import org.mechdancer.ftclib.structures.impl.MotorWithEncoderImpl
+import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.ContinuousServo
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Servo
+import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.Encoder
+import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.RevColorSensor
+import org.mechdancer.ftclib.internal.impl.effector.ContinuousServoImpl
+import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
+import org.mechdancer.ftclib.internal.impl.effector.ServoImpl
+import org.mechdancer.ftclib.internal.impl.sensor.EncoderImpl
+import org.mechdancer.ftclib.internal.impl.sensor.RevColorSensorImpl
+import org.mechdancer.ftclib.internal.impl.MotorWithEncoderImpl
 
 /**
  * DSL 设备工厂

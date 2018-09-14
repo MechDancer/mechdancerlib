@@ -1,11 +1,11 @@
-package org.mechdancer.ftclib.devices.impl
+package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.mechdancer.ftclib.core.structure.Device
-import org.mechdancer.ftclib.devices.Motor
-import org.mechdancer.ftclib.devices.TCMotor
+import org.mechdancer.ftclib.core.structure.monomeric.device.Effector
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.internal.impl.TCMotor
 
 /**
  * 电机
@@ -13,8 +13,8 @@ import org.mechdancer.ftclib.devices.TCMotor
  */
 class MotorImpl(name: String,
                 enable: Boolean,
-                direction: DcMotorSimple.Direction)
-	: Motor, Device<TCMotor>(name, enable) {
+                direction: Motor.Direction)
+	: Motor, Effector<TCMotor>(name, enable) {
 
 	constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
 
@@ -38,7 +38,13 @@ class MotorImpl(name: String,
 	private val _direction = PropertyBuffer(
 			tag = "direction",
 			origin = direction,
-			setter = { this.direction = it }
+			setter = {
+				this.direction =
+						when (it) {
+							Motor.Direction.FORWARD -> DcMotorSimple.Direction.FORWARD
+							Motor.Direction.REVERSE -> DcMotorSimple.Direction.REVERSE
+						}
+			}
 	)
 	/**
 	 * 功率

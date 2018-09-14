@@ -1,13 +1,13 @@
-package org.mechdancer.ftclib.devices.impl
+package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.CRServo
-import org.mechdancer.ftclib.core.structure.Device
-import org.mechdancer.ftclib.devices.ContinuousServo
-import org.mechdancer.ftclib.devices.TCContinuousServo
+import org.mechdancer.ftclib.core.structure.monomeric.device.Effector
+import org.mechdancer.ftclib.internal.impl.TCContinuousServo
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.ContinuousServo
 
 /** 连续舵机功能扩展类  */
 class ContinuousServoImpl(name: String, enable: Boolean)
-	: Device<TCContinuousServo>(name, enable), ContinuousServo {
+	: Effector<TCContinuousServo>(name, enable), ContinuousServo {
 
 	constructor(config: ContinuousServo.Config) : this(config.name, config.enable)
 

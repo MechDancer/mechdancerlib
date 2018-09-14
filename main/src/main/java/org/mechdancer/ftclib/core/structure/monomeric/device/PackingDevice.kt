@@ -1,7 +1,9 @@
-package org.mechdancer.ftclib.core.structure
+package org.mechdancer.ftclib.core.structure.monomeric.device
 
 import com.qualcomm.robotcore.hardware.HardwareDevice
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.mechdancer.ftclib.core.structure.CompositeStructure
+import org.mechdancer.ftclib.core.structure.MonomericStructure
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.logging.Level
@@ -195,7 +197,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 /**
  * 输出设备
  */
-abstract class Device<in T : HardwareDevice>
+abstract class Effector<in T : HardwareDevice>
 (name: String, enable: Boolean)
 	: PackingDevice<T>(name, enable) {
 	final override fun T.input() = Unit
@@ -216,7 +218,7 @@ fun CompositeStructure.findAllDevices(prefix: String = name): List<Pair<String, 
 			acc.addAll((structure as? CompositeStructure)?.let {
 				structure.findAllDevices("$prefix.${structure.name}")
 			} ?: if (structure is PackingDevice<*>) listOf(
-					(if (prefix.split(".").last() != structure.name
+					(if (prefix.split("").last() != structure.name
 					) "$prefix.${structure.name}" else prefix) to structure)
 			else listOf())
 			acc

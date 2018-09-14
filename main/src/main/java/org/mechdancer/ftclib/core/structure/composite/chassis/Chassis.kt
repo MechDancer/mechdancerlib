@@ -1,19 +1,18 @@
-package org.mechdancer.ftclib.structures.impl
+package org.mechdancer.ftclib.core.structure.composite.chassis
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.OpModeFlow
-import org.mechdancer.ftclib.devices.Motor
-import org.mechdancer.ftclib.devices.impl.MotorImpl
-import org.mechdancer.ftclib.structures.Chassis
+import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
 import java.util.logging.Logger
 import kotlin.math.abs
 
-open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, CompositeStructure("chassis"), OpModeFlow.AutoCallable {
+abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
+	:  CompositeStructure("chassis"), OpModeFlow.AutoCallable {
 
-	final override val subStructures = names.map { MotorImpl(it, enable, DcMotorSimple.Direction.FORWARD) }
+	final override val subStructures = motorsConfig.map { MotorImpl(it.first, enable, it.second) }
 
-	override var powers = DoubleArray(names.size) { .0 }
+	open var powers = DoubleArray(motorsConfig.size) { .0 }
 		get() = field.standardizeBy(maxPower)
 		set(value) {
 			if (value.size != field.size)
@@ -22,7 +21,7 @@ open class ChassisImpl(names: Array<String>, enable: Boolean) : Chassis, Composi
 				field = value
 		}
 
-	override var maxPower = 1.0
+	open var maxPower = 1.0
 		set(value) {
 			if (value !in 0..1)
 				logger.warning("电机功率限制不合理($maxPower ∉ [0,1])")
