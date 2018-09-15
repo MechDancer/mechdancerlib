@@ -3,13 +3,15 @@ package org.mechdancer.ftclib.core.structure.composite.chassis
 import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor.Direction.FORWARD
 import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor.Direction.REVERSE
 
-class Mecanum(enable: Boolean)
-	: Omnidirectinal(arrayOf(
+class Differential(enable: Boolean) : Chassis(arrayOf(
 		"左前" to REVERSE, "左后" to REVERSE,
-		"右前" to FORWARD, "右后" to FORWARD), enable) {
+		"右前" to FORWARD, "右后" to FORWARD), enable
+) {
 
-	override val name = "mecanumChassis"
+	override val name: String = "differentialChassis"
 
-	override fun Descartes.transform() =
-			doubleArrayOf(x + y - w, x - y - w, x - y + w, x + y + w)
+	fun tank(leftPower: Double, rightPower: Double) {
+		powers = doubleArrayOf(leftPower, leftPower, rightPower, rightPower)
+	}
+
 }

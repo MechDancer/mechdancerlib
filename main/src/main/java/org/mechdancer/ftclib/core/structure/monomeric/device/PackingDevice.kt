@@ -218,7 +218,7 @@ fun CompositeStructure.findAllDevices(prefix: String = name): List<Pair<String, 
 			acc.addAll((structure as? CompositeStructure)?.let {
 				structure.findAllDevices("$prefix.${structure.name}")
 			} ?: if (structure is PackingDevice<*>) listOf(
-					(if (prefix.split("").last() != structure.name
+					(if (prefix.split(".").last() != structure.name
 					) "$prefix.${structure.name}" else prefix) to structure)
 			else listOf())
 			acc
