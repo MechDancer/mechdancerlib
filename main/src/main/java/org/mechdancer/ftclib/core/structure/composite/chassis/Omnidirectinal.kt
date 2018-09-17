@@ -1,6 +1,6 @@
 package org.mechdancer.ftclib.core.structure.composite.chassis
 
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import kotlin.math.cos
 import kotlin.math.sin
 

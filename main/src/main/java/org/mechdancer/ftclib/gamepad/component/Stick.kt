@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.gamepad.components
+package org.mechdancer.ftclib.gamepad.component
 
 import kotlin.math.sqrt
 

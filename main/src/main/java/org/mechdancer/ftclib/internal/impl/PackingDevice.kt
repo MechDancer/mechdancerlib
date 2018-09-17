@@ -1,13 +1,14 @@
-package org.mechdancer.ftclib.core.structure.monomeric.device
+package org.mechdancer.ftclib.internal.impl
 
 import com.qualcomm.robotcore.hardware.HardwareDevice
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.MonomericStructure
+import org.mechdancer.ftclib.util.SmartLogger
+import org.mechdancer.ftclib.util.info
+import org.mechdancer.ftclib.util.warn
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.logging.Level
-import java.util.logging.Logger
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -17,7 +18,7 @@ import kotlin.reflect.KProperty
  * @param enable 使能
  */
 sealed class PackingDevice<in T : HardwareDevice>
-(name: String, val enable: Boolean) : MonomericStructure(name) {
+(name: String, val enable: Boolean) : MonomericStructure(name), SmartLogger {
 
 	/**
 	 * 对真实设备的引用
@@ -109,7 +110,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 			Thread.yield()
 		//记录更新时间
 		lastUpdateTime = System.currentTimeMillis()
-		logger.info("$name: updating")
+		info("$name: updating")
 		//在新线程里执行
 		threadPool.execute {
 			if (resetRequest.compareAndSet(true, false)) {
@@ -150,10 +151,12 @@ sealed class PackingDevice<in T : HardwareDevice>
 				setter(device, value)
 		}
 
+		operator fun rem(device: T) = sendTo(device)
+
 		var value = origin
 			set(newValue) {
 				if (!isValid(newValue)) {     //新值不合理
-					logger.warning("$name/$tag: property value is not valid($newValue)")
+					warn("$name/$tag: property value is not valid($newValue)")
 					return
 				}
 				if (field == newValue) return //与之前完全相同
@@ -178,19 +181,6 @@ sealed class PackingDevice<in T : HardwareDevice>
 		 */
 		private var threadPool = Executors.newFixedThreadPool(1)
 
-		/**
-		 * 日志
-		 */
-		private val logger = Logger.getLogger("PackingDevice")
-
-		/**
-		 * 输出抑制级别
-		 */
-		var logLevel: Level
-			get() = logger.level
-			set(value) {
-				logger.level = value
-			}
 	}
 }
 
@@ -218,7 +208,7 @@ fun CompositeStructure.findAllDevices(prefix: String = name): List<Pair<String, 
 			acc.addAll((structure as? CompositeStructure)?.let {
 				structure.findAllDevices("$prefix.${structure.name}")
 			} ?: if (structure is PackingDevice<*>) listOf(
-					(if (prefix.split(".").last() != structure.name
+					(if (prefix.split("").last() != structure.name
 					) "$prefix.${structure.name}" else prefix) to structure)
 			else listOf())
 			acc

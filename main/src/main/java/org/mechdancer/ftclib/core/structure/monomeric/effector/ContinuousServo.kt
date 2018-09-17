@@ -1,10 +1,12 @@
-package org.mechdancer.ftclib.core.structure.monomeric.device.effector
+package org.mechdancer.ftclib.core.structure.monomeric.effector
 
-import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceConfig
 import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 interface ContinuousServo : Structure {
 	var power: Double
+
+	var pwmOutput: Boolean
 
 	class Config(
 			name: String,

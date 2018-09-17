@@ -1,7 +1,7 @@
 package org.mechdancer.ftclib.core.structure.composite.chassis
 
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor.Direction.FORWARD
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor.Direction.REVERSE
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor.Direction.FORWARD
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor.Direction.REVERSE
 
 class Mecanum(enable: Boolean)
 	: Omnidirectinal(arrayOf(

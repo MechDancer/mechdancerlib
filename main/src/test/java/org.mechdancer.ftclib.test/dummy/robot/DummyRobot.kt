@@ -1,10 +1,11 @@
 package org.mechdancer.ftclib.test.dummy.robot
 
-import org.mechdancer.ftclib.core.structure.injector.Inject
 import org.mechdancer.ftclib.core.structure.composite.Robot
-import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceFactory
-import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.RevColorSensor
 import org.mechdancer.ftclib.core.structure.composite.chassis.Mecanum
+import org.mechdancer.ftclib.core.structure.injector.Inject
+import org.mechdancer.ftclib.core.structure.monomeric.DeviceFactory
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.RevColorSensor
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 
 class DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm(),
 		DeviceFactory.revColor("colorSensor") {
@@ -14,6 +15,9 @@ class DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm(),
 
 	@Inject
 	lateinit var colorSensor: RevColorSensor
+
+	@Inject
+	lateinit var voltageSensor: VoltageSensor
 
 	@Inject
 	lateinit var dummyArm: DummyArm

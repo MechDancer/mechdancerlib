@@ -2,8 +2,8 @@ package org.mechdancer.ftclib.internal.impl.sensor
 
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
-import org.mechdancer.ftclib.core.structure.monomeric.device.Sensor
-import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.Encoder
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.Encoder
+import org.mechdancer.ftclib.internal.impl.Sensor
 import kotlin.math.PI
 
 class EncoderImpl(name: String, enable: Boolean,

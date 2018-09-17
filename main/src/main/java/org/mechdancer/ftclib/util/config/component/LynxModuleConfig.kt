@@ -1,4 +1,6 @@
-package org.mechdancer.ftclib.config
+package org.mechdancer.ftclib.util.config.component
+
+import org.mechdancer.ftclib.util.config.create
 
 class LynxModuleConfig(val name: String, val port: Int, private val block: LynxModuleConfig.() -> Unit) : HardwareConfigDsl {
 

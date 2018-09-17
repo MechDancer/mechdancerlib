@@ -1,6 +1,6 @@
-package org.mechdancer.ftclib.config
+package org.mechdancer.ftclib.util.config.component
 
-sealed class DeviceConfig(val name: String, val port: Int) : HardwareConfigDsl {
+internal sealed class DeviceConfig(val name: String, val port: Int) : HardwareConfigDsl {
 
 	class ServoConfig(name: String, port: Int) : DeviceConfig(name, port)
 	class Matrix12vMotorConfig(name: String, port: Int) : DeviceConfig(name, port)

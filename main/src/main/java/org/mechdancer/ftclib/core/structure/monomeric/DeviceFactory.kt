@@ -1,20 +1,19 @@
 @file:JvmName("DeviceFactoryDsl")
 
-package org.mechdancer.ftclib.core.structure.monomeric.device
+package org.mechdancer.ftclib.core.structure.monomeric
 
 import org.mechdancer.ftclib.core.structure.StructureBuilder
-import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.ContinuousServo
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Servo
-import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.Encoder
-import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.RevColorSensor
+import org.mechdancer.ftclib.core.structure.monomeric.effector.ContinuousServo
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Servo
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.Encoder
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.RevColorSensor
+import org.mechdancer.ftclib.internal.impl.MotorWithEncoderImpl
 import org.mechdancer.ftclib.internal.impl.effector.ContinuousServoImpl
 import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
 import org.mechdancer.ftclib.internal.impl.effector.ServoImpl
 import org.mechdancer.ftclib.internal.impl.sensor.EncoderImpl
 import org.mechdancer.ftclib.internal.impl.sensor.RevColorSensorImpl
-import org.mechdancer.ftclib.internal.impl.MotorWithEncoderImpl
 
 /**
  * DSL 设备工厂
@@ -59,7 +58,6 @@ fun StructureBuilder.servo(name: String, config: Servo.Config.() -> Unit) {
 fun StructureBuilder.continuousServo(name: String, config: ContinuousServo.Config.() -> Unit) {
 	subStructure(DeviceFactory.continuousServo(name, config))
 }
-
 
 fun StructureBuilder.revColor(name: String, config: RevColorSensor.Config.() -> Unit) {
 	subStructure(DeviceFactory.revColor(name, config))

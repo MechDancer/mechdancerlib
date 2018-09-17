@@ -1,7 +1,7 @@
-package org.mechdancer.ftclib.core.structure.monomeric.device.sensor
+package org.mechdancer.ftclib.core.structure.monomeric.sensor
 
-import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceConfig
 import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 interface RevColorSensor : Structure {
 	val colorData: ColorData

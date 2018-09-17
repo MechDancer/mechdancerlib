@@ -1,8 +1,8 @@
 package org.mechdancer.ftclib.internal.impl.sensor
 
 import com.qualcomm.robotcore.hardware.ColorSensor
-import org.mechdancer.ftclib.core.structure.monomeric.device.Sensor
-import org.mechdancer.ftclib.core.structure.monomeric.device.sensor.RevColorSensor
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.RevColorSensor
+import org.mechdancer.ftclib.internal.impl.Sensor
 
 class RevColorSensorImpl(name: String, enable: Boolean)
 	: RevColorSensor, Sensor<ColorSensor>(name, enable) {

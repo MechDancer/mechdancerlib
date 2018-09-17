@@ -1,9 +1,9 @@
 package org.mechdancer.ftclib.gamepad
 
 import com.qualcomm.robotcore.hardware.Gamepad
-import org.mechdancer.ftclib.gamepad.components.Button
-import org.mechdancer.ftclib.gamepad.components.Stick
-import org.mechdancer.ftclib.gamepad.components.Trigger
+import org.mechdancer.ftclib.gamepad.component.Button
+import org.mechdancer.ftclib.gamepad.component.Stick
+import org.mechdancer.ftclib.gamepad.component.Trigger
 
 
 class GamePad {

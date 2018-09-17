@@ -1,7 +1,7 @@
-package org.mechdancer.ftclib.core.structure.monomeric.device.effector
+package org.mechdancer.ftclib.core.structure.monomeric.effector
 
-import org.mechdancer.ftclib.core.structure.monomeric.device.DeviceConfig
 import org.mechdancer.ftclib.core.structure.Structure
+import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 interface Servo : Structure {
 	var position: Double

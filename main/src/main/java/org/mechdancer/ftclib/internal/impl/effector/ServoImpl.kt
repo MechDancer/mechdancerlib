@@ -1,9 +1,9 @@
 package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.ServoControllerEx
-import org.mechdancer.ftclib.core.structure.monomeric.device.Effector
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Servo
-import org.mechdancer.ftclib.internal.impl.TCServo
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Servo
+import org.mechdancer.ftclib.internal.FtcServo
+import org.mechdancer.ftclib.internal.impl.Effector
 import kotlin.math.abs
 
 /**
@@ -18,7 +18,7 @@ class ServoImpl(
 		enable: Boolean,
 		origin: Double,
 		ending: Double)
-	: Servo, Effector<TCServo>(name, enable) {
+	: Servo, Effector<FtcServo>(name, enable) {
 
 	constructor(config: Servo.Config) : this(config.name, config.enable, config.origin, config.ending)
 
@@ -67,7 +67,10 @@ class ServoImpl(
 				ending..origin
 
 
-	override fun TCServo.output() = _position.sendTo(this)
+	override fun FtcServo.output() {
+		_position % this
+		_pwmOutput % this
+	}
 
 	override fun resetData() = run { position = .0 }
 

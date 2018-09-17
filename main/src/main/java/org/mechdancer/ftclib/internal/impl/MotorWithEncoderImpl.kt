@@ -4,13 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import org.mechdancer.filters.signalAndSystem.Limiter
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.CompositeStructure
-import org.mechdancer.ftclib.core.structure.OpModeFlow
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder.Mode
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
 import org.mechdancer.ftclib.internal.impl.sensor.EncoderImpl
+import org.mechdancer.ftclib.util.OpModeFlow
 
 class MotorWithEncoderImpl(name: String,
                            val enable: Boolean,

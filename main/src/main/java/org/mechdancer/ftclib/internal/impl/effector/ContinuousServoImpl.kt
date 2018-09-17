@@ -1,13 +1,14 @@
 package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.CRServo
-import org.mechdancer.ftclib.core.structure.monomeric.device.Effector
-import org.mechdancer.ftclib.internal.impl.TCContinuousServo
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.ContinuousServo
+import com.qualcomm.robotcore.hardware.ServoControllerEx
+import org.mechdancer.ftclib.core.structure.monomeric.effector.ContinuousServo
+import org.mechdancer.ftclib.internal.FtcContinuousServo
+import org.mechdancer.ftclib.internal.impl.Effector
 
 /** 连续舵机功能扩展类  */
 class ContinuousServoImpl(name: String, enable: Boolean)
-	: Effector<TCContinuousServo>(name, enable), ContinuousServo {
+	: Effector<FtcContinuousServo>(name, enable), ContinuousServo {
 
 	constructor(config: ContinuousServo.Config) : this(config.name, config.enable)
 
@@ -18,13 +19,31 @@ class ContinuousServoImpl(name: String, enable: Boolean)
 			setter = { this.power = it },
 			isValid = { it in -1..1 })
 
+	private val _pwmOutput = PropertyBuffer(
+			tag = "pwmOutput",
+			origin = true,
+			setter = {
+				(controller as ServoControllerEx).let { ctr ->
+					if (it) ctr.setServoPwmEnable(portNumber)
+					else ctr.setServoPwmDisable(portNumber)
+				}
+			}
+	)
+
 	/**
 	 * 速度
 	 */
 	override var power by _power
 
+	/**
+	 * 是否开启 pwm 信号输出
+	 */
+	override var pwmOutput: Boolean by _pwmOutput
 
-	override fun CRServo.output() = _power.sendTo(this)
+	override fun CRServo.output() {
+		_power % this
+		_pwmOutput % this
+	}
 
 	override fun resetData() = run { power = .0 }
 

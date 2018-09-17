@@ -1,7 +1,7 @@
 package org.mechdancer.ftclib.test
 
 import org.junit.Test
-import org.mechdancer.ftclib.config.robotConfig
+import org.mechdancer.ftclib.util.config.robotConfig
 
 class ConfigTest {
 	@Test
@@ -31,6 +31,7 @@ class ConfigTest {
 			}
 		}
 
+		println(xml)
 	}
 
 }

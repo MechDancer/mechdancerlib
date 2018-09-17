@@ -3,9 +3,9 @@ package org.mechdancer.ftclib.internal.impl.effector
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.mechdancer.ftclib.core.structure.monomeric.device.Effector
-import org.mechdancer.ftclib.core.structure.monomeric.device.effector.Motor
-import org.mechdancer.ftclib.internal.impl.TCMotor
+import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
+import org.mechdancer.ftclib.internal.FtcMotor
+import org.mechdancer.ftclib.internal.impl.Effector
 
 /**
  * 电机
@@ -14,7 +14,7 @@ import org.mechdancer.ftclib.internal.impl.TCMotor
 class MotorImpl(name: String,
                 enable: Boolean,
                 direction: Motor.Direction)
-	: Motor, Effector<TCMotor>(name, enable) {
+	: Motor, Effector<FtcMotor>(name, enable) {
 
 	constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
 
@@ -62,9 +62,10 @@ class MotorImpl(name: String,
 
 
 	override fun DcMotorEx.output() {
-		_power.sendTo(this)
-		_zeroBehavior.sendTo(this)
-		_runMode.sendTo(this)
+		_power % this
+		_zeroBehavior % this
+		_runMode % this
+		_direction % this
 	}
 
 	override fun resetData() {
