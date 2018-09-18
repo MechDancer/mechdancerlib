@@ -2,15 +2,39 @@ package org.mechdancer.ftclib.gamepad.component
 
 import kotlin.math.sqrt
 
+/**
+ * 摇杆
+ */
 class Stick : IGamePadComponent<DoubleArray> {
 
+	/**
+	 * x 值
+	 */
 	val x get() = value[0]
+	/**
+	 * y 值
+	 */
 	val y get() = value[1]
 
+	/**
+	 * 角度
+	 */
 	val theta get() = Math.atan2(y, x)
+
+	/**
+	 * 半径
+	 */
 	val radius get() = sqrt(x * x + y * y)
 
+	/**
+	 * 手感系数
+	 */
 	var feel = 1.0
+
+	/**
+	 * 死区
+	 * 位于死区内时会阈值化为 0
+	 */
 	var diedArea = .0
 
 	//================================================

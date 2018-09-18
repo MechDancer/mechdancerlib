@@ -9,9 +9,10 @@ import org.mechdancer.ftclib.test.dummy.robot.DummyRobot
 @Disabled
 class DummyAutomatic : BaseOpMode<DummyRobot>(DummyRobot()) {
 	override fun initTask() {
-
 	}
 
+	override fun startTask() {
+	}
 	override fun loopTask() {
 	}
 

@@ -1,7 +1,6 @@
 package org.mechdancer.ftclib.core.structure
 
 
-
 /**
  * 展平为列表
  */
@@ -38,6 +37,6 @@ fun CompositeStructure.treeView(indent: Int = 0): String {
 }
 
 /**
- * 为 `run` 提供语法糖
+ * 为 [StructureSealed.run] 提供 `()` 运算符
  */
 operator fun StructureSealed.invoke() = run()

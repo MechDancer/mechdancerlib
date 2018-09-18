@@ -2,7 +2,15 @@ package org.mechdancer.ftclib.util
 
 import android.util.Log
 
+/**
+ * 日志接口
+ * 实现该接口的类可直接调用日志输出方法。
+ */
 interface SmartLogger {
+	/**
+	 * 日志标签
+	 * 默认为类名
+	 */
 	val tag: String
 		get() = ""
 }

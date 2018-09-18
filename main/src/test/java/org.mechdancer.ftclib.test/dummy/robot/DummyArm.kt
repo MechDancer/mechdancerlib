@@ -5,7 +5,7 @@ import org.mechdancer.ftclib.core.structure.composite.AbstractStructure
 import org.mechdancer.ftclib.core.structure.injector.Inject
 import org.mechdancer.ftclib.core.structure.monomeric.DeviceFactory
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
-import org.mechdancer.ftclib.util.OpModeFlow
+import org.mechdancer.ftclib.util.Resettable
 import kotlin.math.PI
 
 class DummyArm : AbstractStructure("dummyArm",
@@ -14,7 +14,7 @@ class DummyArm : AbstractStructure("dummyArm",
 			pidPosition = PID(0.233, .0, .0, .0, .0)
 			radians = 2 * PI
 		}
-), OpModeFlow.Initialisable {
+), Resettable {
 
 	@Inject
 	private lateinit var core: MotorWithEncoder
@@ -30,11 +30,12 @@ class DummyArm : AbstractStructure("dummyArm",
 		}
 
 	fun lock() {
-		core.mode = MotorWithEncoder.Mode.LOCK
+		core.lock()
 	}
 
-	override fun init() {
+	override fun reset() {
 		core.mode = MotorWithEncoder.Mode.POSITION_CLOSE_LOOP
+		armState = ArmState.UP
 	}
 
 	enum class ArmState { UP, PARALLEL, DOWN }

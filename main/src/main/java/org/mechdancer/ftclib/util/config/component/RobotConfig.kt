@@ -6,6 +6,11 @@ class RobotConfig(private val block: RobotConfig.() -> Unit) : HardwareConfigDsl
 
 	private val builder = StringBuilder()
 
+	/**
+	 * 添加 Rev 设备
+	 *
+	 * @param block Rev 设备配置 DSL 建造者
+	 */
 	fun lynxUsbDevice(block: LynxUsbDeviceConfig.() -> Unit) {
 		builder.append(LynxUsbDeviceConfig(block).create())
 	}

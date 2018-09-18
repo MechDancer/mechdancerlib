@@ -3,13 +3,13 @@ package org.mechdancer.ftclib.core.structure.composite.chassis
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
-import org.mechdancer.ftclib.util.OpModeFlow
+import org.mechdancer.ftclib.util.AutoCallable
 import org.mechdancer.ftclib.util.SmartLogger
 import org.mechdancer.ftclib.util.warn
 import kotlin.math.abs
 
 abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
-	: CompositeStructure("chassis"), OpModeFlow.AutoCallable, SmartLogger {
+	: CompositeStructure("chassis"), AutoCallable, SmartLogger {
 
 	final override val subStructures = motorsConfig.map { MotorImpl(it.first, enable, it.second) }
 

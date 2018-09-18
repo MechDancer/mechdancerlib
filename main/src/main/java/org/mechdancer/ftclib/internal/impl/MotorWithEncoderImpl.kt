@@ -10,7 +10,7 @@ import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder.Mode
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
 import org.mechdancer.ftclib.internal.impl.sensor.EncoderImpl
-import org.mechdancer.ftclib.util.OpModeFlow
+import org.mechdancer.ftclib.util.AutoCallable
 
 class MotorWithEncoderImpl(name: String,
                            val enable: Boolean,
@@ -19,7 +19,7 @@ class MotorWithEncoderImpl(name: String,
                            private val pidPosition: PID,
                            private val pidSpeed: PID
 ) : MotorWithEncoder,
-    CompositeStructure(name), OpModeFlow.AutoCallable {
+    CompositeStructure(name), AutoCallable {
 
 	constructor(config: MotorWithEncoder.Config) : this(config.name, config.enable,
 			config.radians, config.direction, config.pidPosition, config.pidSpeed)
@@ -82,10 +82,14 @@ class MotorWithEncoderImpl(name: String,
 		}
 
 	override val position: Double
-		get() =  encoder.position
+		get() = encoder.position
 
 	override val speed: Double
 		get() = encoder.speed
+
+	override fun lock() {
+		mode = Mode.LOCK
+	}
 
 	override fun reset(off: Double) {
 		encoder.reset(off)

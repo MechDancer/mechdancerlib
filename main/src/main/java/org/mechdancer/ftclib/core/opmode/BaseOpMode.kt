@@ -31,7 +31,9 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 
 	final override fun start() {
 		robot.devices.forEach { it.second.reset() }
+		robot.resttables.forEach { it.reset() }
 		startTask()
+		robot.startables.forEach { it.start() }
 	}
 
 	final override fun loop() {
@@ -40,10 +42,9 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 		//calculate suggestions
 		//generate and execute commands
 		loopTask()
-		robot.run()
-		robot.autoCallable.forEach { it.run() }
+		robot.runnable.forEach { it.run() }
 		robot.devices.forEach { it.second.run() }
-		robot.takeAll<VoltageSensorImpl>()[0].bind(hardwareMap)
+		robot.takeAll<VoltageSensorImpl>()[0].run()
 	}
 
 	final override fun stop() {

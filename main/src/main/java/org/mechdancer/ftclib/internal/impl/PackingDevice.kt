@@ -203,10 +203,10 @@ abstract class Sensor<in T : HardwareDevice>
 	final override fun T.output() = Unit
 }
 
-fun CompositeStructure.findAllDevices(prefix: String = name): List<Pair<String, PackingDevice<*>>> =
+fun CompositeStructure.takeAllDevices(prefix: String = name): List<Pair<String, PackingDevice<*>>> =
 		subStructures.fold(mutableListOf()) { acc, structure ->
 			acc.addAll((structure as? CompositeStructure)?.let {
-				structure.findAllDevices("$prefix.${structure.name}")
+				structure.takeAllDevices("$prefix.${structure.name}")
 			} ?: if (structure is PackingDevice<*>) listOf(
 					(if (prefix.split("").last() != structure.name
 					) "$prefix.${structure.name}" else prefix) to structure)
