@@ -37,6 +37,6 @@ fun CompositeStructure.treeView(indent: Int = 0): String {
 }
 
 /**
- * 为 [StructureSealed.run] 提供 `()` 运算符
+ * 为 [Structure.run] 提供 `()` 运算符
  */
-operator fun StructureSealed.invoke() = run()
+operator fun Structure.invoke() = run()
