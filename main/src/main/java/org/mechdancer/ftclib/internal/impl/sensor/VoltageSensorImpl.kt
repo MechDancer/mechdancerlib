@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.mechdancer.ftclib.core.structure.MonomericStructure
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 import org.mechdancer.ftclib.internal.FtcVoltageSensor
-import kotlin.math.min
 
 class VoltageSensorImpl internal constructor()
 	: VoltageSensor, MonomericStructure("voltageSensor") {
@@ -23,12 +22,12 @@ class VoltageSensorImpl internal constructor()
 	}
 
 	override fun run() {
-		var result = Double.POSITIVE_INFINITY
 		sensors?.let { voltages ->
-			voltages.asSequence()
-					.filter { it.voltage > 0 }
-					.map { min(result, voltage) }
-					.forEach { result = it }
+			voltage = voltages.minBy {
+				if (it.voltage < 0)
+					Double.POSITIVE_INFINITY else it.voltage
+			}?.voltage
+					?: Double.POSITIVE_INFINITY
 		}
 	}
 

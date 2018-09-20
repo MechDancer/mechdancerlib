@@ -10,11 +10,11 @@ class Stick : IGamePadComponent<DoubleArray> {
 	/**
 	 * x 值
 	 */
-	val x get() = value[0]
+	val x get() = raw[0]
 	/**
 	 * y 值
 	 */
-	val y get() = value[1]
+	val y get() = raw[1]
 
 	/**
 	 * 角度
@@ -48,7 +48,7 @@ class Stick : IGamePadComponent<DoubleArray> {
 		else                   -> -mapExpression(-x, feel)
 	}
 
-	override var value: DoubleArray = doubleArrayOf(.0, .0)
+	override var raw: DoubleArray = doubleArrayOf(.0, .0)
 		set(value) {
 			field[0] = nonlinearMap(value[0], feel, diedArea)
 			field[1] = nonlinearMap(-value[1], feel, diedArea)

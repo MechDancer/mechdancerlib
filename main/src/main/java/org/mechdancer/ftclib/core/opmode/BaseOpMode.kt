@@ -3,7 +3,6 @@ package org.mechdancer.ftclib.core.opmode
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.mechdancer.ftclib.core.structure.composite.Robot
-import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.internal.impl.PackingDevice
 import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
 
@@ -17,7 +16,8 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 		PackingDevice.count = robot.devices.size
 		robot.devices.forEach { it.second.bind(hardwareMap, it.first) }
 		robot.initialisable.forEach { it.init() }
-		robot.takeAll<VoltageSensorImpl>()[0].bind(hardwareMap)
+		(robot.subStructures.find { it is VoltageSensorImpl }
+				as VoltageSensorImpl?)?.bind(hardwareMap)
 
 		//ask for resources
 		initTask()
@@ -44,12 +44,14 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 		loopTask()
 		robot.runnable.forEach { it.run() }
 		robot.devices.forEach { it.second.run() }
-		robot.takeAll<VoltageSensorImpl>()[0].run()
+		robot.subStructures.find { it is VoltageSensorImpl }?.run()
 	}
 
 	final override fun stop() {
 		robot.stoppable.forEach { it.stop() }
 		robot.devices.forEach { it.second.unbind() }
+		(robot.subStructures.find { it is VoltageSensorImpl }
+				as VoltageSensorImpl?)?.unbind()
 		PackingDevice.count = 0
 		//release resources
 		stopTask()

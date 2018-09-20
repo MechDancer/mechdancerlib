@@ -76,25 +76,25 @@ class GamePad {
 
 	//===========================
 	internal fun update(origin: Gamepad) {
-		leftBumper.value = origin.left_bumper
-		rightBumper.value = origin.right_bumper
+		leftBumper.raw = origin.left_bumper
+		rightBumper.raw = origin.right_bumper
 
-		a.value = origin.a
-		b.value = origin.b
-		x.value = origin.x
-		y.value = origin.y
-		up.value = origin.dpad_up
-		down.value = origin.dpad_down
-		left.value = origin.dpad_left
-		right.value = origin.dpad_right
+		a.raw = origin.a
+		b.raw = origin.b
+		x.raw = origin.x
+		y.raw = origin.y
+		up.raw = origin.dpad_up
+		down.raw = origin.dpad_down
+		left.raw = origin.dpad_left
+		right.raw = origin.dpad_right
 
-		leftTrigger.value = origin.left_trigger.toDouble()
-		rightTrigger.value = origin.right_trigger.toDouble()
+		leftTrigger.raw = origin.left_trigger.toDouble()
+		rightTrigger.raw = origin.right_trigger.toDouble()
 
-		leftStick.value = doubleArrayOf(
+		leftStick.raw = doubleArrayOf(
 				origin.left_stick_x.toDouble(),
 				origin.left_stick_y.toDouble())
-		rightStick.value = doubleArrayOf(
+		rightStick.raw = doubleArrayOf(
 				origin.right_stick_x.toDouble(),
 				origin.right_stick_y.toDouble())
 	}

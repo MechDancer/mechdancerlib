@@ -11,5 +11,5 @@ interface IGamePadComponent<T> {
 	/**
 	 * 值
 	 */
-	var value: T
+	var raw: T
 }
