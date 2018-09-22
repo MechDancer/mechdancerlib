@@ -4,9 +4,7 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.composite.chassis.Chassis
 import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
-import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.AutoCallable
-import org.mechdancer.ftclib.util.OpModeLifecycle
 import org.mechdancer.ftclib.util.Resettable
 
 /**
@@ -19,12 +17,12 @@ import org.mechdancer.ftclib.util.Resettable
  */
 abstract class Robot(name: String, protected val chassis: Chassis, vararg subStructs: Structure)
 	: AbstractStructure(name, chassis, *subStructs, VoltageSensorImpl()), AutoCallable {
-	internal val devices = takeAllDevices()
-	internal val resttables = takeAll<Resettable>()
 
-	internal val initialisable = takeAll<OpModeLifecycle.Initialize>()
-	internal val startables = takeAll<OpModeLifecycle.Start>()
-	internal val runnable = takeAll<OpModeLifecycle.Run>()
-	internal val stoppable = takeAll<OpModeLifecycle.Stop>()
+	private val resttables = takeAll<Resettable>()
+
+
+	fun reset() {
+		resttables.forEach { it.reset() }
+	}
 
 }
