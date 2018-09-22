@@ -19,6 +19,9 @@ class DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm(),
 	@Inject
 	lateinit var voltageSensor: VoltageSensor
 
+	@Inject("mecanumChassis")
+	lateinit var chassis: Mecanum
+
 	@Inject
 	private lateinit var dummyArm: DummyArm
 

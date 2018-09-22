@@ -23,7 +23,7 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 
 	private val devices = robot.takeAllDevices()
 	private val voltageSensor = robot.takeAll<VoltageSensorImpl>()[0]
-	
+
 	final override fun init() {
 		PackingDevice.count = devices.size
 		devices.forEach { it.second.bind(hardwareMap, it.first) }
