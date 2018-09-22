@@ -20,7 +20,7 @@ class DummyRobot : Robot("dummyRobot", Mecanum(true), DummyArm(),
 	lateinit var voltageSensor: VoltageSensor
 
 	@Inject
-	lateinit var dummyArm: DummyArm
+	private lateinit var dummyArm: DummyArm
 
 	var armState: DummyArm.ArmState = DummyArm.ArmState.DOWN
 

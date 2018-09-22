@@ -12,7 +12,7 @@ class Button : IGamePadComponent<Boolean> {
 	 *
 	 * @return 当前按钮状态
 	 */
-	fun bePressed() = value
+	fun bePressed() = raw
 
 	/**
 	 * 是否被按下
@@ -28,7 +28,7 @@ class Button : IGamePadComponent<Boolean> {
 	 */
 	fun isReleasing() = last && bePressed()
 
-	override var value: Boolean = false
+	override var raw: Boolean = false
 		set(value) {
 			last = field
 			field = value
