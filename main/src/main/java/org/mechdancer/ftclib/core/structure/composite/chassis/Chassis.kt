@@ -9,7 +9,7 @@ import org.mechdancer.ftclib.util.warn
 import kotlin.math.abs
 
 abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
-	: CompositeStructure("chassis"), AutoCallable, SmartLogger {
+	: CompositeStructure("nullChassis"), AutoCallable, SmartLogger {
 
 	final override val subStructures = motorsConfig.map { MotorImpl(it.first, enable, it.second) }
 

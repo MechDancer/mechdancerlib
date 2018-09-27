@@ -144,7 +144,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 			this.value = value
 		}
 
-		private var changed = AtomicBoolean(false)
+		private var changed = AtomicBoolean(true)
 
 		fun sendTo(device: T) {
 			if (changed.compareAndSet(true, false))
@@ -153,7 +153,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 
 		operator fun rem(device: T) = sendTo(device)
 
-		var value = origin
+		private var value = origin
 			set(newValue) {
 				if (!isValid(newValue)) {     //新值不合理
 					warn("$name/$tag: property value is not valid($newValue)")

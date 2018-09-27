@@ -21,7 +21,10 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 	private val actions = robot.takeAll<OpModeLifecycle.Run>()
 	private val stops = robot.takeAll<OpModeLifecycle.Stop>()
 
-	private val devices = robot.takeAllDevices()
+	private val devices = robot.takeAllDevices().map {
+		it.first.dropWhile { name -> name != '.' }.removePrefix(".") to it.second
+	}
+
 	private val voltageSensor = robot.takeAll<VoltageSensorImpl>()[0]
 
 	final override fun init() {
