@@ -11,7 +11,8 @@ import kotlin.math.abs
 abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
 	: CompositeStructure("nullChassis"), AutoCallable, SmartLogger {
 
-	final override val subStructures = motorsConfig.map { MotorImpl(it.first, enable, it.second) }
+	final override val subStructures: List<Motor> =
+			motorsConfig.map { MotorImpl(it.first, enable, it.second) }
 
 	open var powers = DoubleArray(motorsConfig.size) { .0 }
 		get() = field.standardizeBy(maxPower)

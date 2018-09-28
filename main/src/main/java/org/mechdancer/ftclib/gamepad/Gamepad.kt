@@ -8,7 +8,7 @@ import org.mechdancer.ftclib.gamepad.component.Trigger
 /**
  * 手柄
  */
-class GamePad {
+class Gamepad {
 
 	//==============
 	// 上方区域

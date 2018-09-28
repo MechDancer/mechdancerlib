@@ -3,7 +3,7 @@ package org.mechdancer.ftclib.test.dummy.opmode
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.mechdancer.ftclib.core.opmode.RemoteControlOpMode
-import org.mechdancer.ftclib.gamepad.GamePad
+import org.mechdancer.ftclib.gamepad.Gamepad
 import org.mechdancer.ftclib.test.dummy.robot.DummyArm.ArmState
 import org.mechdancer.ftclib.test.dummy.robot.DummyRobot
 
@@ -15,7 +15,7 @@ class DummyRemoteControl : RemoteControlOpMode<DummyRobot>(DummyRobot()) {
 
 	}
 
-	override fun loop(master: GamePad, helper: GamePad) {
+	override fun loop(master: Gamepad, helper: Gamepad) {
 		if (master.a.isPressing())
 			when (robot.armState) {
 				ArmState.DOWN     -> ArmState.PARALLEL
