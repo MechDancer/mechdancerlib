@@ -49,5 +49,10 @@ interface Motor : Structure {
 			FORWARD -> REVERSE
 			REVERSE -> FORWARD
 		}
+
+		internal fun toSymbol() = when (this) {
+			FORWARD -> 1.0
+			REVERSE -> -1.0
+		}
 	}
 }

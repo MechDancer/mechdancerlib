@@ -2,7 +2,6 @@ package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
-import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.internal.FtcMotor
 import org.mechdancer.ftclib.internal.impl.Effector
@@ -13,7 +12,7 @@ import org.mechdancer.ftclib.internal.impl.Effector
  */
 class MotorImpl(name: String,
                 enable: Boolean,
-                direction: Motor.Direction)
+                override var direction: Motor.Direction)
 	: Motor, Effector<FtcMotor>(name, enable) {
 
 	constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
@@ -21,7 +20,7 @@ class MotorImpl(name: String,
 	private val _power = PropertyBuffer(
 			tag = "power",
 			origin = .0,
-			setter = { this.power = it },
+			setter = { this.power = it * this@MotorImpl.direction.toSymbol() },
 			isValid = { it in -1..1 })
 
 	private val _zeroBehavior = PropertyBuffer(
@@ -35,6 +34,7 @@ class MotorImpl(name: String,
 			origin = DcMotor.RunMode.RUN_USING_ENCODER,
 			setter = { this.mode = it }
 	)
+	/*
 	private val _direction = PropertyBuffer(
 			tag = "direction",
 			origin = direction,
@@ -45,14 +45,12 @@ class MotorImpl(name: String,
 							Motor.Direction.REVERSE -> DcMotorSimple.Direction.REVERSE
 						}
 			}
-	)
+	) */
 	/**
 	 * 功率
 	 * 范围：[-1, 1]
 	 */
 	override var power by _power
-
-	override var direction by _direction
 
 	var runMode by _runMode
 		internal set
@@ -65,7 +63,7 @@ class MotorImpl(name: String,
 		_power % this
 		_zeroBehavior % this
 		_runMode % this
-		_direction % this
+		//_direction % this
 	}
 
 	override fun resetData() {
