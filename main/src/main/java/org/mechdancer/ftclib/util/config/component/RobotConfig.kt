@@ -17,7 +17,7 @@ class RobotConfig(private val block: RobotConfig.() -> Unit) : HardwareConfigDsl
 
 	override fun start() {
 		builder.apply {
-			appendln(""""<?xml version="1.0" encoding="utf-8" standalone="yes"?>""")
+			appendln("""<?xml version="1.0" encoding="utf-8" standalone="yes"?>""")
 			appendln("""<Robot type="FirstInspires-FTC">""")
 			block()
 		}

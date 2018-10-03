@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.MonomericStructure
+import org.mechdancer.ftclib.util.Resettable
 import org.mechdancer.ftclib.util.SmartLogger
 import org.mechdancer.ftclib.util.info
 import org.mechdancer.ftclib.util.warn
@@ -18,7 +19,8 @@ import kotlin.reflect.KProperty
  * @param enable 使能
  */
 sealed class PackingDevice<in T : HardwareDevice>
-(name: String, val enable: Boolean) : MonomericStructure(name), SmartLogger {
+(name: String, val enable: Boolean) :
+		MonomericStructure(name), Resettable, SmartLogger {
 
 	/**
 	 * 对真实设备的引用
@@ -94,7 +96,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 	/**
 	 * 重置操作
 	 */
-	fun reset() {
+	override fun reset() {
 		if (resetRequest.compareAndSet(false, true))
 			resetData()
 	}
@@ -208,7 +210,7 @@ fun CompositeStructure.takeAllDevices(prefix: String = name): List<Pair<String, 
 			acc.addAll((structure as? CompositeStructure)?.let {
 				structure.takeAllDevices("$prefix.${structure.name}")
 			} ?: if (structure is PackingDevice<*>) listOf(
-					(if (prefix.split("").last() != structure.name
+					(if (prefix.split(".").last() != structure.name
 					) "$prefix.${structure.name}" else prefix) to structure)
 			else listOf())
 			acc

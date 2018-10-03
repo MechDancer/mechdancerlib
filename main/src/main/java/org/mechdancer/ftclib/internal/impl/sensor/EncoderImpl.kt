@@ -1,5 +1,6 @@
 package org.mechdancer.ftclib.internal.impl.sensor
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.Encoder
@@ -20,26 +21,32 @@ class EncoderImpl(name: String, enable: Boolean,
 	override var speed = .0
 		private set
 
+	private var raw = .0
+
 	private val scalar = 2 * PI / radians
 
 	override fun DcMotorEx.input() {
-		position = scalar * currentPosition - offset
-		speed = scalar * getVelocity(AngleUnit.RADIANS)
-	}
-
-	override fun DcMotorEx.reset() {
-		reset(Math.toRadians(currentPosition.toDouble()))
+		raw = currentPosition * scalar
+		position = raw - offset
 		speed = getVelocity(AngleUnit.RADIANS)
 	}
 
+	override fun DcMotorEx.reset() {
+		input()
+		mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+	}
+
 	override fun resetData() {
-		offset = .0
-		position = .0
-		speed = .0
+
+	}
+
+	override fun reset() {
+		super.reset()
+		reset(.0)
 	}
 
 	override fun reset(off: Double) {
-		offset = off
+		offset = raw - off
 	}
 
 

@@ -7,10 +7,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.17'
-        classpath 'com.novoda:bintray-release:0.8.1'
+//        classpath 'com.novoda:bintray-release:0.8.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,6 +23,9 @@ allprojects {
         flatDir {
             dirs rootProject.file('libs')
         }
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
     }
 }
 
@@ -32,6 +35,3 @@ task clean(type: Delete) {
 
 group 'org.mechdancer'
 version '0.1.0-SNAPSHOT'
-repositories {
-    mavenCentral()
-}
