@@ -30,17 +30,17 @@ interface Motor : Structure {
 	/**
 	 * 电机方向枚举
 	 */
-	enum class Direction {
+	enum class Direction(internal val sign: Int) {
 		/**
 		 * 正向
 		 * 逆时针
 		 */
-		FORWARD,
+		FORWARD(+1),
 		/**
 		 * 反向
 		 * 顺时针
 		 */
-		REVERSE;
+		REVERSE(-1);
 
 		/**
 		 * 求当前方向的逆
@@ -48,11 +48,6 @@ interface Motor : Structure {
 		fun reverse(): Direction = when (this) {
 			FORWARD -> REVERSE
 			REVERSE -> FORWARD
-		}
-
-		internal fun toSymbol() = when (this) {
-			FORWARD -> 1.0
-			REVERSE -> -1.0
 		}
 	}
 }

@@ -8,10 +8,10 @@ import org.mechdancer.ftclib.internal.impl.Sensor
 import kotlin.math.PI
 
 class EncoderImpl(name: String, enable: Boolean,
-                  radians: Double)
+                  cpr: Double)
 	: Encoder, Sensor<DcMotorEx>(name, enable) {
 
-	constructor(config: Encoder.Config) : this(config.name, config.enable, config.radians)
+	constructor(config: Encoder.Config) : this(config.name, config.enable, config.cpr)
 
 	private var offset = .0
 
@@ -23,12 +23,12 @@ class EncoderImpl(name: String, enable: Boolean,
 
 	private var raw = .0
 
-	private val scalar = 2 * PI / radians
+	private val scalar = 2 * PI / cpr
 
 	override fun DcMotorEx.input() {
 		raw = currentPosition * scalar
 		position = raw - offset
-		speed = getVelocity(AngleUnit.RADIANS)
+		speed = getVelocity(AngleUnit.DEGREES) * scalar
 	}
 
 	override fun DcMotorEx.reset() {
@@ -37,11 +37,6 @@ class EncoderImpl(name: String, enable: Boolean,
 	}
 
 	override fun resetData() {
-
-	}
-
-	override fun reset() {
-		super.reset()
 		reset(.0)
 	}
 
@@ -51,6 +46,6 @@ class EncoderImpl(name: String, enable: Boolean,
 
 
 	override fun toString(): String = "编码器[$name] | " +
-			if (enable) "位置: $position, 速度: $speed" else "关闭"
+		if (enable) "位置: $position, 速度: $speed" else "关闭"
 
 }

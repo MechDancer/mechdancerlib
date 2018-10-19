@@ -12,7 +12,7 @@ class DummyArm : AbstractStructure("dummyArm",
 		DeviceFactory.motorWithEncoder("core") {
 			enable = true
 			pidPosition = PID(0.233, .0, .0, .0, .0)
-			radians = 2 * PI
+			cpr = 1120.0
 		}
 ), Resettable {
 

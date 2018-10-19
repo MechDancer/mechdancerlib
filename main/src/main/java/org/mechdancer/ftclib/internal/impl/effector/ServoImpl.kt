@@ -1,10 +1,10 @@
 package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.ServoControllerEx
+import org.mechdancer.filters.signalAndSystem.Lens
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Servo
 import org.mechdancer.ftclib.internal.FtcServo
 import org.mechdancer.ftclib.internal.impl.Effector
-import kotlin.math.abs
 
 /**
  * 普通舵机功能扩展类
@@ -25,8 +25,7 @@ class ServoImpl(
 	private val _position = PropertyBuffer(
 			tag = "position",
 			origin = origin,
-			setter = { this.position = map(it) },
-			isValid = { it in range })
+		setter = { this.position = map(it) })
 
 	private val _pwmOutput = PropertyBuffer(
 			tag = "pwmOutput",
@@ -53,18 +52,7 @@ class ServoImpl(
 	/**
 	 * 映射方案
 	 */
-	private val map = { property: Double ->
-		abs((property - origin) / (ending - origin))
-	}
-
-	/**
-	 * 取值范围
-	 */
-	private val range =
-			if (origin < ending)
-				origin..ending
-			else
-				ending..origin
+	private val map = Lens(origin, ending, -1.0, 1.0)
 
 
 	override fun FtcServo.output() {

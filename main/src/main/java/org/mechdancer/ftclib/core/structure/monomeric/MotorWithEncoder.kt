@@ -67,14 +67,14 @@ interface MotorWithEncoder : Motor, Encoder, Structure {
 	 *
 	 * @param name 名字
 	 * @param enable 是否启用
-	 * @param radians 总弧度
+	 * @param cpr 编码器一圈的值
 	 * @param direction 电机方向
 	 * @param pidPosition 位置环 pid 参数 [PID]
 	 * @param pidSpeed 速度环 pid 参数 [PID]
 	 */
 	class Config(name: String,
 	             enable: Boolean = false,
-	             var radians: Double = .0,
+	             var cpr: Double = .0,
 	             var direction: Motor.Direction = Motor.Direction.FORWARD,
 	             var pidPosition: PID = PID(1.0, .0, .0, .0, .0),
 	             var pidSpeed: PID = PID(1.0, .0, .0, .0, .0)) : DeviceConfig(name, enable)

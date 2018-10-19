@@ -18,22 +18,23 @@ class MotorImpl(name: String,
 	constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
 
 	private val _power = PropertyBuffer(
-			tag = "power",
-			origin = .0,
-			setter = { this.power = it * this@MotorImpl.direction.toSymbol() },
-			isValid = { it in -1..1 })
+		tag = "power",
+		origin = .0,
+		setter = { this.power = it * this@MotorImpl.direction.sign })
 
 	private val _zeroBehavior = PropertyBuffer(
-			tag = "zeroBehavior",
-			origin = DcMotor.ZeroPowerBehavior.FLOAT,
-			setter = { this.zeroPowerBehavior = it }
+		tag = "zeroBehavior",
+		origin = DcMotor.ZeroPowerBehavior.FLOAT,
+		setter = { this.zeroPowerBehavior = it }
 	)
 
 	private val _runMode = PropertyBuffer(
-			tag = "runMode",
-			origin = DcMotor.RunMode.RUN_USING_ENCODER,
-			setter = { this.mode = it }
+		tag = "runMode",
+		origin = DcMotor.RunMode.RUN_USING_ENCODER,
+		setter = { this.mode = it }
 	)
+
+	//avoid using internal direction
 	/*
 	private val _direction = PropertyBuffer(
 			tag = "direction",
@@ -71,7 +72,7 @@ class MotorImpl(name: String,
 	}
 
 	override fun toString() =
-			"电机[$name] | ${if (enable) "功率: ${100 * power}%" else "关闭"}"
+		"电机[$name] | ${if (enable) "功率: ${100 * power}%" else "关闭"}"
 
 
 }

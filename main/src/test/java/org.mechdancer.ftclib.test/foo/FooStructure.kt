@@ -13,7 +13,7 @@ import kotlin.math.PI
 class FooStructure : AbstractStructure("fooo",{
 	motorWithEncoder("fooMotor") {
 		enable = true
-		radians = 2.0 * PI
+		cpr = 2.0 * PI
 		pidPosition = PID(0.233, .0, .0, .0, .0)
 	}
 	servo("barServo") {

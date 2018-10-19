@@ -14,7 +14,7 @@ import org.mechdancer.ftclib.util.AutoCallable
 
 class MotorWithEncoderImpl(name: String,
                            val enable: Boolean,
-                           radians: Double,
+                           cpr: Double,
                            direction: Motor.Direction,
                            private val pidPosition: PID,
                            private val pidSpeed: PID
@@ -22,16 +22,16 @@ class MotorWithEncoderImpl(name: String,
     CompositeStructure(name), AutoCallable {
 
 	constructor(config: MotorWithEncoder.Config) : this(config.name, config.enable,
-			config.radians, config.direction, config.pidPosition, config.pidSpeed)
+		config.cpr, config.direction, config.pidPosition, config.pidSpeed)
 
 
 	private val motor = MotorImpl(name, enable, direction)
 
-	private val encoder = EncoderImpl(name, enable, radians)
+	private val encoder = EncoderImpl(name, enable, cpr)
 
 	override val subStructures: List<Structure> = listOf(motor, encoder)
 
-	private val positionLimiter = Limiter(radians)
+	private val positionLimiter = Limiter(cpr)
 
 	override var power
 		get() = motor.power
@@ -59,15 +59,15 @@ class MotorWithEncoderImpl(name: String,
 			when (value) {
 				Mode.SPEED_CLOSE_LOOP, Mode.POSITION_CLOSE_LOOP ->
 					setMotorState(DcMotor.ZeroPowerBehavior.FLOAT,
-							DcMotor.RunMode.RUN_USING_ENCODER)
+						DcMotor.RunMode.RUN_USING_ENCODER)
 
 				Mode.OPEN_LOOP, Mode.STOP                       ->
 					setMotorState(DcMotor.ZeroPowerBehavior.FLOAT,
-							DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+						DcMotor.RunMode.RUN_WITHOUT_ENCODER)
 
 				Mode.LOCK                                       ->
 					setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-							DcMotor.RunMode.RUN_USING_ENCODER)
+						DcMotor.RunMode.RUN_USING_ENCODER)
 
 			}
 			field = value
@@ -82,10 +82,10 @@ class MotorWithEncoderImpl(name: String,
 		}
 
 	override val position: Double
-		get() = encoder.position
+		get() = encoder.position * direction.sign
 
 	override val speed: Double
-		get() = encoder.speed
+		get() = encoder.speed * direction.sign
 
 	override fun lock() {
 		mode = Mode.LOCK
@@ -104,6 +104,6 @@ class MotorWithEncoderImpl(name: String,
 	}
 
 	override fun toString(): String = "电机x编码器[$name] | ${if (enable) "功率: ${100 * power}% " +
-			"位置: $position 速度: $speed" else "关闭"}"
+		"位置: $position 速度: $speed" else "关闭"}"
 
 }
