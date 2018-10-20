@@ -16,8 +16,7 @@ class ContinuousServoImpl(name: String, enable: Boolean)
 	private val _power = PropertyBuffer(
 			tag = "power",
 			origin = .0,
-			setter = { this.power = it },
-			isValid = { it in -1..1 })
+		setter = { this.power = it })
 
 	private val _pwmOutput = PropertyBuffer(
 			tag = "pwmOutput",
