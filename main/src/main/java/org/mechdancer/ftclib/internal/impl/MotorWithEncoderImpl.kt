@@ -1,7 +1,6 @@
 package org.mechdancer.ftclib.internal.impl
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.mechdancer.filters.signalAndSystem.Limiter
 import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
@@ -31,17 +30,11 @@ class MotorWithEncoderImpl(name: String,
 
 	override val subStructures: List<Structure> = listOf(motor, encoder)
 
-	private val positionLimiter = Limiter(cpr)
 
 	override var power
 		get() = motor.power
 		set(value) {
-			motor.power = when (mode) {
-				Mode.SPEED_CLOSE_LOOP    -> pidSpeed(targetSpeed - speed)
-				Mode.OPEN_LOOP           -> value
-				Mode.POSITION_CLOSE_LOOP -> pidPosition(targetPosition - position)
-				Mode.STOP, Mode.LOCK     -> .0
-			}
+			motor.power = value
 		}
 	override var direction: Motor.Direction
 		get() = motor.direction
@@ -77,9 +70,6 @@ class MotorWithEncoderImpl(name: String,
 
 
 	override var targetPosition = .0
-		set(value) {
-			field = positionLimiter(value)
-		}
 
 	override val position: Double
 		get() = encoder.position * direction.sign
@@ -97,6 +87,13 @@ class MotorWithEncoderImpl(name: String,
 
 
 	override fun run() {
+		motor.power = when (mode) {
+			Mode.SPEED_CLOSE_LOOP    -> pidSpeed(targetSpeed - speed)
+			Mode.OPEN_LOOP           -> motor.power
+			Mode.POSITION_CLOSE_LOOP -> pidPosition(targetPosition - position)
+			Mode.STOP, Mode.LOCK     -> .0
+		}
+
 		if (mode == Mode.LOCK && speed <= 0.05) {
 			mode = Mode.POSITION_CLOSE_LOOP
 			targetPosition = position

@@ -78,4 +78,9 @@ interface MotorWithEncoder : Motor, Encoder, Structure {
 	             var direction: Motor.Direction = Motor.Direction.FORWARD,
 	             var pidPosition: PID = PID(1.0, .0, .0, .0, .0),
 	             var pidSpeed: PID = PID(1.0, .0, .0, .0, .0)) : DeviceConfig(name, enable)
+
+	companion object CPR {
+		const val NEVEREST40 = 1120.0
+		const val MATRIX12V = 1478.4
+	}
 }
