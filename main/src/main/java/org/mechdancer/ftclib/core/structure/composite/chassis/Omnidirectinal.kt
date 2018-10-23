@@ -11,7 +11,7 @@ abstract class Omnidirectinal
 	                     var y: Double,
 	                     var w: Double) {
 		operator fun times(other: Descartes) =
-				Descartes(x * other.x, y * other.y, w * other.w)
+			Descartes(x * other.x, y * other.y, w * other.w)
 	}
 
 	data class Polar(var rho: Double = .0,
@@ -40,21 +40,21 @@ abstract class Omnidirectinal
 
 	//笛卡尔模式
 	fun descartes(block: Descartes.() -> Unit) =
-			descartes.run(block)
+		descartes.run(block)
 
 	//极坐标模式
 	fun polar(block: Polar.() -> Unit) =
-			descartes.run(Polar().apply(block).block)
+		descartes.run(Polar().apply(block).block)
 
 	//坦克模式
 	fun tank(block: TankMode.() -> Unit) =
-			descartes.run(TankMode().apply(block).block)
+		descartes.run(TankMode().apply(block).block)
 
 	/**
 	 * DSL：设定权重
 	 */
 	fun weights(block: Descartes.() -> Unit) =
-			weights.run(block)
+		weights.run(block)
 
 	/**
 	 * 高级控制模式（接管powers）

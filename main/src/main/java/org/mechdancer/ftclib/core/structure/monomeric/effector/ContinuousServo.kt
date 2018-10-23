@@ -25,7 +25,7 @@ interface ContinuousServo : Structure {
 	 * @param enable 是否启用
 	 */
 	class Config(
-			name: String,
-			enable: Boolean = false
+		name: String,
+		enable: Boolean = false
 	) : DeviceConfig(name, enable)
 }

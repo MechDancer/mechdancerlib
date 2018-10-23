@@ -10,7 +10,7 @@ import org.mechdancer.ftclib.core.structure.monomeric.motorWithEncoder
 import org.mechdancer.ftclib.core.structure.monomeric.servo
 import kotlin.math.PI
 
-class FooStructure : AbstractStructure("fooo",{
+class FooStructure : AbstractStructure("fooo", {
 	motorWithEncoder("fooMotor") {
 		enable = true
 		cpr = 2.0 * PI

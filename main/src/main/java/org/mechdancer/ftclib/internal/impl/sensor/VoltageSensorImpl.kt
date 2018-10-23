@@ -27,7 +27,7 @@ class VoltageSensorImpl internal constructor()
 				if (it.voltage < 0)
 					Double.POSITIVE_INFINITY else it.voltage
 			}?.voltage
-					?: Double.POSITIVE_INFINITY
+				?: Double.POSITIVE_INFINITY
 		}
 	}
 

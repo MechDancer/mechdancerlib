@@ -16,19 +16,19 @@ interface SmartLogger {
 }
 
 private fun SmartLogger.getTag() =
-		tag.takeIf { it.isNotBlank() } ?: javaClass.name
+	tag.takeIf { it.isNotBlank() } ?: javaClass.name
 
 fun SmartLogger.info(any: Any) =
-		Log.i(getTag(), any.toString())
+	Log.i(getTag(), any.toString())
 
 fun SmartLogger.debug(any: Any) =
-		Log.d(getTag(), any.toString())
+	Log.d(getTag(), any.toString())
 
 fun SmartLogger.error(any: Any) =
-		Log.e(getTag(), any.toString())
+	Log.e(getTag(), any.toString())
 
 fun SmartLogger.wtf(any: Any) =
-		Log.wtf(getTag(), any.toString())
+	Log.wtf(getTag(), any.toString())
 
 fun SmartLogger.warn(any: Any) =
-		Log.w(getTag(), any.toString())
+	Log.w(getTag(), any.toString())

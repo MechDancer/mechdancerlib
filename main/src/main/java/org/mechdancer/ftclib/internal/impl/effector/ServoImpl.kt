@@ -14,28 +14,28 @@ import org.mechdancer.ftclib.internal.impl.Effector
  * @param enable 使能
  */
 class ServoImpl(
-		name: String,
-		enable: Boolean,
-		origin: Double,
-		ending: Double)
+	name: String,
+	enable: Boolean,
+	origin: Double,
+	ending: Double)
 	: Servo, Effector<FtcServo>(name, enable) {
 
 	constructor(config: Servo.Config) : this(config.name, config.enable, config.origin, config.ending)
 
 	private val _position = PropertyBuffer(
-			tag = "position",
-			origin = origin,
+		tag = "position",
+		origin = origin,
 		setter = { this.position = map(it) })
 
 	private val _pwmOutput = PropertyBuffer(
-			tag = "pwmOutput",
-			origin = true,
-			setter = {
-				(controller as ServoControllerEx).let { ctr ->
-					if (it) ctr.setServoPwmEnable(portNumber)
-					else ctr.setServoPwmDisable(portNumber)
-				}
+		tag = "pwmOutput",
+		origin = true,
+		setter = {
+			(controller as ServoControllerEx).let { ctr ->
+				if (it) ctr.setServoPwmEnable(portNumber)
+				else ctr.setServoPwmDisable(portNumber)
 			}
+		}
 
 	)
 	/**
@@ -63,7 +63,7 @@ class ServoImpl(
 	override fun resetData() = run { position = .0 }
 
 	override fun toString() =
-			"舵机[$name] | ${if (enable) "位置: $position" else "关闭"}"
+		"舵机[$name] | ${if (enable) "位置: $position" else "关闭"}"
 
 
 }

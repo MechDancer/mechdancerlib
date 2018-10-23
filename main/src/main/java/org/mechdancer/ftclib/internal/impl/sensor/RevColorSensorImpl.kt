@@ -10,7 +10,7 @@ class RevColorSensorImpl(name: String, enable: Boolean)
 	constructor(config: RevColorSensor.Config) : this(config.name, config.enable)
 
 
-	override var colorData = RevColorSensor.ColorData(0, 0, 0, 0,0)
+	override var colorData = RevColorSensor.ColorData(0, 0, 0, 0, 0)
 		private set
 
 	override var enableLed: Boolean = false
@@ -33,7 +33,7 @@ class RevColorSensorImpl(name: String, enable: Boolean)
 
 
 	override fun toString(): String =
-			"Rev颜色传感器[$name] | ${if (enable) "颜色值: $colorData" else "关闭"}"
+		"Rev颜色传感器[$name] | ${if (enable) "颜色值: $colorData" else "关闭"}"
 
 
 }

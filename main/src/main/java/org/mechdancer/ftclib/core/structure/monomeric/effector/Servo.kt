@@ -24,9 +24,9 @@ interface Servo : Structure {
 	 * @param ending 末位置（弧度）
 	 */
 	class Config(
-			name: String,
-			enable: Boolean = false,
-			var origin: Double = .0,
-			var ending: Double = .0
+		name: String,
+		enable: Boolean = false,
+		var origin: Double = .0,
+		var ending: Double = .0
 	) : DeviceConfig(name, enable)
 }

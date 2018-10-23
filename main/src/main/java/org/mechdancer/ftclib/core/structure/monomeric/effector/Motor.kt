@@ -22,9 +22,9 @@ interface Motor : Structure {
 	 * @param enable 是否启用
 	 */
 	class Config(
-			name: String,
-			enable: Boolean = false,
-			var direction: Direction = Direction.FORWARD
+		name: String,
+		enable: Boolean = false,
+		var direction: Direction = Direction.FORWARD
 	) : DeviceConfig(name, enable)
 
 	/**

@@ -6,10 +6,10 @@ import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor.Direction.R
 class Mecanum(override val name: String = "mecanumChassis"
               , enable: Boolean)
 	: Omnidirectinal(arrayOf(
-		"左前" to REVERSE, "左后" to REVERSE,
-		"右前" to FORWARD, "右后" to FORWARD), enable) {
+	"左前" to REVERSE, "左后" to REVERSE,
+	"右前" to FORWARD, "右后" to FORWARD), enable) {
 
 
 	override fun Descartes.transform() =
-			doubleArrayOf(x + y - w, x - y - w, x - y + w, x + y + w)
+		doubleArrayOf(x + y - w, x - y - w, x - y + w, x + y + w)
 }

@@ -39,7 +39,7 @@ class Stick : IGamePadComponent<DoubleArray> {
 
 	//================================================
 	private fun mapExpression(x: Double, f: Double) =
-			(f / ((1 - f) * (x + 1) + f) - f) / (f - 1)
+		(f / ((1 - f) * (x + 1) + f) - f) / (f - 1)
 
 	private fun nonlinearMap(x: Double, feel: Double, diedArea: Double) = when {
 		Math.abs(x) < diedArea -> .0
