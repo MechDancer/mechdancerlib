@@ -1,12 +1,5 @@
 package org.mechdancer.ftclib.util
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier
-import org.firstinspires.ftc.robotcore.internal.opmode.OpModeManagerImpl
-import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
-import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
-import org.firstinspires.ftc.robotcore.internal.system.AppUtil
-
 object OpModeUtil {
 
 	fun getOpModeManager() =
@@ -33,9 +26,9 @@ object OpModeUtil {
 	fun addListener(listener: OpModeManagerNotifier.Notifications) =
 		getOpModeManager().registerListener(listener)
 
-
 	fun removeListener(listener: OpModeManagerNotifier.Notifications) =
 		getOpModeManager().unregisterListener(listener)
+
 
 	fun switchTo(name: String) {
 		getOpModeManager().run {
@@ -44,3 +37,15 @@ object OpModeUtil {
 		}
 	}
 }
+
+fun Notifications(init: (OpMode) -> Unit = {},
+                  start: (OpMode) -> Unit = {},
+                  stop: (OpMode) -> Unit = {}) =
+	object : OpModeManagerNotifier.Notifications {
+		override fun onOpModePostStop(opMode: OpMode) = stop(opMode)
+
+		override fun onOpModePreInit(opMode: OpMode) = init(opMode)
+
+		override fun onOpModePreStart(opMode: OpMode) = start(opMode)
+
+	}
