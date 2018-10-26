@@ -1,5 +1,12 @@
 package org.mechdancer.ftclib.util
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier
+import org.firstinspires.ftc.robotcore.internal.opmode.OpModeManagerImpl
+import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
+import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil
+
 object OpModeUtil {
 
 	fun getOpModeManager() =
