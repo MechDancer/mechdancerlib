@@ -1,12 +1,12 @@
 package org.mechdancer.ftclib.internal.impl
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.mechdancer.filters.signalAndSystem.PID
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder.Mode
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
+import org.mechdancer.ftclib.internal.algorithm.PID
 import org.mechdancer.ftclib.internal.impl.effector.MotorImpl
 import org.mechdancer.ftclib.internal.impl.sensor.EncoderImpl
 import org.mechdancer.ftclib.util.AutoCallable
@@ -83,6 +83,8 @@ class MotorWithEncoderImpl(name: String,
 
 	override fun reset(off: Double) {
 		encoder.reset(off)
+		pidPosition.reset()
+		pidSpeed.reset()
 	}
 
 

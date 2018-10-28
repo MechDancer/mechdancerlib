@@ -1,9 +1,9 @@
 package org.mechdancer.ftclib.internal.impl.effector
 
 import com.qualcomm.robotcore.hardware.ServoControllerEx
-import org.mechdancer.filters.signalAndSystem.Lens
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Servo
 import org.mechdancer.ftclib.internal.FtcServo
+import org.mechdancer.ftclib.internal.algorithm.Lens
 import org.mechdancer.ftclib.internal.impl.Effector
 
 /**

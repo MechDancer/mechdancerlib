@@ -27,12 +27,7 @@ android {
 
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api("org.mechdancer:filters:0.1.0") {
-        exclude group: 'org.jetbrains'
-    }
-    api("org.mechdancer:statemachine:0.1.1") {
-        exclude group: 'org.jetbrains'
-    }
+
     implementation(name: 'RobotCore-release', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // implementation 'com.android.support:appcompat-v7:27.1.1'

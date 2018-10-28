@@ -27,6 +27,11 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 
 	private val voltageSensor = robot.takeAll<VoltageSensorImpl>()[0]
 
+	private var lastPeriod = -1L
+
+	var period = lastPeriod
+		private set
+
 	final override fun init() {
 		PackingDevice.count = devices.size
 		devices.forEach { it.second.bind(hardwareMap, it.first) }
@@ -59,6 +64,8 @@ abstract class BaseOpMode<T : Robot>(protected val robot: T) : OpMode() {
 		actions.forEach { it.run() }
 		devices.forEach { it.second.run() }
 		voltageSensor.run()
+		period = System.currentTimeMillis() - lastPeriod
+		lastPeriod = System.currentTimeMillis()
 	}
 
 	final override fun stop() {
