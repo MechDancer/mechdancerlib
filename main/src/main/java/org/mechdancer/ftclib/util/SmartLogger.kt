@@ -1,6 +1,7 @@
 package org.mechdancer.ftclib.util
 
 import android.util.Log
+import com.qualcomm.robotcore.util.RobotLog
 
 /**
  * 日志接口
@@ -19,16 +20,16 @@ private fun SmartLogger.getTag() =
 	tag.takeIf { it.isNotBlank() } ?: javaClass.name
 
 fun SmartLogger.info(any: Any) =
-	Log.i(getTag(), any.toString())
+	RobotLog.ii(getTag(), any.toString())
 
 fun SmartLogger.debug(any: Any) =
-	Log.d(getTag(), any.toString())
+	RobotLog.dd(getTag(), any.toString())
 
 fun SmartLogger.error(any: Any) =
-	Log.e(getTag(), any.toString())
+	RobotLog.ee(getTag(), any.toString())
 
 fun SmartLogger.wtf(any: Any) =
 	Log.wtf(getTag(), any.toString())
 
 fun SmartLogger.warn(any: Any) =
-	Log.w(getTag(), any.toString())
+	RobotLog.ww(getTag(), any.toString())
