@@ -9,7 +9,7 @@ import org.mechdancer.ftclib.test.dummy.robot.DummyRobot
 
 @TeleOp(name = "DummyRemoteControl", group = "dummy")
 @Disabled
-class DummyRemoteControl : RemoteControlOpMode<DummyRobot>(DummyRobot()) {
+class DummyRemoteControl : RemoteControlOpMode<DummyRobot>() {
 
 	override fun initTask() {
 
