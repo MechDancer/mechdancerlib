@@ -23,12 +23,12 @@ class EncoderImpl(name: String, enable: Boolean,
 
 	private var raw = .0
 
-	private val scalar = 2 * PI / cpr
+	private val ratio = 2 * PI / cpr
 
 	override fun DcMotorEx.input() {
-		raw = currentPosition * scalar
+		raw = currentPosition * ratio
 		position = raw - offset
-		speed = getVelocity(AngleUnit.DEGREES) * scalar
+		speed = getVelocity(AngleUnit.DEGREES) * ratio
 	}
 
 	override fun DcMotorEx.reset() {
