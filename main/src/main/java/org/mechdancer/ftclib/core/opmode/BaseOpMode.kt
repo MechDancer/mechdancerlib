@@ -13,7 +13,6 @@ import org.mechdancer.ftclib.util.OpModeLifecycle
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.lang.reflect.ParameterizedType
-import kotlin.concurrent.thread
 
 /**
  * 程序入口
@@ -52,7 +51,6 @@ abstract class BaseOpMode<T : Robot> : OpMode() {
 		private set
 
 	protected var exceptionHandler: (String, Throwable) -> Unit = { lifecycle: String, t: Throwable ->
-		thread { throw t }
 		RobotLog.setGlobalErrorMsg("用户代码在 <$lifecycle> 抛出了:\n" +
 			StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
 	}
