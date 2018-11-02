@@ -12,7 +12,6 @@ import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.OpModeLifecycle
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.lang.reflect.ParameterizedType
 
 /**
  * 程序入口
@@ -20,19 +19,11 @@ import java.lang.reflect.ParameterizedType
  */
 @Suppress("UNCHECKED_CAST")
 @Disabled
-abstract class BaseOpMode<T : Robot> : OpMode() {
+abstract class BaseOpMode<T : Robot>
+constructor(_opModeName: String? = null) : OpMode() {
 
-	protected val robot: T = (javaClass.genericSuperclass as? ParameterizedType)?.let { type ->
-		type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
-			?.let { it -> it as Class<*> }
-			?.let {
-				try {
-					it.getConstructor().newInstance()
-				} catch (e: NoSuchMethodException) {
-					throw IllegalArgumentException("未找到 Robot: ${it.name} 的公共无参构造器")
-				}
-			} ?: throw IllegalArgumentException("未找到 Robot 类型")
-	} as T
+	protected val robot: T = createRobot()
+	val opModeName: String = _opModeName ?: javaClass.simpleName
 
 	private val initializations = robot.takeAll<OpModeLifecycle.Initialize>()
 	private val starts = robot.takeAll<OpModeLifecycle.Start>()

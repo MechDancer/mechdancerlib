@@ -11,7 +11,7 @@ import org.mechdancer.ftclib.gamepad.Gamepad
  */
 @TeleOp
 @Disabled
-abstract class RemoteControlOpMode<T : Robot> : BaseOpMode<T>() {
+abstract class RemoteControlOpMode<T : Robot>(opModeName: String) : BaseOpMode<T>(opModeName) {
 	private val master = Gamepad()
 	private val helper = Gamepad()
 
