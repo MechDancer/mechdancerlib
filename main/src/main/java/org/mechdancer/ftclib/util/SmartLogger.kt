@@ -1,6 +1,5 @@
 package org.mechdancer.ftclib.util
 
-import android.util.Log
 import com.qualcomm.robotcore.util.RobotLog
 
 /**
@@ -28,8 +27,17 @@ fun SmartLogger.debug(any: Any) =
 fun SmartLogger.error(any: Any) =
 	RobotLog.ee(getTag(), any.toString())
 
-fun SmartLogger.wtf(any: Any) =
-	Log.wtf(getTag(), any.toString())
-
 fun SmartLogger.warn(any: Any) =
 	RobotLog.ww(getTag(), any.toString())
+
+inline fun SmartLogger.info(block: () -> Any) =
+	info(block())
+
+inline fun SmartLogger.debug(block: () -> Any) =
+	debug(block())
+
+inline fun SmartLogger.error(block: () -> Any) =
+	error(block())
+
+inline fun SmartLogger.warn(block: () -> Any) =
+	warn(block())
