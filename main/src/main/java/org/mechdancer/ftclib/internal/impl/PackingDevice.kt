@@ -6,7 +6,7 @@ import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.MonomericStructure
 import org.mechdancer.ftclib.util.Resettable
 import org.mechdancer.ftclib.util.SmartLogger
-import org.mechdancer.ftclib.util.info
+import org.mechdancer.ftclib.util.debug
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.properties.ReadWriteProperty
@@ -111,7 +111,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 			Thread.yield()
 		//记录更新时间
 		lastUpdateTime = System.currentTimeMillis()
-		info("$name: updating")
+		debug("$name: updating")
 		//在新线程里执行
 		threadPool.execute {
 			if (resetRequest.compareAndSet(true, false)) {

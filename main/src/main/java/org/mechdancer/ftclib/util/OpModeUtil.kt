@@ -15,19 +15,19 @@ object OpModeUtil {
 	fun registerOpMode(opModeMeta: OpModeMeta, clazz: Class<out OpMode>) =
 		RegisteredOpModes.getInstance().register(opModeMeta, clazz)
 
-	fun regieserOpMode(opModeMeta: OpModeMeta, opModeInstance: OpMode) =
+	fun registerOpMode(opModeMeta: OpModeMeta, opModeInstance: OpMode) =
 		RegisteredOpModes.getInstance().register(opModeMeta, opModeInstance)
 
 	fun registerTeleOp(name: String, group: String, clazz: Class<out OpMode>) =
 		registerOpMode(OpModeMeta(name, OpModeMeta.Flavor.TELEOP, group), clazz)
 
-	fun regieserTeleOp(name: String, group: String, opModeInstance: OpMode) =
+	fun registerTeleOp(name: String, group: String, opModeInstance: OpMode) =
 		RegisteredOpModes.getInstance().register(OpModeMeta(name, OpModeMeta.Flavor.TELEOP, group), opModeInstance)
 
 	fun registerAutonomous(name: String, group: String, clazz: Class<out OpMode>) =
 		registerOpMode(OpModeMeta(name, OpModeMeta.Flavor.AUTONOMOUS, group), clazz)
 
-	fun regieserAutonomous(name: String, group: String, opModeInstance: OpMode) =
+	fun registerAutonomous(name: String, group: String, opModeInstance: OpMode) =
 		RegisteredOpModes.getInstance().register(OpModeMeta(name, OpModeMeta.Flavor.AUTONOMOUS, group), opModeInstance)
 
 	fun addListener(listener: OpModeManagerNotifier.Notifications) =

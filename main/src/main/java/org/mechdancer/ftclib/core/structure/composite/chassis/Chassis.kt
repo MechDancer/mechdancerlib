@@ -26,7 +26,7 @@ abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enabl
 	var maxPower = 1.0
 		set(value) {
 			if (value !in -1.0..1.0)
-				warn("电机功率限制不合理($maxPower ∉ [0,1])")
+				warn("电机功率限制不合理($maxPower ∉ [-1,1])")
 			else
 				field = value
 		}

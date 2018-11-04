@@ -12,8 +12,6 @@ import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.OpModeLifecycle
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.lang.reflect.ParameterizedType
-import kotlin.concurrent.thread
 
 /**
  * 程序入口
@@ -21,19 +19,11 @@ import kotlin.concurrent.thread
  */
 @Suppress("UNCHECKED_CAST")
 @Disabled
-abstract class BaseOpMode<T : Robot> : OpMode() {
+abstract class BaseOpMode<T : Robot>
+constructor(_opModeName: String? = null) : OpMode() {
 
-	protected val robot: T = (javaClass.genericSuperclass as? ParameterizedType)?.let { type ->
-		type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
-			?.let { it -> it as Class<*> }
-			?.let {
-				try {
-					it.getConstructor().newInstance()
-				} catch (e: NoSuchMethodException) {
-					throw IllegalArgumentException("未找到 Robot: ${it.name} 的公共无参构造器")
-				}
-			} ?: throw IllegalArgumentException("未找到 Robot 类型")
-	} as T
+	protected val robot: T = createRobot()
+	val opModeName: String = _opModeName ?: javaClass.simpleName
 
 	private val initializations = robot.takeAll<OpModeLifecycle.Initialize>()
 	private val starts = robot.takeAll<OpModeLifecycle.Start>()
@@ -52,7 +42,6 @@ abstract class BaseOpMode<T : Robot> : OpMode() {
 		private set
 
 	protected var exceptionHandler: (String, Throwable) -> Unit = { lifecycle: String, t: Throwable ->
-		thread { throw t }
 		RobotLog.setGlobalErrorMsg("用户代码在 <$lifecycle> 抛出了:\n" +
 			StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
 	}
