@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.RobotLog
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.mechdancer.ftclib.core.opmode.RobotFactory.createRobot
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.internal.impl.PackingDevice
