@@ -2,6 +2,12 @@ package org.mechdancer.ftclib.internal.algorithm
 
 import java.lang.Math.abs
 
+/**
+ *限幅器
+ *
+ * @param min 最小值
+ * @param max 最大值
+ */
 class Limiter(min: Double, max: Double) {
 	private val min: Double
 	private val max: Double

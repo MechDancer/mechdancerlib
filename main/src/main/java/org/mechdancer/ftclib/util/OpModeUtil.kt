@@ -7,6 +7,9 @@ import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
 import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil
 
+/**
+ * OpMode 工具类
+ */
 object OpModeUtil {
 
 	fun getOpModeManager() =

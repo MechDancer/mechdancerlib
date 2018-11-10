@@ -2,6 +2,9 @@ package org.mechdancer.ftclib.internal.algorithm
 
 import java.lang.Math.abs
 
+/**
+ * PID 控制器
+ */
 class PID(private val k: Double,
           private val ki: Double,
           private val kd: Double,

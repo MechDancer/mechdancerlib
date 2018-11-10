@@ -145,7 +145,7 @@ sealed class PackingDevice<in T : HardwareDevice>
 
 		private var changed = AtomicBoolean(true)
 
-		fun sendTo(device: T) {
+		private fun sendTo(device: T) {
 			if (changed.compareAndSet(true, false))
 				setter(device, value)
 		}

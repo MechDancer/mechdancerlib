@@ -1,7 +1,11 @@
 package org.mechdancer.ftclib.util
 
+import org.mechdancer.ftclib.core.structure.Structure
+
 /**
- * 实现对应接口标识着该结构将参与 OpMode 相应流程，会被 OpMode 调用
+ * OpMode 生命周期
+ * 实现相应接口标识着该 [Structure] 将参与 OpMode 相应生命周期，会被 OpMode 调用。
+ * 只有 [Structure] 子类继承有效。
  */
 object OpModeLifecycle {
 	/**
@@ -35,6 +39,7 @@ object OpModeLifecycle {
 
 /**
  * 实现该接口的结构将具有重置能力
+ * 会在 `robot.reset()` 时调用。
  */
 interface Resettable {
 	fun reset()
