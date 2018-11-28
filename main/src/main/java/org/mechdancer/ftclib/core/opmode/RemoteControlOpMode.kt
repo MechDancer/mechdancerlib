@@ -17,7 +17,7 @@ abstract class RemoteControlOpMode<T : Robot>(opModeName: String) : BaseOpMode<T
 
 	final override fun loopTask() {
 		master.update(gamepad1)
-		helper.update(gamepad1)
+		helper.update(gamepad2)
 		loop(master, helper)
 	}
 
