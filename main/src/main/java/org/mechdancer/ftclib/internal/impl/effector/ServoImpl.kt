@@ -52,7 +52,7 @@ class ServoImpl(
 	/**
 	 * 映射方案
 	 */
-	private val map = Lens(origin, ending, -1.0, 1.0)
+    private val map = Lens(origin, ending, .0, 1.0)
 
 
 	override fun FtcServo.output() {
