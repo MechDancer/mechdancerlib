@@ -52,11 +52,11 @@ class MotorWithEncoderImpl(name: String,
             }
             when (value) {
                 Mode.SPEED_CLOSE_LOOP, Mode.POSITION_CLOSE_LOOP ->
-                    setMotorState(DcMotor.ZeroPowerBehavior.FLOAT,
-                        DcMotor.RunMode.RUN_USING_ENCODER)
+                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
+                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
 
                 Mode.OPEN_LOOP, Mode.STOP                       ->
-                    setMotorState(DcMotor.ZeroPowerBehavior.FLOAT,
+                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
                         DcMotor.RunMode.RUN_WITHOUT_ENCODER)
 
                 Mode.LOCK                                       ->

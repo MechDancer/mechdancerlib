@@ -34,6 +34,7 @@ class EncoderImpl(name: String, enable: Boolean,
 	override fun DcMotorEx.reset() {
 		input()
 		mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+		mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
 	}
 
 	override fun resetData() {
