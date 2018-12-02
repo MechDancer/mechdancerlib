@@ -11,15 +11,15 @@ import org.mechdancer.ftclib.gamepad.Gamepad
  */
 @TeleOp
 @Disabled
-abstract class RemoteControlOpMode<T : Robot>(opModeName: String) : BaseOpMode<T>(opModeName) {
-	private val master = Gamepad()
-	private val helper = Gamepad()
+abstract class RemoteControlOpMode<T : Robot>(opModeName: String? = null) : BaseOpMode<T>(opModeName) {
+    private val master = Gamepad()
+    private val helper = Gamepad()
 
-	final override fun loopTask() {
-		master.update(gamepad1)
-		helper.update(gamepad2)
-		loop(master, helper)
-	}
+    final override fun loopTask() {
+        master.update(gamepad1)
+        helper.update(gamepad2)
+        loop(master, helper)
+    }
 
-	abstract fun loop(master: Gamepad, helper: Gamepad)
+    abstract fun loop(master: Gamepad, helper: Gamepad)
 }

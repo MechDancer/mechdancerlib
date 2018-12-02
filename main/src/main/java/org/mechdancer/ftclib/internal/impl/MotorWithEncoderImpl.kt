@@ -55,7 +55,7 @@ class MotorWithEncoderImpl(name: String,
                     setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
                         DcMotor.RunMode.RUN_WITHOUT_ENCODER)
 
-                Mode.OPEN_LOOP, Mode.STOP                       ->
+                Mode.OPEN_LOOP                                  ->
                     setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
                         DcMotor.RunMode.RUN_WITHOUT_ENCODER)
 
@@ -63,6 +63,11 @@ class MotorWithEncoderImpl(name: String,
                     setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
                         DcMotor.RunMode.RUN_USING_ENCODER)
 
+                Mode.STOP                                       -> {
+                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
+                        DcMotor.RunMode.STOP_AND_RESET_ENCODER)
+                    encoder.reset()
+                }
             }
             field = value
         }

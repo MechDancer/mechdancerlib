@@ -11,10 +11,10 @@ import org.mechdancer.ftclib.util.Resettable
  * 由 OpMode 直接调用
  *
  * @param name 机器人名字
- * @param subStructs 可添加子结构
+ * @param subStruct 可添加子结构
  */
-abstract class Robot(name: String, vararg subStructs: Structure)
-	: AbstractStructure(name, *subStructs, VoltageSensorImpl()), AutoCallable {
+abstract class Robot(name: String, vararg subStruct: Structure)
+    : AbstractStructure(name, *subStruct, VoltageSensorImpl()), AutoCallable {
 
 	private val rests = takeAll<Resettable>()
 
