@@ -7,37 +7,37 @@ import com.qualcomm.robotcore.util.RobotLog
  * 实现该接口的类可直接调用日志输出方法。
  */
 interface SmartLogger {
-	/**
-	 * 日志标签
-	 * 默认为类名
-	 */
-	val tag: String
-		get() = ""
+    /**
+     * 日志标签
+     * 默认为类名
+     */
+    val tag: String
+        get() = ""
 }
 
 private fun SmartLogger.getTag() =
-	tag.takeIf { it.isNotBlank() } ?: javaClass.name
+        tag.takeIf { it.isNotBlank() } ?: javaClass.name
 
 fun SmartLogger.info(any: Any) =
-	RobotLog.ii(getTag(), any.toString())
+        RobotLog.ii(getTag(), any.toString())
 
 fun SmartLogger.debug(any: Any) =
-	RobotLog.dd(getTag(), any.toString())
+        RobotLog.dd(getTag(), any.toString())
 
 fun SmartLogger.error(any: Any) =
-	RobotLog.ee(getTag(), any.toString())
+        RobotLog.ee(getTag(), any.toString())
 
 fun SmartLogger.warn(any: Any) =
-	RobotLog.ww(getTag(), any.toString())
+        RobotLog.ww(getTag(), any.toString())
 
 inline fun SmartLogger.info(block: () -> Any) =
-	info(block())
+        info(block())
 
 inline fun SmartLogger.debug(block: () -> Any) =
-	debug(block())
+        debug(block())
 
 inline fun SmartLogger.error(block: () -> Any) =
-	error(block())
+        error(block())
 
 inline fun SmartLogger.warn(block: () -> Any) =
-	warn(block())
+        warn(block())

@@ -11,28 +11,28 @@ import org.mechdancer.ftclib.internal.algorithm.PID
 import kotlin.math.PI
 
 class FooStructure : AbstractStructure("fooo", {
-	motorWithEncoder("fooMotor") {
-		enable = true
-		cpr = 2.0 * PI
-		pidPosition = PID(0.233, .0, .0, .0, .0)
-	}
-	servo("barServo") {
-		enable = true
-		origin = .0
-		ending = 130.0
-	}
+    motorWithEncoder("fooMotor") {
+        enable = true
+        cpr = 2.0 * PI
+        pidPosition = PID(0.233, .0, .0, .0, .0)
+    }
+    servo("barServo") {
+        enable = true
+        origin = .0
+        ending = 130.0
+    }
 }) {
 
-	@Inject
-	lateinit var fooMotor: MotorWithEncoder
+    @Inject
+    lateinit var fooMotor: MotorWithEncoder
 
-	@Inject
-	private lateinit var barServo: Servo
+    @Inject
+    private lateinit var barServo: Servo
 
-	override fun run() {
-		fooMotor.mode = Mode.POSITION_CLOSE_LOOP
-		fooMotor.targetPosition = 2 * PI
-		barServo.position = 100.0
-	}
+    override fun run() {
+        fooMotor.mode = Mode.POSITION_CLOSE_LOOP
+        fooMotor.targetPosition = 2 * PI
+        barServo.position = 100.0
+    }
 
 }

@@ -6,13 +6,13 @@ import org.mechdancer.ftclib.internal.impl.PackingDevice
 import org.mechdancer.ftclib.internal.impl.takeAllDevices
 
 class StructureTest {
-	@Test
-	fun test() {
-		val foo = FooStructure()
-		println(foo.takeAllDevices().joinToString(separator = "\n"))
-		println()
-		println()
-		println()
-		println(foo.takeAll<PackingDevice<*>>())
-	}
+    @Test
+    fun test() {
+        val foo = FooStructure()
+        println(foo.takeAllDevices().joinToString(separator = "\n"))
+        println()
+        println()
+        println()
+        println(foo.takeAll<PackingDevice<*>>())
+    }
 }

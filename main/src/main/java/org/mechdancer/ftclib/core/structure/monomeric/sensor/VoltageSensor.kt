@@ -8,9 +8,9 @@ import org.mechdancer.ftclib.core.structure.Structure
 [org.mechdancer.ftclib.core.structure.injector.Inject] 注入即可。
  */
 interface VoltageSensor : Structure {
-	/**
-	 * 电压值
-	 */
-	val voltage: Double
+    /**
+     * 电压值
+     */
+    val voltage: Double
 
 }

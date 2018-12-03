@@ -4,9 +4,9 @@ import org.mechdancer.ftclib.util.config.component.HardwareConfigDsl
 import org.mechdancer.ftclib.util.config.component.RobotConfig
 
 internal fun HardwareConfigDsl.create(): String {
-	start()
-	finalize()
-	return build()
+    start()
+    finalize()
+    return build()
 }
 
 /**

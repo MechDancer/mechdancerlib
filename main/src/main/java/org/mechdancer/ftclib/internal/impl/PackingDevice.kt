@@ -17,7 +17,7 @@ import kotlin.reflect.KProperty
  */
 sealed class PackingDevice<in T : HardwareDevice>
 (name: String, val enable: Boolean) :
-    MonomericStructure(name), Resettable, SmartLogger {
+        MonomericStructure(name), Resettable, SmartLogger {
 
     /**
      * 对真实设备的引用
@@ -89,9 +89,9 @@ sealed class PackingDevice<in T : HardwareDevice>
      * @param setter 发送指令的方法
      */
     protected inner class PropertyBuffer<U>(
-        private val tag: String,
-        origin: U,
-        private val setter: T.(U) -> Unit) : ReadWriteProperty<Any?, U> {
+            private val tag: String,
+            origin: U,
+            private val setter: T.(U) -> Unit) : ReadWriteProperty<Any?, U> {
         override fun getValue(thisRef: Any?, property: KProperty<*>): U = value
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: U) {
@@ -137,12 +137,12 @@ abstract class Sensor<in T : HardwareDevice>
 }
 
 fun CompositeStructure.takeAllDevices(prefix: String = name): List<Pair<String, PackingDevice<*>>> =
-    subStructures.fold(mutableListOf()) { acc, structure ->
-        acc.addAll((structure as? CompositeStructure)?.let {
-            structure.takeAllDevices("$prefix.${structure.name}")
-        } ?: if (structure is PackingDevice<*>) listOf(
-            (if (prefix.split(".").last() != structure.name
-            ) "$prefix.${structure.name}" else prefix) to structure)
-        else listOf())
-        acc
-    }
+        subStructures.fold(mutableListOf()) { acc, structure ->
+            acc.addAll((structure as? CompositeStructure)?.let {
+                structure.takeAllDevices("$prefix.${structure.name}")
+            } ?: if (structure is PackingDevice<*>) listOf(
+                    (if (prefix.split(".").last() != structure.name
+                    ) "$prefix.${structure.name}" else prefix) to structure)
+            else listOf())
+            acc
+        }

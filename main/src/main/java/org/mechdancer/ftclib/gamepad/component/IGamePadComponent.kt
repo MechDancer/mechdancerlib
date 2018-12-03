@@ -8,8 +8,8 @@ package org.mechdancer.ftclib.gamepad.component
  * [Trigger]
  */
 interface IGamePadComponent<T> {
-	/**
-	 * 值
-	 */
-	var raw: T
+    /**
+     * 值
+     */
+    var raw: T
 }

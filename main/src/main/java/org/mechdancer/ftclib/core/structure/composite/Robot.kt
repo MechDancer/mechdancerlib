@@ -16,11 +16,11 @@ import org.mechdancer.ftclib.util.Resettable
 abstract class Robot(name: String, vararg subStruct: Structure)
     : AbstractStructure(name, *subStruct, VoltageSensorImpl()), AutoCallable {
 
-	private val rests = takeAll<Resettable>()
+    private val rests = takeAll<Resettable>()
 
 
-	fun reset() {
-		rests.forEach { it.reset() }
-	}
+    fun reset() {
+        rests.forEach { it.reset() }
+    }
 
 }

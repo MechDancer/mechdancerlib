@@ -43,15 +43,15 @@ constructor(opModeName: String? = null) : OpMode() {
 
     protected var exceptionHandler: (String, Throwable) -> Unit = { lifecycle: String, t: Throwable ->
         RobotLog.setGlobalErrorMsg("用户代码在 <$lifecycle> 抛出了:\n" +
-            StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
+                StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
     }
 
     private inline fun catchException(lifecycle: String, block: () -> Unit) =
-        try {
-            block()
-        } catch (t: Throwable) {
-            exceptionHandler(lifecycle, t)
-        }
+            try {
+                block()
+            } catch (t: Throwable) {
+                exceptionHandler(lifecycle, t)
+            }
 
     final override fun init() {
         devices.forEach { it.second.bind(hardwareMap, it.first) }

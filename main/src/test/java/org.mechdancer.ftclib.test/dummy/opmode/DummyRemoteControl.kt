@@ -11,20 +11,20 @@ import org.mechdancer.ftclib.test.dummy.robot.DummyRobot
 @Disabled
 class DummyRemoteControl : RemoteControlOpMode<DummyRobot>() {
 
-	override fun initTask() {
+    override fun initTask() {
 
-	}
+    }
 
-	override fun loop(master: Gamepad, helper: Gamepad) {
-		if (master.a.isPressing())
-			when (robot.armState) {
-				ArmState.DOWN     -> ArmState.PARALLEL
-				ArmState.PARALLEL -> ArmState.UP
-				ArmState.UP       -> ArmState.DOWN
-			}
-	}
+    override fun loop(master: Gamepad, helper: Gamepad) {
+        if (master.a.isPressing())
+            when (robot.armState) {
+                ArmState.DOWN     -> ArmState.PARALLEL
+                ArmState.PARALLEL -> ArmState.UP
+                ArmState.UP       -> ArmState.DOWN
+            }
+    }
 
-	override fun stopTask() {
+    override fun stopTask() {
 
-	}
+    }
 }

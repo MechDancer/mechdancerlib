@@ -11,6 +11,10 @@ class PID(var k: Double,
           var integrateIArea: Double,
           var deadArea: Double) {
 
+    companion object {
+        fun zero() = PID(.0, .0, .0, .0, .0)
+    }
+
     /** 运行参数  */
     private var sum = 0.0
     private var last = 0.0

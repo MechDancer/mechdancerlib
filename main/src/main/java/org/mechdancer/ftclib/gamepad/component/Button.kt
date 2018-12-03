@@ -5,32 +5,32 @@ package org.mechdancer.ftclib.gamepad.component
  */
 class Button : IGamePadComponent<Boolean> {
 
-	private var last = false
+    private var last = false
 
-	/**
-	 * 当前状态
-	 *
-	 * @return 当前按钮状态
-	 */
-	fun bePressed() = raw
+    /**
+     * 当前状态
+     *
+     * @return 当前按钮状态
+     */
+    fun bePressed() = raw
 
-	/**
-	 * 是否被按下
-	 *
-	 * @return 是否一直处于按下状态
-	 */
-	fun isPressing() = !last && bePressed()
+    /**
+     * 是否被按下
+     *
+     * @return 是否一直处于按下状态
+     */
+    fun isPressing() = !last && bePressed()
 
-	/**
-	 * 是否释放
-	 *
-	 * @return 是否一直处于释放状态
-	 */
-	fun isReleasing() = last && bePressed()
+    /**
+     * 是否释放
+     *
+     * @return 是否一直处于释放状态
+     */
+    fun isReleasing() = last && !bePressed()
 
-	override var raw: Boolean = false
-		set(value) {
-			last = field
-			field = value
-		}
+    override var raw: Boolean = false
+        set(value) {
+            last = field
+            field = value
+        }
 }

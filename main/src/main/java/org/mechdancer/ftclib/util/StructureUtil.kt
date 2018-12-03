@@ -8,33 +8,33 @@ import org.mechdancer.ftclib.core.structure.Structure
  * 只有 [Structure] 子类继承有效。
  */
 object OpModeLifecycle {
-	/**
-	 *参与 OpMode 的 `init()`
-	 */
-	interface Initialize {
-		fun init()
-	}
+    /**
+     *参与 OpMode 的 `init()`
+     */
+    interface Initialize {
+        fun init()
+    }
 
-	/**
-	 * 参与 OpMode 的 `start()`
-	 */
-	interface Start {
-		fun start()
-	}
+    /**
+     * 参与 OpMode 的 `start()`
+     */
+    interface Start {
+        fun start()
+    }
 
-	/**
-	 *参与 OpMode 的 `loop()`
-	 */
-	interface Run {
-		fun run()
-	}
+    /**
+     *参与 OpMode 的 `loop()`
+     */
+    interface Run {
+        fun run()
+    }
 
-	/**
-	 *参与 OpMode 的 `stop()`
-	 */
-	interface Stop {
-		fun stop()
-	}
+    /**
+     *参与 OpMode 的 `stop()`
+     */
+    interface Stop {
+        fun stop()
+    }
 }
 
 /**
@@ -42,7 +42,7 @@ object OpModeLifecycle {
  * 会在 `robot.reset()` 时调用。
  */
 interface Resettable {
-	fun reset()
+    fun reset()
 }
 
 /**

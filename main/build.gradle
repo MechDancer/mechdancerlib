@@ -26,10 +26,13 @@ android {
 }
 
 dependencies {
-    implementation(name: 'RobotCore-release', ext: 'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    implementation(name: 'RobotCore-release', ext: 'aar')
+    implementation "org.mechdancer:linearalgebra:0.2.4-dev-5"
+
+    testImplementation 'junit:junit:4.12'
 }
 //publish {
 //    userOrg = 'mechdancer'
@@ -41,6 +44,6 @@ dependencies {
 //}
 
 dokka {
-    outputFormat = 'html'
+    outputFormat = 'javdoc'
     outputDirectory = "$buildDir/javadoc"
 }

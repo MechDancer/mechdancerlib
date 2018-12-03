@@ -8,26 +8,26 @@ import org.mechdancer.ftclib.core.structure.monomeric.sensor.RevColorSensor
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 
 class DummyRobot : Robot("dummyRobot", Mecanum(enable = true), DummyArm(),
-	DeviceFactory.revColor("colorSensor") {
-		enable = true
-	}
+        DeviceFactory.revColor("colorSensor") {
+            enable = true
+        }
 ) {
 
-	@Inject
-	lateinit var colorSensor: RevColorSensor
+    @Inject
+    lateinit var colorSensor: RevColorSensor
 
-	@Inject
-	lateinit var voltageSensor: VoltageSensor
+    @Inject
+    lateinit var voltageSensor: VoltageSensor
 
-	@Inject("mecanumChassis")
-	lateinit var chassis: Mecanum
+    @Inject("mecanumChassis")
+    lateinit var chassis: Mecanum
 
-	@Inject
-	private lateinit var dummyArm: DummyArm
+    @Inject
+    private lateinit var dummyArm: DummyArm
 
-	var armState: DummyArm.ArmState = DummyArm.ArmState.DOWN
+    var armState: DummyArm.ArmState = DummyArm.ArmState.DOWN
 
-	override fun run() {
-		dummyArm.armState = armState
-	}
+    override fun run() {
+        dummyArm.armState = armState
+    }
 }

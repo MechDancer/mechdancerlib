@@ -7,12 +7,12 @@ import org.mechdancer.ftclib.util.config.create
  */
 class LynxModuleConfig(val name: String, val port: Int, private val block: LynxModuleConfig.() -> Unit) : HardwareConfigDsl {
 
-	private val builder = StringBuilder()
+    private val builder = StringBuilder()
 
 
-	fun device(deviceConfig: DeviceConfig) {
-		builder.append(deviceConfig.create())
-	}
+    fun device(deviceConfig: DeviceConfig) {
+        builder.append(deviceConfig.create())
+    }
 
 //	/**
 //	 * 添加舵机
@@ -56,14 +56,14 @@ class LynxModuleConfig(val name: String, val port: Int, private val block: LynxM
 //	}
 
 
-	override fun start() {
-		builder.appendln("""<LynxModule name="$name" port="$port">""")
-		block()
-	}
+    override fun start() {
+        builder.appendln("""<LynxModule name="$name" port="$port">""")
+        block()
+    }
 
-	override fun finalize() {
-		builder.appendln("</LynxModule>")
-	}
+    override fun finalize() {
+        builder.appendln("</LynxModule>")
+    }
 
-	override fun build(): String = builder.toString()
+    override fun build(): String = builder.toString()
 }
