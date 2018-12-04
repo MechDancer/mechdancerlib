@@ -21,13 +21,12 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/google' }
         mavenCentral()
         jcenter()
+        maven { url 'https://maven.aliyun.com/repository/google' }
         flatDir {
             dirs rootProject.file('libs')
         }
-        google()
     }
 }
 
