@@ -35,7 +35,7 @@ abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enabl
     /**
      * 功率标准化
      * 若传入的功率中存在大于传入的最大值约束的值，将最大值调整为约束值，其他值按比例缩小
-     * @param maxPower 最大功率约束∈[0,1]
+     * @param maxPower 最大功率约束∈[-1,1]
      */
     private fun DoubleArray.standardizeBy(maxPower: Double) =
             map(::abs).max()!!.let {

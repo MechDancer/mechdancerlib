@@ -30,23 +30,10 @@ class MotorImpl(name: String,
 
     private val _runMode = PropertyBuffer(
             tag = "runMode",
-            origin = DcMotor.RunMode.RUN_USING_ENCODER,
+        origin = DcMotor.RunMode.RUN_WITHOUT_ENCODER,
             setter = { this.mode = it }
     )
 
-    //avoid using internal direction
-    /*
-    private val _direction = PropertyBuffer(
-            tag = "direction",
-            origin = direction,
-            setter = {
-                this.direction =
-                        when (it) {
-                            Motor.Direction.FORWARD -> DcMotorSimple.Direction.FORWARD
-                            Motor.Direction.REVERSE -> DcMotorSimple.Direction.REVERSE
-                        }
-            }
-    ) */
     /**
      * 功率
      * 范围：[-1, 1]
@@ -64,7 +51,6 @@ class MotorImpl(name: String,
         _power % this
         _zeroBehavior % this
         _runMode % this
-        //_direction % this
     }
 
     override fun resetData() {
