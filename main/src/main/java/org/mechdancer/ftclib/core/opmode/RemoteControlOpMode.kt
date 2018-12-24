@@ -16,9 +16,15 @@ abstract class RemoteControlOpMode<T : Robot>(opModeName: String? = null) : Base
     private val helper = Gamepad()
 
     final override fun loopTask() {
-        master.update(gamepad1)
-        helper.update(gamepad2)
-        loop(master, helper)
+        withMeasuringTime("刷新主手柄") {
+            master.update(gamepad1)
+        }
+        withMeasuringTime("刷新副手柄") {
+            helper.update(gamepad2)
+        }
+        withMeasuringTime("执行循环任务") {
+            loop(master, helper)
+        }
     }
 
     abstract fun loop(master: Gamepad, helper: Gamepad)

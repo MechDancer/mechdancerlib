@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.RobotLog
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.mechdancer.ftclib.core.opmode.RobotFactory.createRobot
+import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
@@ -32,7 +33,7 @@ constructor(opModeName: String? = null) : OpMode() {
 
     private val devices = robot.takeAllDevices().map {
         it.first.dropWhile { name -> name != '.' }.removePrefix(".") to it.second
-    }
+    }.toMap()
 
     private val voltageSensor = robot.takeAll<VoltageSensorImpl>()[0]
 
@@ -43,23 +44,46 @@ constructor(opModeName: String? = null) : OpMode() {
 
     protected var exceptionHandler: (String, Throwable) -> Unit = { lifecycle: String, t: Throwable ->
         RobotLog.setGlobalErrorMsg("用户代码在 <$lifecycle> 抛出了:\n" +
-                StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
+            StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
     }
 
     private inline fun catchException(lifecycle: String, block: () -> Unit) =
-            try {
-                block()
-            } catch (t: Throwable) {
-                exceptionHandler(lifecycle, t)
-            }
+        try {
+            block()
+        } catch (t: Throwable) {
+            exceptionHandler(lifecycle, t)
+        }
+
+
+
+    private fun Structure.showName() = /*if (this is PackingDevice<*>)
+        devices.entries.find { this == it.value }!!.key
+    else*/ name
 
     final override fun init() {
-        devices.forEach { it.second.bind(hardwareMap, it.first) }
-        initializations.forEach { it.init() }
-        voltageSensor.bind(hardwareMap)
+        withMeasuringTime("遍历绑定设备") {
+            devices.forEach {
+                withMeasuringTime("绑定 ${it.key}") {
+                    it.value.bind(hardwareMap, it.key)
+                }
+            }
+        }
+        withMeasuringTime("遍历初始化结构") {
+            initializations.forEach {
+                withMeasuringTime("初始化结构 ${it.showName()}") {
+                    it.init()
+                }
+            }
+        }
+        withMeasuringTime("绑定电压传感器") {
+            voltageSensor.bind(hardwareMap)
+        }
+
         catchException("init") {
             //ask for resources
-            initTask()
+            withMeasuringTime("执行初始化任务") {
+                initTask()
+            }
         }
     }
 
@@ -67,16 +91,34 @@ constructor(opModeName: String? = null) : OpMode() {
         catchException("init_loop") {
             //adjust sensors (if needed)
             //initialize devices
-            initLoopTask()
+            withMeasuringTime("执行初始化循环任务") {
+                initLoopTask()
+            }
         }
     }
 
     final override fun start() {
-        devices.forEach { it.second.reset() }
+        withMeasuringTime("遍历重置设备") {
+            devices.forEach {
+                withMeasuringTime("重置设备 ${it.key}") {
+                    it.value.reset()
+                }
+            }
+        }
         catchException("start") {
-            robot.reset()
-            starts.forEach { it.start() }
-            startTask()
+            withMeasuringTime("重置 Robot") {
+                robot.reset()
+            }
+            withMeasuringTime("遍历执行开始结构") {
+                starts.forEach {
+                    withMeasuringTime("执行开始结构 ${it.showName()}") {
+                        it.start()
+                    }
+                }
+            }
+            withMeasuringTime("执行开始任务") {
+                startTask()
+            }
         }
     }
 
@@ -84,24 +126,62 @@ constructor(opModeName: String? = null) : OpMode() {
         catchException("loop") {
             //calculate suggestions
             //generate and execute commands
-            loopTask()
-            actions.forEach { it.run() }
+            withMeasuringTime("执行循环任务") {
+                loopTask()
+            }
+            withMeasuringTime("遍历执行循环结构") {
+                actions.forEach {
+                    withMeasuringTime("执行循环结构 ${it.showName()}") {
+                        it.run()
+                    }
+                }
+            }
         }
-        devices.forEach { it.second.run() }
-        voltageSensor.run()
+
+        withMeasuringTime("遍历执行循环设备") {
+            devices.forEach {
+                withMeasuringTime("执行循环设备 ${it.key}") {
+                    it.value.run()
+                }
+            }
+        }
+
+        withMeasuringTime("执行循环电压传感器") {
+            voltageSensor.run()
+        }
+
         period = (System.currentTimeMillis() - lastPeriod).toInt()
         lastPeriod = System.currentTimeMillis()
     }
 
     final override fun stop() {
         catchException("stop") {
-            stops.forEach { it.stop() }
+            withMeasuringTime("遍历执行停止结构") {
+                stops.forEach {
+                    withMeasuringTime("执行停止结构 ${it.showName()}") {
+                        it.stop()
+                    }
+                }
+            }
         }
-        devices.forEach { it.second.unbind() }
-        voltageSensor.unbind()
+
+        withMeasuringTime("遍历解绑设备") {
+            devices.forEach {
+                withMeasuringTime("解绑设备 ${it.key}") {
+                    it.value.unbind()
+                }
+            }
+        }
+        withMeasuringTime("解绑电压传感器") {
+            voltageSensor.unbind()
+        }
+
         catchException("stop") {
             //release resources
-            stopTask()
+            withMeasuringTime("执行停止任务") {
+                stopTask()
+
+            }
         }
     }
 

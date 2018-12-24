@@ -48,7 +48,7 @@ open class MecanumWithLocator(name: String,
         location = Location(
             subStructures[0].position + subStructures[1].position + subStructures[2].position + subStructures[3].position,
             subStructures[0].position - subStructures[1].position - subStructures[2].position + subStructures[3].position,
-            -subStructures[2].position + subStructures[3].position - subStructures[1].position - subStructures[0].position
+            -subStructures[0].position - subStructures[1].position + subStructures[2].position + subStructures[3].position
         )
     }
 

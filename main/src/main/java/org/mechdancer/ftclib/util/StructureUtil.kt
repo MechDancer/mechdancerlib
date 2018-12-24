@@ -11,28 +11,26 @@ object OpModeLifecycle {
     /**
      *参与 OpMode 的 `init()`
      */
-    interface Initialize {
+    interface Initialize : Structure {
         fun init()
     }
 
     /**
      * 参与 OpMode 的 `start()`
      */
-    interface Start {
+    interface Start : Structure {
         fun start()
     }
 
     /**
      *参与 OpMode 的 `loop()`
      */
-    interface Run {
-        fun run()
-    }
+    interface Run : Structure
 
     /**
      *参与 OpMode 的 `stop()`
      */
-    interface Stop {
+    interface Stop : Structure {
         fun stop()
     }
 }
@@ -41,7 +39,7 @@ object OpModeLifecycle {
  * 实现该接口的结构将具有重置能力
  * 会在 `robot.reset()` 时调用。
  */
-interface Resettable {
+interface Resettable : Structure {
     fun reset()
 }
 
