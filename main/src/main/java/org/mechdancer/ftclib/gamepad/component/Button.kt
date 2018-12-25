@@ -9,22 +9,20 @@ class Button : IGamePadComponent<Boolean> {
 
     /**
      * 当前状态
-     *
-     * @return 当前按钮状态
-     */
+     **/
     fun bePressed() = raw
 
     /**
      * 是否被按下
      *
-     * @return 是否一直处于按下状态
+     * 仅当按钮被按下的第一个周期为 `true`
      */
     fun isPressing() = !last && bePressed()
 
     /**
      * 是否释放
      *
-     * @return 是否一直处于释放状态
+     * 仅当按钮释放的第一个周期为 `true`
      */
     fun isReleasing() = last && !bePressed()
 

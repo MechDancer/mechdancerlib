@@ -4,17 +4,17 @@ import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.core.structure.composite.chassis.Mecanum
 import org.mechdancer.ftclib.core.structure.injector.Inject
 import org.mechdancer.ftclib.core.structure.monomeric.DeviceFactory
-import org.mechdancer.ftclib.core.structure.monomeric.sensor.RevColorSensor
+import org.mechdancer.ftclib.core.structure.monomeric.sensor.ColorSensor
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 
 class DummyRobot : Robot("dummyRobot", Mecanum(enable = true), DummyArm(),
-        DeviceFactory.revColor("colorSensor") {
+        DeviceFactory.colorSensor("colorSensor") {
             enable = true
         }
 ) {
 
     @Inject
-    lateinit var colorSensor: RevColorSensor
+    lateinit var colorSensor: ColorSensor
 
     @Inject
     lateinit var voltageSensor: VoltageSensor

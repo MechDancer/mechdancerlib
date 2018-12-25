@@ -4,9 +4,9 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * Rev 颜色传感器
+ * 颜色传感器
  */
-interface RevColorSensor : Structure {
+interface ColorSensor : Structure {
     /**
      * 颜色数值
      */

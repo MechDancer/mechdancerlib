@@ -5,8 +5,7 @@ import org.mechdancer.ftclib.core.structure.MonomericStructure
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 import org.mechdancer.ftclib.internal.FtcVoltageSensor
 
-class VoltageSensorImpl internal constructor()
-    : VoltageSensor, MonomericStructure("voltageSensor") {
+class VoltageSensorImpl : VoltageSensor, MonomericStructure("voltageSensor") {
 
     override var voltage: Double = Double.POSITIVE_INFINITY
         private set

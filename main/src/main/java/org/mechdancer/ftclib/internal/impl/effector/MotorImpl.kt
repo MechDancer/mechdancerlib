@@ -17,45 +17,32 @@ class MotorImpl(name: String,
 
     constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
 
-    private val _power = PropertyBuffer(
-            tag = "power",
-            origin = .0,
-            setter = { this.power = it * this@MotorImpl.direction.sign })
-
-    private val _zeroBehavior = PropertyBuffer(
-            tag = "zeroBehavior",
-            origin = DcMotor.ZeroPowerBehavior.FLOAT,
-            setter = { this.zeroPowerBehavior = it }
-    )
-
-    private val _runMode = PropertyBuffer(
-            tag = "runMode",
-        origin = DcMotor.RunMode.RUN_WITHOUT_ENCODER,
-            setter = { this.mode = it }
-    )
 
     /**
      * 功率
      * 范围：[-1, 1]
      */
-    override var power by _power
+    override var power = .0
 
-    var runMode by _runMode
-        internal set
+    /**
+     * 运行模式
+     * [DcMotor.RunMode]
+     */
+    var runMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
 
-    var zeroPowerBehavior by _zeroBehavior
-        internal set
+    /**
+     * 零功率行为
+     * [DcMotor.ZeroPowerBehavior]
+     */
+    var zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
 
     override fun DcMotorEx.output() {
-        _power % this
-        _zeroBehavior % this
-        _runMode % this
+        power = this@MotorImpl.power
+        zeroPowerBehavior = this@MotorImpl.zeroPowerBehavior
+        mode = runMode
     }
 
-    override fun resetData() {
-        power = .0
-    }
 
     override fun toString() =
             "电机[$name] | ${if (enable) "功率: ${100 * power}%" else "关闭"}"

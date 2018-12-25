@@ -12,42 +12,35 @@ class ContinuousServoImpl(name: String, enable: Boolean)
 
     constructor(config: ContinuousServo.Config) : this(config.name, config.enable)
 
-
-    private val _power = PropertyBuffer(
-            tag = "power",
-            origin = .0,
-            setter = { this.power = it })
-
-    private val _pwmOutput = PropertyBuffer(
-            tag = "pwmOutput",
-            origin = true,
-            setter = {
-                (controller as ServoControllerEx).let { ctr ->
-                    if (it) ctr.setServoPwmEnable(portNumber)
-                    else ctr.setServoPwmDisable(portNumber)
-                }
-            }
-    )
+    private var shouldUpdatePwmEnable = false
 
     /**
      * 速度
      */
-    override var power by _power
+    override var power = .0
 
     /**
      * 是否开启 pwm 信号输出
      */
-    override var pwmOutput: Boolean by _pwmOutput
+    override var pwmOutput: Boolean = true
+        set(value) {
+            shouldUpdatePwmEnable = true
+            field = value
+        }
+
 
     override fun CRServo.output() {
-        _power % this
-        _pwmOutput % this
+        power = this@ContinuousServoImpl.power
+        if (shouldUpdatePwmEnable)
+            (controller as ServoControllerEx).let { ctr ->
+                if (pwmOutput)
+                    ctr.setServoPwmEnable(portNumber)
+                else ctr.setServoPwmDisable(portNumber)
+                shouldUpdatePwmEnable = false
+            }
     }
-
-    override fun resetData() = run { power = .0 }
 
     override fun toString() =
             "连续舵机[$name] | ${if (enable) "功率：${100 * power}%" else "关闭"}"
-
 
 }

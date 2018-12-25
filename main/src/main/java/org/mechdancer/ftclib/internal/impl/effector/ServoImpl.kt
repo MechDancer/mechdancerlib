@@ -22,32 +22,22 @@ class ServoImpl(
 
     constructor(config: Servo.Config) : this(config.name, config.enable, config.origin, config.ending)
 
-    private val _position = PropertyBuffer(
-            tag = "position",
-            origin = origin,
-            setter = { this.position = map(it) })
+    private var shouldUpdatePwmEnable = false
 
-    private val _pwmOutput = PropertyBuffer(
-            tag = "pwmOutput",
-            origin = true,
-            setter = {
-                (controller as ServoControllerEx).let { ctr ->
-                    if (it) ctr.setServoPwmEnable(portNumber)
-                    else ctr.setServoPwmDisable(portNumber)
-                }
-            }
-
-    )
     /**
      * 目标位置
      * 范围：起点到终点的区间
      */
-    override var position by _position
+    override var position = .0
 
     /**
      * 是否开启 pwm 信号输出
      */
-    override var pwmOutput: Boolean by _pwmOutput
+    override var pwmOutput: Boolean = true
+        set(value) {
+            shouldUpdatePwmEnable = true
+            field = value
+        }
 
     /**
      * 映射方案
@@ -56,14 +46,18 @@ class ServoImpl(
 
 
     override fun FtcServo.output() {
-        _position % this
-        _pwmOutput % this
+        position = map(this@ServoImpl.position)
+        if (shouldUpdatePwmEnable)
+            (controller as ServoControllerEx).let { ctr ->
+                if (pwmOutput)
+                    ctr.setServoPwmEnable(portNumber)
+                else ctr.setServoPwmDisable(portNumber)
+                shouldUpdatePwmEnable = false
+            }
     }
 
-    override fun resetData() = run { position = .0 }
 
     override fun toString() =
             "舵机[$name] | ${if (enable) "位置: $position" else "关闭"}"
-
 
 }

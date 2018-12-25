@@ -16,7 +16,10 @@ import java.io.StringWriter
 
 /**
  * 程序入口
+ *
  * 所有 OpMode 应在该类的继承树下
+ *
+ * 注意: 类中成员若非 `lateinit` 可能会导致预料外的问题
  */
 @Suppress("UNCHECKED_CAST")
 @Disabled
