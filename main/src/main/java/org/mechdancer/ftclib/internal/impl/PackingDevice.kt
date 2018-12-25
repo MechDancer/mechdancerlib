@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.MonomericStructure
 import org.mechdancer.ftclib.util.SmartLogger
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
  * 设备
@@ -78,6 +81,38 @@ sealed class PackingDevice<in T : HardwareDevice>
         device?.output()
     }
 
+    /**
+     * （需要由外部设置的）设备属性
+     * @param tag 属性名字，写日志用
+     * @param origin 初始值
+     * @param setter 发送指令的方法
+     */
+    protected inner class PropertyBuffer<U>(
+            private val tag: String,
+            origin: U,
+            private val setter: T.(U) -> Unit) : ReadWriteProperty<Any?, U> {
+        override fun getValue(thisRef: Any?, property: KProperty<*>): U = value
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: U) {
+            this.value = value
+        }
+
+        private var changed = AtomicBoolean(true)
+
+        private fun sendTo(device: T) {
+            if (changed.compareAndSet(true, false))
+                setter(device, value)
+        }
+
+        operator fun rem(device: T) = sendTo(device)
+
+        private var value = origin
+            set(newValue) {
+                if (field == newValue) return //与之前完全相同
+                field = newValue              //更新
+                changed.set(true)             //记录
+            }
+    }
 
 }
 
