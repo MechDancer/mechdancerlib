@@ -8,7 +8,7 @@ import java.lang.Math.abs
 class PID(var k: Double,
           var ki: Double,
           var kd: Double,
-          var integrateIArea: Double,
+          var integrateArea: Double,
           var deadArea: Double) {
 
     companion object {
@@ -21,10 +21,12 @@ class PID(var k: Double,
 
     operator fun invoke(data: Double): Double {
         val value = abs(data)
-        sum = if (value > integrateIArea) .0 else sum + data
+        sum = if (value > integrateArea) .0 else sum + data
         val result = data + kd * (data - last) + ki * sum
         last = data
-        return if (value < deadArea) .0
+        return if (value < deadArea) .0.also {
+            sum = .0
+        }
         else k * result
     }
 
@@ -34,5 +36,5 @@ class PID(var k: Double,
         last = 0.0
     }
 
-    override fun toString(): String = "PID[P:$k I:$ki D:$kd IA:$integrateIArea DA:$deadArea]"
+    override fun toString(): String = "PID[P:$k I:$ki D:$kd IA:$integrateArea DA:$deadArea]"
 }
