@@ -8,7 +8,7 @@ object RobotFactory {
     fun <T : Robot> createRobot(clazz: Class<BaseOpMode<T>>) =
             (clazz.genericSuperclass as? ParameterizedType)?.let { type ->
                 type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
-                        ?.let { it -> it as Class<*> }
+                        ?.let { it as Class<*> }
                         ?.let {
                             try {
                                 it.getConstructor().newInstance()

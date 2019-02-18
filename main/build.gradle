@@ -30,7 +30,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation(name: 'RobotCore-release', ext: 'aar')
-    implementation "org.mechdancer:linearalgebra:0.2.4-dev-5"
 
     testImplementation 'junit:junit:4.12'
 }
