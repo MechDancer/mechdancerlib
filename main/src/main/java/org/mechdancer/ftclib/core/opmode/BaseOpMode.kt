@@ -88,6 +88,7 @@ constructor(opModeName: String? = null) : OpMode() {
                 initTask()
             }
         }
+        RobotLog.d("完成初始化")
     }
 
     final override fun init_loop() {
@@ -98,6 +99,7 @@ constructor(opModeName: String? = null) : OpMode() {
                 initLoopTask()
             }
         }
+        RobotLog.d("完成一次初始化循环")
     }
 
     final override fun start() {
@@ -123,6 +125,7 @@ constructor(opModeName: String? = null) : OpMode() {
                 startTask()
             }
         }
+        RobotLog.d("完成开始")
     }
 
     final override fun loop() {
@@ -155,6 +158,8 @@ constructor(opModeName: String? = null) : OpMode() {
 
         period = (System.currentTimeMillis() - lastPeriod).toInt()
         lastPeriod = System.currentTimeMillis()
+
+        RobotLog.d("完成一次循环")
     }
 
     final override fun stop() {
@@ -186,6 +191,7 @@ constructor(opModeName: String? = null) : OpMode() {
 
             }
         }
+        RobotLog.d("完成停止")
     }
 
     final override fun getRuntime(): Double {

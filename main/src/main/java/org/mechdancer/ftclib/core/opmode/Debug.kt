@@ -3,10 +3,10 @@ package org.mechdancer.ftclib.core.opmode
 import com.qualcomm.robotcore.util.RobotLog
 import org.mechdancer.ftclib.gamepad.Gamepad
 import kotlin.random.Random
-import kotlin.system.measureTimeMillis
+import kotlin.system.measureNanoTime
 
 internal fun withMeasuringTime(prefix: String, block: () -> Unit) {
-    RobotLog.d("$prefix 花费 ${measureTimeMillis(block)} ms")
+    RobotLog.d("$prefix 花费 ${measureNanoTime(block) * 1E-6} ms")
 }
 
 internal fun Gamepad.random() {

@@ -2,7 +2,7 @@ package org.mechdancer.ftclib.core.structure.composite.chassis
 
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 
-open class Mecanum(override val name: String = "mecanum_chassis",
+open class Mecanum(override val name: String = "chassis",
                    enable: Boolean,
                    lfMotorDirection: Motor.Direction = Motor.Direction.REVERSE,
                    lbMotorDirection: Motor.Direction = Motor.Direction.REVERSE,
@@ -18,5 +18,9 @@ open class Mecanum(override val name: String = "mecanum_chassis",
 
 
     override fun Descartes.transform() =
-        doubleArrayOf(x + y - w, x - y - w, x - y + w, x + y + w)
+        doubleArrayOf(
+            x + y + w,
+            x - y + w,
+            x - y - w,
+            x + y - w)
 }
