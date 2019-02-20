@@ -38,14 +38,14 @@ class MotorImpl(name: String,
 
 
     override fun DcMotorEx.output() {
-        power = this@MotorImpl.power
+        power = this@MotorImpl.power * this@MotorImpl.direction.sign
         zeroPowerBehavior = this@MotorImpl.zeroPowerBehavior
         mode = runMode
     }
 
 
     override fun toString() =
-            "电机[$name] | ${if (enable) "功率: ${100 * power}%" else "关闭"}"
+        "电机[$name] | ${if (enable) "功率: ${100 * power}%" else "关闭"}"
 
 
 }
