@@ -13,7 +13,7 @@ import org.mechdancer.ftclib.util.SmartLogger
  */
 sealed class PackingDevice<in T : HardwareDevice>
 (name: String, val enable: Boolean) :
-        MonomericStructure(name), SmartLogger {
+    MonomericStructure(name), SmartLogger {
 
     /**
      * 对真实设备的引用
@@ -100,12 +100,12 @@ abstract class Sensor<in T : HardwareDevice>
 }
 
 fun CompositeStructure.takeAllDevices(prefix: String = name): List<Pair<String, PackingDevice<*>>> =
-        subStructures.fold(mutableListOf()) { acc, structure ->
-            acc.addAll((structure as? CompositeStructure)?.let {
-                structure.takeAllDevices("$prefix.${structure.name}")
-            } ?: if (structure is PackingDevice<*>) listOf(
-                    (if (prefix.split(".").last() != structure.name
-                    ) "$prefix.${structure.name}" else prefix) to structure)
-            else listOf())
-            acc
-        }
+    subStructures.fold(mutableListOf()) { acc, structure ->
+        acc.addAll((structure as? CompositeStructure)?.let {
+            structure.takeAllDevices("$prefix.${structure.name}")
+        } ?: if (structure is PackingDevice<*>) listOf(
+            (if (prefix.split(".").last() != structure.name
+            ) "$prefix.${structure.name}" else prefix) to structure)
+        else listOf())
+        acc
+    }

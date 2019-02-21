@@ -92,10 +92,10 @@ class Gamepad {
         rightTrigger.raw = origin.right_trigger.toDouble()
 
         leftStick.raw = doubleArrayOf(
-                origin.left_stick_x.toDouble(),
-                origin.left_stick_y.toDouble())
+            origin.left_stick_x.toDouble(),
+            origin.left_stick_y.toDouble())
         rightStick.raw = doubleArrayOf(
-                origin.right_stick_x.toDouble(),
-                origin.right_stick_y.toDouble())
+            origin.right_stick_x.toDouble(),
+            origin.right_stick_y.toDouble())
     }
 }

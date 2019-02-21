@@ -33,7 +33,7 @@ class ColorSensorImpl(name: String, enable: Boolean)
 
 
     override fun toString(): String =
-            "颜色传感器[$name] | ${if (enable) "颜色值: $colorData" else "关闭"}"
+        "颜色传感器[$name] | ${if (enable) "颜色值: $colorData" else "关闭"}"
 
 
 }

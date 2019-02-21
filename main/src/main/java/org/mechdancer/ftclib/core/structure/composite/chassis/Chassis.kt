@@ -13,7 +13,7 @@ abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enabl
     : CompositeStructure("null_chassis"), AutoCallable, SmartLogger {
 
     override val subStructures: List<Motor> =
-            motorsConfig.map { MotorImpl(it.first, enable, it.second) }
+        motorsConfig.map { MotorImpl(it.first, enable, it.second) }
 
     open var powers = DoubleArray(motorsConfig.size) { .0 }
         get() = field.standardizeBy(maxPower)
@@ -35,19 +35,20 @@ abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enabl
     /**
      * 功率标准化
      * 若传入的功率中存在大于传入的最大值约束的值，将最大值调整为约束值，其他值按比例缩小
+     *
      * @param maxPower 最大功率约束∈[-1,1]
      */
     private fun DoubleArray.standardizeBy(maxPower: Double) =
-            map(::abs).max()!!.let {
-                if (it <= abs(maxPower))
-                    maxPower.sign
-                else
-                    maxPower / it
-            }.let {
-                DoubleArray(size) { i ->
-                    this[i] * it
-                }
+        map(::abs).max()!!.let {
+            if (it <= abs(maxPower))
+                maxPower.sign
+            else
+                maxPower / it
+        }.let {
+            DoubleArray(size) { i ->
+                this[i] * it
             }
+        }
 
     override fun run() {
         subStructures.forEachIndexed { index: Int, motor: Motor ->

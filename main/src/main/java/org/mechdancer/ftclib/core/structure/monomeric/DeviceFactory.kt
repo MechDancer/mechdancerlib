@@ -22,25 +22,25 @@ import org.mechdancer.ftclib.internal.impl.sensor.TouchSensorImpl
  */
 object DeviceFactory {
     fun motor(name: String, config: Motor.Config.() -> Unit): Motor =
-            MotorImpl(Motor.Config(name).apply(config))
+        MotorImpl(Motor.Config(name).apply(config))
 
     fun encoder(name: String, config: Encoder.Config.() -> Unit): Encoder =
-            EncoderImpl(Encoder.Config(name).apply(config))
+        EncoderImpl(Encoder.Config(name).apply(config))
 
     fun motorWithEncoder(name: String, config: MotorWithEncoder.Config.() -> Unit): MotorWithEncoder =
-            MotorWithEncoderImpl(MotorWithEncoder.Config(name).apply(config))
+        MotorWithEncoderImpl(MotorWithEncoder.Config(name).apply(config))
 
     fun servo(name: String, config: Servo.Config.() -> Unit): Servo =
-            ServoImpl(Servo.Config(name).apply(config))
+        ServoImpl(Servo.Config(name).apply(config))
 
     fun continuousServo(name: String, config: ContinuousServo.Config.() -> Unit): ContinuousServo =
-            ContinuousServoImpl(ContinuousServo.Config(name).apply(config))
+        ContinuousServoImpl(ContinuousServo.Config(name).apply(config))
 
     fun colorSensor(name: String, config: ColorSensor.Config.() -> Unit): ColorSensor =
-            ColorSensorImpl(ColorSensor.Config(name).apply(config))
+        ColorSensorImpl(ColorSensor.Config(name).apply(config))
 
     fun touchSensor(name: String, config: TouchSensor.Config.() -> Unit): TouchSensor =
-            TouchSensorImpl(TouchSensor.Config(name).apply(config))
+        TouchSensorImpl(TouchSensor.Config(name).apply(config))
 }
 
 fun StructureBuilder.motor(name: String, config: Motor.Config.() -> Unit) {

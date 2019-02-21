@@ -31,7 +31,7 @@ interface Encoder : Structure {
      * @param cpr 编码器一圈的值
      */
     class Config(
-            name: String,
-            enable: Boolean = false,
-            var cpr: Double = .0) : DeviceConfig(name, enable)
+        name: String,
+        enable: Boolean = false,
+        var cpr: Double = .0) : DeviceConfig(name, enable)
 }

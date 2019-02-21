@@ -43,6 +43,6 @@ class EncoderImpl(name: String, enable: Boolean,
 
 
     override fun toString(): String = "编码器[$name] | " +
-            if (enable) "位置: $position, 速度: $speed" else "关闭"
+        if (enable) "位置: $position, 速度: $speed" else "关闭"
 
 }

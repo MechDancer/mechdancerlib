@@ -29,7 +29,7 @@ constructor(opModeName: String? = null) : OpMode() {
     protected val robot: T = createRobot()
     val opModeName: String = opModeName ?: javaClass.simpleName
 
-    private val initializations = robot.takeAll<OpModeLifecycle.Initialize>()
+    private val initializations = robot.takeAll<OpModeLifecycle.Initialize<T>>()
     private val starts = robot.takeAll<OpModeLifecycle.Start>()
     private val actions = robot.takeAll<OpModeLifecycle.Run>()
     private val stops = robot.takeAll<OpModeLifecycle.Stop>()
@@ -58,7 +58,6 @@ constructor(opModeName: String? = null) : OpMode() {
         }
 
 
-
     private fun Structure.showName() = /*if (this is PackingDevice<*>)
         devices.entries.find { this == it.value }!!.key
     else*/ name
@@ -74,7 +73,7 @@ constructor(opModeName: String? = null) : OpMode() {
         withMeasuringTime("遍历初始化结构") {
             initializations.forEach {
                 withMeasuringTime("初始化结构 ${it.showName()}") {
-                    it.init()
+                    it.init(this)
                 }
             }
         }

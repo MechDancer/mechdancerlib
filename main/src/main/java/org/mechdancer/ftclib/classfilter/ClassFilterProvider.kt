@@ -10,7 +10,7 @@ object ClassFilterProvider : ClassFilterAdapter() {
     override fun filterClass(clazz: Class<*>) {
         if (clazz == javaClass) return
         if (clazz.isAnnotationPresent(FilteringClass::class.java) &&
-                ClassFilterAdapter::class.java.isAssignableFrom(clazz))
+            ClassFilterAdapter::class.java.isAssignableFrom(clazz))
             filters.add(clazz.newInstance() as ClassFilter)
         else classes.add(clazz)
     }

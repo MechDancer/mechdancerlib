@@ -52,4 +52,4 @@ class StructureBuilder(private val structureName: String) {
  * @param block 复合结构 DSL 建造者
  */
 inline fun structure(name: String = "Unnamed", block: StructureBuilder.() -> Unit) =
-        StructureBuilder(name).apply(block).build()
+    StructureBuilder(name).apply(block).build()

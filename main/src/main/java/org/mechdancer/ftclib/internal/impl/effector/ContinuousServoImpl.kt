@@ -12,6 +12,7 @@ class ContinuousServoImpl(name: String, enable: Boolean)
 
     constructor(config: ContinuousServo.Config) : this(config.name, config.enable)
 
+    @Volatile
     private var shouldUpdatePwmEnable = false
 
     /**
@@ -41,6 +42,6 @@ class ContinuousServoImpl(name: String, enable: Boolean)
     }
 
     override fun toString() =
-            "连续舵机[$name] | ${if (enable) "功率：${100 * power}%" else "关闭"}"
+        "连续舵机[$name] | ${if (enable) "功率：${100 * power}%" else "关闭"}"
 
 }

@@ -11,44 +11,31 @@ import org.mechdancer.ftclib.core.structure.composite.Robot
 
 @Suppress("UNCHECKED_CAST")
 object MechDancerOpModeRegister : ClassFilterAdapter() {
-    private val teleOps = mutableSetOf<Class<out OpMode>>()
+    private val teleops = mutableSetOf<Class<out OpMode>>()
     private val autonomous = mutableSetOf<Class<out OpMode>>()
 
     private val registered by lazy { RegisteredOpModes.getInstance().opModes }
 
     override fun filterClass(clazz: Class<*>) {
         if (clazz.isAnnotationPresent(Disabled::class.java) ||
-                !BaseOpMode::class.java.isAssignableFrom(clazz)
+            !BaseOpMode::class.java.isAssignableFrom(clazz)
         ) return
         if (RemoteControlOpMode::class.java.isAssignableFrom(clazz))
-            teleOps.add(clazz as Class<out OpMode>)
+            teleops.add(clazz as Class<out OpMode>)
         else autonomous.add(clazz as Class<out OpMode>)
     }
 
     fun register(manager: OpModeManager) {
 
         fun reg(clazz: Class<out OpMode>, flavor: OpModeMeta.Flavor) {
-//			val robot = createRobot(clazz as Class<BaseOpMode<Robot>>)
-//			val opMode = try {
-//				clazz.getConstructor(String::class.java, Robot::class.java)
-//					.newInstance(clazz.simpleName, robot)
-//			} catch (e: NoSuchMethodException) {
-//				try {
-//					clazz.getConstructor(String::class.java)
-//						.newInstance(clazz.simpleName)
-//				}catch (e:NoSuchMethodException){
-//					clazz.getConstructor()
-//						.newInstance()
-//				}
-//			}
             val opMode =
-                    clazz.newInstance() as BaseOpMode<*>
+                clazz.newInstance() as BaseOpMode<*>
             val robot = BaseOpMode::class.java.getDeclaredField("robot")
-                    .also { it.isAccessible = true }[opMode] as Robot
+                .also { it.isAccessible = true }[opMode] as Robot
             manager.register(OpModeMeta(opMode.opModeName, flavor, robot.name), opMode)
         }
 
-        teleOps.forEach {
+        teleops.forEach {
             reg(it, OpModeMeta.Flavor.TELEOP)
         }
         autonomous.forEach {

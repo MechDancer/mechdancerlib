@@ -5,8 +5,9 @@ import org.mechdancer.ftclib.gamepad.Gamepad
 import kotlin.random.Random
 import kotlin.system.measureNanoTime
 
-internal fun withMeasuringTime(prefix: String, block: () -> Unit) {
-    RobotLog.d("$prefix 花费 ${measureNanoTime(block) * 1E-6} ms")
+internal inline fun withMeasuringTime(prefix: String, block: () -> Unit) {
+    if (enableTimeMeasuring)
+        RobotLog.d("$prefix 花费 ${measureNanoTime(block) * 1E-6} ms")
 }
 
 internal fun Gamepad.random() {
@@ -27,3 +28,5 @@ internal fun Gamepad.random() {
     leftBumper.raw = Random.nextBoolean()
     rightBumper.raw = Random.nextBoolean()
 }
+
+var enableTimeMeasuring = false

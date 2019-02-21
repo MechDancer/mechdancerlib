@@ -74,7 +74,7 @@ sealed class DeviceConfig(val name: String, val port: Int) : HardwareConfigDsl {
             is LynxEmbeddedImuConfig          -> """<LynxEmbeddedImu name="$name" bus="$bus" port="$port"/>"""
             is NeveRest3dot7v1GearmotorConfig -> """"<NeveRest3.7v1Gearmotor name="$name" port="$port"/>"""
             else                              -> "<${this::class.java.simpleName.substringBefore("Config")}" +
-                    """ name="$name" port="$port"/>"""
+                """ name="$name" port="$port"/>"""
         })
     }
 

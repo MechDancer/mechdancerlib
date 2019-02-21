@@ -14,14 +14,15 @@ import org.mechdancer.ftclib.internal.impl.Effector
  * @param enable 使能
  */
 class ServoImpl(
-        name: String,
-        enable: Boolean,
-        origin: Double,
-        ending: Double)
+    name: String,
+    enable: Boolean,
+    origin: Double,
+    ending: Double)
     : Servo, Effector<FtcServo>(name, enable) {
 
     constructor(config: Servo.Config) : this(config.name, config.enable, config.origin, config.ending)
 
+    @Volatile
     private var shouldUpdatePwmEnable = false
 
     /**
@@ -58,6 +59,6 @@ class ServoImpl(
 
 
     override fun toString() =
-            "舵机[$name] | ${if (enable) "位置: $position" else "关闭"}"
+        "舵机[$name] | ${if (enable) "位置: $position" else "关闭"}"
 
 }
