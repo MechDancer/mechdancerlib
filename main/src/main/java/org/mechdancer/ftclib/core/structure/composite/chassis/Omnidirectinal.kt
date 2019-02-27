@@ -16,11 +16,11 @@ abstract class Omnidirectinal
 
     data class Polar(var rho: Double = .0,
                      var theta: Double = .0,
-                     var omiga: Double = .0) {
+                     var omega: Double = .0) {
         val block: Descartes.() -> Unit = {
             x = rho * cos(theta)
             y = rho * sin(theta)
-            w = omiga
+            w = omega
         }
     }
 
