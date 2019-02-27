@@ -78,7 +78,7 @@ constructor(opModeName: String? = null) : OpMode() {
             }
         }
         withMeasuringTime("绑定电压传感器") {
-            voltageSensor.bind(hardwareMap)
+            //            voltageSensor.bind(hardwareMap)   TODO
         }
 
         catchException("init") {
@@ -87,7 +87,9 @@ constructor(opModeName: String? = null) : OpMode() {
                 initTask()
             }
         }
-        RobotLog.d("完成初始化")
+
+        if (enableTimeMeasuring)
+            RobotLog.d("完成初始化")
     }
 
     final override fun init_loop() {
@@ -98,7 +100,9 @@ constructor(opModeName: String? = null) : OpMode() {
                 initLoopTask()
             }
         }
-        RobotLog.d("完成一次初始化循环")
+
+        if (enableTimeMeasuring)
+            RobotLog.d("完成一次初始化循环")
     }
 
     final override fun start() {
@@ -124,7 +128,9 @@ constructor(opModeName: String? = null) : OpMode() {
                 startTask()
             }
         }
-        RobotLog.d("完成开始")
+
+        if (enableTimeMeasuring)
+            RobotLog.d("完成开始")
     }
 
     final override fun loop() {
@@ -134,6 +140,7 @@ constructor(opModeName: String? = null) : OpMode() {
             withMeasuringTime("执行循环任务") {
                 loopTask()
             }
+
             withMeasuringTime("遍历执行循环结构") {
                 actions.forEach {
                     withMeasuringTime("执行循环结构 ${it.showName()}") {
@@ -151,14 +158,15 @@ constructor(opModeName: String? = null) : OpMode() {
             }
         }
 
-        withMeasuringTime("执行循环电压传感器") {
-            voltageSensor.run()
-        }
+//        withMeasuringTime("执行循环电压传感器") {
+//            voltageSensor.run()   TODO
+//        }
 
         period = (System.currentTimeMillis() - lastPeriod).toInt()
         lastPeriod = System.currentTimeMillis()
 
-        RobotLog.d("完成一次循环")
+        if (enableTimeMeasuring)
+            RobotLog.d("完成一次循环")
     }
 
     final override fun stop() {
@@ -179,18 +187,21 @@ constructor(opModeName: String? = null) : OpMode() {
                 }
             }
         }
-        withMeasuringTime("解绑电压传感器") {
-            voltageSensor.unbind()
-        }
+
+//
+//        withMeasuringTime("解绑电压传感器") {
+//            voltageSensor.unbind()    TODO
+//        }
 
         catchException("stop") {
             //release resources
             withMeasuringTime("执行停止任务") {
                 stopTask()
-
             }
         }
-        RobotLog.d("完成停止")
+
+        if (enableTimeMeasuring)
+            RobotLog.d("完成停止")
     }
 
     final override fun getRuntime(): Double {
