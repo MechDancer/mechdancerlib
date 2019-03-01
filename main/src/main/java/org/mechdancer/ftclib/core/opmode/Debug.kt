@@ -8,6 +8,7 @@ import kotlin.system.measureNanoTime
 internal inline fun withMeasuringTime(prefix: String, block: () -> Unit) {
     if (enableTimeMeasuring)
         RobotLog.d("$prefix 花费 ${measureNanoTime(block) * 1E-6} ms")
+    else block()
 }
 
 internal fun Gamepad.random() {

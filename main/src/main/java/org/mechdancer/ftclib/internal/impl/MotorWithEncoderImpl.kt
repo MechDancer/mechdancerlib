@@ -1,6 +1,5 @@
 package org.mechdancer.ftclib.internal.impl
 
-import com.qualcomm.robotcore.hardware.DcMotor
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
@@ -32,11 +31,8 @@ class MotorWithEncoderImpl(name: String,
     override val subStructures: List<Structure> = listOf(motor, encoder)
 
 
-    override var power
-        get() = motor.power
-        set(value) {
-            motor.power = value
-        }
+    override var power = .0
+
     override var direction: Motor.Direction
         get() = motor.direction
         set(value) {
@@ -44,36 +40,35 @@ class MotorWithEncoderImpl(name: String,
         }
 
     override var mode = Mode.OPEN_LOOP
-        set(value) {
-            fun setMotorState(zeroPowerBehavior: DcMotor.ZeroPowerBehavior,
-                              runMode: DcMotor.RunMode) {
-                motor.zeroPowerBehavior = zeroPowerBehavior
-                motor.runMode = runMode
-            }
-            when (value) {
-                Mode.SPEED_CLOSE_LOOP, Mode.POSITION_CLOSE_LOOP ->
-                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-
-                Mode.OPEN_LOOP                                  ->
-                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-
-                Mode.LOCK                                       ->
-                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-                        DcMotor.RunMode.RUN_USING_ENCODER)
-
-                Mode.STOP                                       -> {
-                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-                        DcMotor.RunMode.STOP_AND_RESET_ENCODER)
-                    encoder.reset()
-                }
-            }
-            field = value
-        }
+//        set(value) {
+//            fun setMotorState(zeroPowerBehavior: DcMotor.ZeroPowerBehavior,
+//                              runMode: DcMotor.RunMode) {
+//                motor.zeroPowerBehavior = zeroPowerBehavior
+//                motor.runMode = runMode
+//            }
+//            when (value) {
+//                Mode.SPEED_CLOSE_LOOP, Mode.POSITION_CLOSE_LOOP ->
+//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
+//                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+//
+//                Mode.OPEN_LOOP                                  ->
+//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
+//                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+//
+//                Mode.LOCK                                       ->
+//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
+//                        DcMotor.RunMode.RUN_USING_ENCODER)
+//
+//                Mode.STOP                                       -> {
+//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
+//                        DcMotor.RunMode.STOP_AND_RESET_ENCODER)
+//                    encoder.reset()
+//                }
+//            }
+//            field = value
+//        }
 
     override var targetSpeed = .0
-
 
     override var targetPosition = .0
 
@@ -95,13 +90,14 @@ class MotorWithEncoderImpl(name: String,
 
     override fun reset() {
         reset(.0)
+        mode = Mode.OPEN_LOOP
     }
 
 
     override fun run() {
-        motor.power = when (mode) {
+        power = when (mode) {
             Mode.SPEED_CLOSE_LOOP    -> pidSpeed(targetSpeed - speed)
-            Mode.OPEN_LOOP           -> motor.power
+            Mode.OPEN_LOOP           -> power
             Mode.POSITION_CLOSE_LOOP -> pidPosition(targetPosition - position)
             Mode.STOP, Mode.LOCK     -> .0
         }
@@ -110,6 +106,7 @@ class MotorWithEncoderImpl(name: String,
             mode = Mode.POSITION_CLOSE_LOOP
             targetPosition = position
         }
+        motor.power = power
     }
 
     override fun toString(): String = "电机x编码器[$name] | ${if (enable) "功率: ${100 * power}% " +

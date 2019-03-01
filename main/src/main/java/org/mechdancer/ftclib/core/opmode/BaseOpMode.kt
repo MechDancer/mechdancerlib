@@ -36,7 +36,7 @@ constructor(opModeName: String? = null) : OpMode() {
 
     private val devices = robot.takeAllDevices().map {
         it.first.dropWhile { name -> name != '.' }.removePrefix(".") to it.second
-    }.toMap()
+    }
 
     private val voltageSensor = robot.takeAll<VoltageSensorImpl>()[0]
 
@@ -64,12 +64,16 @@ constructor(opModeName: String? = null) : OpMode() {
 
     final override fun init() {
         withMeasuringTime("遍历绑定设备") {
-            devices.forEach {
-                withMeasuringTime("绑定 ${it.key}") {
-                    it.value.bind(hardwareMap, it.key)
+            devices.forEach {(name,device)->
+                withMeasuringTime("绑定 $name") {
+                    device.bind(hardwareMap, name)
+                    RobotLog.i("绑定设备: $name")
                 }
             }
         }
+
+        RobotLog.i("设备: $devices")
+
         withMeasuringTime("遍历初始化结构") {
             initializations.forEach {
                 withMeasuringTime("初始化结构 ${it.showName()}") {
@@ -107,9 +111,9 @@ constructor(opModeName: String? = null) : OpMode() {
 
     final override fun start() {
         withMeasuringTime("遍历重置设备") {
-            devices.forEach {
-                withMeasuringTime("重置设备 ${it.key}") {
-                    it.value.reset()
+            devices.forEach {(name,device)->
+                withMeasuringTime("重置设备 $name") {
+                    device.reset()
                 }
             }
         }
@@ -151,9 +155,9 @@ constructor(opModeName: String? = null) : OpMode() {
         }
 
         withMeasuringTime("遍历执行循环设备") {
-            devices.forEach {
-                withMeasuringTime("执行循环设备 ${it.key}") {
-                    it.value.run()
+            devices.forEach {(name,device)->
+                withMeasuringTime("执行循环设备 $name") {
+                    device.run()
                 }
             }
         }
@@ -181,9 +185,9 @@ constructor(opModeName: String? = null) : OpMode() {
         }
 
         withMeasuringTime("遍历解绑设备") {
-            devices.forEach {
-                withMeasuringTime("解绑设备 ${it.key}") {
-                    it.value.unbind()
+            devices.forEach {(name,device)->
+                withMeasuringTime("解绑设备 $name") {
+                    device.unbind()
                 }
             }
         }
