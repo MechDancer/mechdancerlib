@@ -6,9 +6,9 @@ package org.mechdancer.ftclib.core.structure
  */
 class StructureBuilder(private val structureName: String) {
 
-    private val _subStructures = mutableListOf<Structure>()
+    internal val subStructures = mutableListOf<Structure>()
 
-    private fun add(structure: Structure) = _subStructures.add(structure)
+    private fun add(structure: Structure) = subStructures.add(structure)
 
     /**
      * 结构运行动作
@@ -38,7 +38,7 @@ class StructureBuilder(private val structureName: String) {
      * 建造
      */
     fun build() = object : CompositeStructure(structureName) {
-        override val subStructures: List<Structure> = ArrayList(_subStructures)
+        override val subStructures: List<Structure> = ArrayList(this@StructureBuilder.subStructures)
         override fun run() = action(subStructures)
 
         override fun toString() = "AnonymousStructure[$name]"

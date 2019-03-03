@@ -4,7 +4,6 @@ import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.StructureBuilder
 import org.mechdancer.ftclib.core.structure.injector.StructureInjector
-import org.mechdancer.ftclib.core.structure.structure
 
 /**
  * 用于构造非匿名 Structure
@@ -12,31 +11,13 @@ import org.mechdancer.ftclib.core.structure.structure
  * @param delegate 匿名 structure
  */
 @Suppress("LeakingThis")
-abstract class AbstractStructure(private val delegate: CompositeStructure) : CompositeStructure(delegate.name) {
-    /**
-     * 建立全新的 Structure
-     */
-    constructor() : this(structure { })
+abstract class AbstractStructure(name: String = "Unnamed", block: StructureBuilder.() -> Unit = {}) : CompositeStructure(name) {
 
-    /**
-     * 省略 [structure] {...} 的语法糖
-     */
-    constructor(block: StructureBuilder.() -> Unit) : this(structure(block = block))
 
-    /**
-     * 省略 [structure] {...} 的语法糖
-     */
-    constructor(name: String, block: StructureBuilder.() -> Unit) : this(structure(name, block))
+    constructor(name: String, vararg subStructures: Structure) : this(name, { subStructures.forEach { subStructure(it) } })
 
-    /**
-     * 带名，可将子结构直接加入构造器
-     */
-    constructor(name: String, vararg subStructs: Structure) : this(structure(name) { subStructs.forEach { subStructure(it) } })
 
-    /**
-     * 可将子结构直接加入构造器
-     */
-    constructor(vararg subStructs: Structure) : this({ subStructs.forEach { subStructure(it) } })
+    private val delegate = StructureBuilder(name).apply(block)
 
     final override val subStructures: List<Structure> = delegate.subStructures
 
@@ -45,7 +26,7 @@ abstract class AbstractStructure(private val delegate: CompositeStructure) : Com
     }
 
     override fun run() {
-        delegate.run()
+        delegate.action(subStructures)
     }
 
     override fun toString(): String {

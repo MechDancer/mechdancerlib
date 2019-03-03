@@ -26,7 +26,12 @@ interface ColorSensor : Structure {
      * @property alpha alpha 通道
      * @property argb 全部数据组合
      */
-    data class ColorData(val red: Int, val green: Int, val blue: Int, val alpha: Int, val argb: Int) {
+    data class ColorData(
+        val red: Int,
+        val green: Int,
+        val blue: Int,
+        val alpha: Int,
+        val argb: Int) {
         override fun toString(): String = "RevSensorValue(Red:$red Blue:$blue Green:$green Alpha:$alpha)"
     }
 
