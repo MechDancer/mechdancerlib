@@ -6,7 +6,6 @@ import org.mechdancer.ftclib.core.structure.monomeric.effector.ContinuousServo
 import org.mechdancer.ftclib.internal.FtcContinuousServo
 import org.mechdancer.ftclib.internal.impl.Effector
 
-/** 连续舵机功能扩展类  */
 class ContinuousServoImpl(name: String, enable: Boolean)
     : Effector<FtcContinuousServo>(name, enable), ContinuousServo {
 
@@ -15,14 +14,8 @@ class ContinuousServoImpl(name: String, enable: Boolean)
     @Volatile
     private var shouldUpdatePwmEnable = false
 
-    /**
-     * 速度
-     */
     override var power = .0
 
-    /**
-     * 是否开启 pwm 信号输出
-     */
     override var pwmOutput: Boolean = true
         set(value) {
             shouldUpdatePwmEnable = true
@@ -42,6 +35,6 @@ class ContinuousServoImpl(name: String, enable: Boolean)
     }
 
     override fun toString() =
-        "连续舵机[$name] | ${if (enable) "功率：${100 * power}%" else "关闭"}"
+        "ContinuousServo[$name] | ${if (enable) "Power：${100 * power}%" else "Disabled"}"
 
 }

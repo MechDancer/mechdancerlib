@@ -1,15 +1,18 @@
 package org.mechdancer.ftclib.gamepad.component
 
 /**
- * 手柄组件
+ * Component of gamepad
  *
- * [Button]
- * [Stick]
+ * See:
+ * [Button],
+ * [Stick],
  * [Trigger]
  */
 interface IGamePadComponent<T> {
+
     /**
-     * 值
+     * Raw value
      */
     var raw: T
+
 }

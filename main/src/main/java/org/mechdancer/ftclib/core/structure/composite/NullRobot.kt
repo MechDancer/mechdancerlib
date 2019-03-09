@@ -1,6 +1,8 @@
 package org.mechdancer.ftclib.core.structure.composite
 
 /**
- * 空机器人
+ * Null robot
+ *
+ * Works as a placeholder.
  */
 class NullRobot : Robot("null_robot")

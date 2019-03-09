@@ -4,28 +4,33 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * 连续舵机
+ * ContinuousServo
+ *
+ * A kind of device realized power output using pwm.
  */
 interface ContinuousServo : Structure {
+
     /**
-     * 功率
-     * 范围: [-1, 1]
+     * Power
+     *
+     * Range: [-1, 1]
      */
     var power: Double
 
     /**
-     * 是否开启 pwm 输出
+     * Whether to enable pwm output
      */
     var pwmOutput: Boolean
 
     /**
-     * 配置
+     * DSL config
      *
-     * @param name 名字
-     * @param enable 是否启用
+     * @param name name
+     * @param enable whether to enable
      */
     class Config(
         name: String,
         enable: Boolean = false
     ) : DeviceConfig(name, enable)
+
 }

@@ -8,32 +8,37 @@ import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
  * 电机编码器组合
+ *
  * 具有电机和编码器一切性质。其不应具有多态性，但为约定行为，实现 [Motor], [Encoder]。
  * 在拥有编码器的同时为电机提供了闭环功能。
  */
 interface MotorWithEncoder : Motor, Encoder, Structure {
+
     /**
      * 电机模式
-     * [Mode]
      */
     var mode: Mode
 
     /**
      * 目标速度
+     *
      * 在 [mode] 为 [Mode.SPEED_CLOSE_LOOP] 时有效
      */
     var targetSpeed: Double
 
     /**
      * 目标位置
+     *
      * 在 [mode] 为 [Mode.POSITION_CLOSE_LOOP] 时有效
      */
     var targetPosition: Double
 
     /**
      * 锁定电机
+     *
+     * 通过闭位置环实现
      */
-    fun lock()
+    override var lock: Boolean
 
     /**
      * 电机模式枚举
@@ -51,11 +56,6 @@ interface MotorWithEncoder : Motor, Encoder, Structure {
          * 闭位置环
          */
         POSITION_CLOSE_LOOP,
-        /**
-         * 锁定
-         * 内部状态
-         */
-        LOCK,
         /**
          * 停止
          */
@@ -80,7 +80,16 @@ interface MotorWithEncoder : Motor, Encoder, Structure {
                  var pidSpeed: PID = PID.zero()) : DeviceConfig(name, enable)
 
     companion object CPR {
-        const val NEVEREST40 = 1120.0
-        const val MATRIX12V = 1478.4
+        const val NeveRest3_7 = 44.4
+        const val NeveRest20 = 560.0
+        const val Neverest40 = 1120.0
+        const val NeveRest60 = 1680.0
+        const val RevRobotics20HdHex = 1120.0
+        const val RevRobotics40HdHex = 2240.0
+        const val RevRoboticsCoreHex = 290.0
+        const val Tetrix = 1440.0
+        const val Matrix12V = 1478.4
+        const val MatrixLegacy = 757.12
     }
+
 }

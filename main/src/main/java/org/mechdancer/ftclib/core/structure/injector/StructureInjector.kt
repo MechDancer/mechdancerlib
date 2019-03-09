@@ -4,11 +4,15 @@ import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
 
 /**
- * 子结构注入器
- * 与 [Inject] 配合使用
+ * Structure injector
+ *
+ * See [Inject].
  */
 object StructureInjector {
 
+    /**
+     * Uses [structure]'s substructures to inject [structure].
+     */
     fun inject(structure: CompositeStructure) {
         val clazz = structure::class.java
         val properties = clazz.declaredFields.filter {
@@ -33,12 +37,12 @@ object StructureInjector {
                         it
                     else
                         throw IllegalStateException("""
-							注入类型错误
-							预期: ${expectType.simpleName}
-							实际: ${p.first.type.simpleName}
+							Inject type error:
+							Expected: ${expectType.simpleName}
+							Actual: ${p.first.type.simpleName}
 						""".trimIndent())
                 }
-                ?: throw IllegalStateException("未找到 [$expectName: ${expectType.name}]")
+                ?: throw IllegalStateException("Unable to find [$expectName: ${expectType.name}]")
             p.first.set(structure, result)
         }
     }

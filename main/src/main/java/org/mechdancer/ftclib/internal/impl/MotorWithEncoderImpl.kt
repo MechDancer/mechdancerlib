@@ -30,7 +30,6 @@ class MotorWithEncoderImpl(name: String,
 
     override val subStructures: List<Structure> = listOf(motor, encoder)
 
-
     override var power = .0
 
     override var direction: Motor.Direction
@@ -40,33 +39,6 @@ class MotorWithEncoderImpl(name: String,
         }
 
     override var mode = Mode.OPEN_LOOP
-//        set(value) {
-//            fun setMotorState(zeroPowerBehavior: DcMotor.ZeroPowerBehavior,
-//                              runMode: DcMotor.RunMode) {
-//                motor.zeroPowerBehavior = zeroPowerBehavior
-//                motor.runMode = runMode
-//            }
-//            when (value) {
-//                Mode.SPEED_CLOSE_LOOP, Mode.POSITION_CLOSE_LOOP ->
-//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-//                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-//
-//                Mode.OPEN_LOOP                                  ->
-//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-//                        DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-//
-//                Mode.LOCK                                       ->
-//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-//                        DcMotor.RunMode.RUN_USING_ENCODER)
-//
-//                Mode.STOP                                       -> {
-//                    setMotorState(DcMotor.ZeroPowerBehavior.BRAKE,
-//                        DcMotor.RunMode.STOP_AND_RESET_ENCODER)
-//                    encoder.reset()
-//                }
-//            }
-//            field = value
-//        }
 
     override var targetSpeed = .0
 
@@ -78,9 +50,7 @@ class MotorWithEncoderImpl(name: String,
     override val speed: Double
         get() = encoder.speed * direction.sign
 
-    override fun lock() {
-        mode = Mode.LOCK
-    }
+    override var lock: Boolean = false
 
     override fun reset(off: Double) {
         encoder.reset(off)
@@ -95,21 +65,23 @@ class MotorWithEncoderImpl(name: String,
 
 
     override fun run() {
+        if (lock) {
+            motor.lock = speed >= 0.05
+            mode = Mode.POSITION_CLOSE_LOOP
+            targetPosition = position
+        }
+
         power = when (mode) {
             Mode.SPEED_CLOSE_LOOP    -> pidSpeed(targetSpeed - speed)
             Mode.OPEN_LOOP           -> power
             Mode.POSITION_CLOSE_LOOP -> pidPosition(targetPosition - position)
-            Mode.STOP, Mode.LOCK     -> .0
+            Mode.STOP                -> .0
         }
 
-        if (mode == Mode.LOCK && speed <= 0.05) {
-            mode = Mode.POSITION_CLOSE_LOOP
-            targetPosition = position
-        }
         motor.power = power
     }
 
-    override fun toString(): String = "电机x编码器[$name] | ${if (enable) "功率: ${100 * power}% " +
-        "位置: $position 速度: $speed" else "关闭"}"
+    override fun toString(): String = "MotorWithEncoder[$name] | ${if (enable) "Power: ${100 * power}% " +
+        "Position: $position rad, Speed: $speed rad/s" else "Disabled"}"
 
 }

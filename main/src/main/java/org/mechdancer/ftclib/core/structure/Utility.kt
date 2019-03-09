@@ -15,8 +15,8 @@ internal inline fun <reified T> CompositeStructure.takeAll(): List<T> =
     this.flatten().filter { it is T }.map { it as T }
 
 /**
- * 转化为树状图
- * @param indent 缩进
+ * Too tree view
+ * @param indent indent to recursive
  */
 fun CompositeStructure.treeView(indent: Int = 0): String {
     val builder = StringBuilder()
@@ -37,6 +37,6 @@ fun CompositeStructure.treeView(indent: Int = 0): String {
 }
 
 /**
- * 为 [Structure.run] 提供 `()` 运算符
+ * Operator for [run]
  */
 operator fun Structure.invoke() = run()

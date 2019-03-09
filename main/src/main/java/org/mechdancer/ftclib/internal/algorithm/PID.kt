@@ -3,7 +3,7 @@ package org.mechdancer.ftclib.internal.algorithm
 import java.lang.Math.abs
 
 /**
- * PID 控制器
+ * PID controller
  */
 class PID(var k: Double,
           var ki: Double,
@@ -12,13 +12,18 @@ class PID(var k: Double,
           var deadArea: Double) {
 
     companion object {
+        /**
+         * Creates a pid controller, all parameters in which is 0.
+         */
         fun zero() = PID(.0, .0, .0, .0, .0)
     }
 
-    /** 运行参数  */
     private var sum = 0.0
     private var last = 0.0
 
+    /**
+     * Run pid controller
+     */
     operator fun invoke(data: Double): Double {
         val value = abs(data)
         sum = if (value > integrateArea) .0 else sum + data
@@ -30,7 +35,9 @@ class PID(var k: Double,
         else k * result
     }
 
-    /** 重置运行间参数  */
+    /**
+     * Resets running parameters
+     */
     fun reset() {
         sum = 0.0
         last = 0.0

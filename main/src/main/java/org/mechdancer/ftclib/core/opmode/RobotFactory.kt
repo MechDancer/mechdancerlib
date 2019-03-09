@@ -4,7 +4,16 @@ import org.mechdancer.ftclib.core.structure.composite.Robot
 import java.lang.reflect.ParameterizedType
 
 @Suppress("UNCHECKED_CAST")
+/**
+ * Robot factory
+ *
+ * Use generic parameter to create a robot instance.
+ */
 object RobotFactory {
+
+    /**
+     * Create a [clazz] robot
+     */
     fun <T : Robot> createRobot(clazz: Class<BaseOpMode<T>>) =
         (clazz.genericSuperclass as? ParameterizedType)?.let { type ->
             type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
@@ -20,5 +29,8 @@ object RobotFactory {
                 } ?: throw IllegalArgumentException("未找到 Robot 类型")
         } as T
 
+    /**
+     * Create a [T] robot
+     */
     fun <T : Robot> BaseOpMode<T>.createRobot() = createRobot(javaClass)
 }

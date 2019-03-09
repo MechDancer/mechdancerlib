@@ -7,11 +7,12 @@ import org.mechdancer.ftclib.util.AutoCallable
 import org.mechdancer.ftclib.util.Resettable
 
 /**
- * 机器人结构树根部
- * 由 OpMode 直接调用
+ * Root of structure tree
  *
- * @param name 机器人名字
- * @param subStruct 可添加子结构
+ * Calls directly by OpMode.
+ *
+ * @param name name
+ * @param subStruct substructures
  */
 abstract class Robot(name: String, vararg subStruct: Structure)
     : AbstractStructure(name, *subStruct, VoltageSensorImpl()), AutoCallable {
@@ -19,6 +20,11 @@ abstract class Robot(name: String, vararg subStruct: Structure)
     private val rests = takeAll<Resettable>()
 
 
+    /**
+     * Resets the robot
+     *
+     * Structures marked with [Resettable] will be called.
+     */
     fun reset() {
         rests.forEach { it.reset() }
     }

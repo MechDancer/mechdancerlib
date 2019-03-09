@@ -22,7 +22,7 @@ class TouchSensorImpl(name: String, enable: Boolean)
 
     override fun isReleasing(): Boolean = last && !bePressed()
 
-    override fun toString(): String = "触控传感器[$name] | 状态: $raw"
+    override fun toString(): String = "TouchSensor[$name] | BePressed: $raw"
 
     override fun resetData() {
         last = false

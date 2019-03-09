@@ -1,35 +1,43 @@
 package org.mechdancer.ftclib.gamepad.component
 
 /**
- * 扳机
+ * Trigger
+ *
+ * Usually, triggers are used as button is very common,
+ * since it has pressingThreshold, it has become to a button.
  */
 class Trigger : IGamePadComponent<Double> {
 
+    /**
+     * Pressing threshold
+     *
+     * If trigger value is greater than that,
+     * this trigger can be counted as *be pressed*.
+     */
     var pressingThreshold = 0.7
 
 
     private var last = false
 
     /**
-     * 当前状态
-     **/
+     * Returns the current state of the button
+     */
     fun bePressed() = raw > pressingThreshold
 
     /**
-     * 是否被按下
-     *
-     * 仅当按钮被按下的第一个周期为 `true`
+     * Returns true when the first time the button be pressed
      */
     fun isPressing() = !last && bePressed()
 
     /**
-     * 是否释放
-     *
-     * 仅当按钮释放的第一个周期为 `true`
+     * Returns true when the first time the button be released
      */
     fun isReleasing() = last && !bePressed()
 
 
+    /**
+     * Value of the trigger
+     */
     val value
         get() = raw
 

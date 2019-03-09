@@ -1,16 +1,25 @@
 package org.mechdancer.ftclib.core.structure
 
 /**
- * 机器人结构
+ * Structure
+ *
+ * It is an specific definition of a robot part,
+ * like a rocker arm or a chassis.
+ * Once it is attached to robot as substructure,
+ * it will has a similar life-cycle (see [org.mechdancer.ftclib.util.OpModeLifecycle]).
+ *
+ * It has a name, can be to string.
+ * [run] function defines what this structure should do when robot is running.
  */
 interface Structure {
+
     /**
-     * 结构名
+     * Name of structure
      */
     val name: String
 
     /**
-     * 结构运行动作
+     * Action when running
      */
     fun run()
 
@@ -19,17 +28,19 @@ interface Structure {
 
 
 /**
- * 单体结构
+ * Monomeric structure
  */
 abstract class MonomericStructure(override val name: String) : Structure
 
 /**
- * 复合结构
- * 与单体结构相比，可具有子结构。
+ * Composite structure
+ *
+ * The only difference between [CompositeStructure] and [MonomericStructure]
+ * is that a composite structure can have substructures attached to it.
  */
 abstract class CompositeStructure(override val name: String) : Structure {
     /**
-     * 子结构
+     * SubStructures attached to it
      */
     abstract val subStructures: List<Structure>
 }

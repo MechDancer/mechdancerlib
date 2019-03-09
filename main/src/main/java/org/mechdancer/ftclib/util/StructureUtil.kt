@@ -5,7 +5,8 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.composite.Robot
 
 /**
- * OpMode 生命周期
+ * OpMode life cycle
+ *
  * 实现相应接口标识着该 [Structure] 将参与 OpMode 相应生命周期，会被 OpMode 调用。
  * 只有 [Structure] 子类继承有效。
  */

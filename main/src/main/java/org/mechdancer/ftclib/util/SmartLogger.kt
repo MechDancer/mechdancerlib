@@ -3,16 +3,20 @@ package org.mechdancer.ftclib.util
 import com.qualcomm.robotcore.util.RobotLog
 
 /**
- * 日志接口
- * 实现该接口的类可直接调用日志输出方法。
+ * Logger interface
+ *
+ * Classes implemented this interface can output logs.
  */
 interface SmartLogger {
+
     /**
-     * 日志标签
-     * 默认为类名
+     * TAG of the logger
+     *
+     * Default is class name.
      */
     val tag: String
         get() = ""
+
 }
 
 private fun SmartLogger.getTag() =

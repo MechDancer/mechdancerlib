@@ -1,8 +1,7 @@
 package org.mechdancer.ftclib.core.structure
 
 /**
- * 使用 DSL 建立匿名复合结构
- * [CompositeStructure]
+ * Dsl builder for [CompositeStructure].
  */
 class StructureBuilder(private val structureName: String) {
 
@@ -11,31 +10,26 @@ class StructureBuilder(private val structureName: String) {
     private fun add(structure: Structure) = subStructures.add(structure)
 
     /**
-     * 结构运行动作
+     * See [Structure.run]
      */
     var action: (structures: List<Structure>) -> Unit = {}
 
     /**
-     * 添加子结构
-     *
-     * @param name 子结构名
-     * @param block 子结构 DSL 建造者
+     * Creates and adds a substructure
      */
     fun subStructure(name: String, block: StructureBuilder.() -> Unit) {
         add(StructureBuilder(name).apply(block).build())
     }
 
     /**
-     * 添加子结构
-     *
-     * @param subStructure 子结构
+     * Adds a substructure
      */
     fun subStructure(subStructure: Structure) {
         add(subStructure)
     }
 
     /**
-     * 建造
+     * Builds the instance
      */
     fun build() = object : CompositeStructure(structureName) {
         override val subStructures: List<Structure> = ArrayList(this@StructureBuilder.subStructures)
@@ -46,10 +40,10 @@ class StructureBuilder(private val structureName: String) {
 }
 
 /**
- * 构造匿名 Structure
+ * Constructs an anonymous structure
  *
- * @param name 结构名
- * @param block 复合结构 DSL 建造者
+ * @param name name
+ * @param block see [StructureBuilder]
  */
 inline fun structure(name: String = "Unnamed", block: StructureBuilder.() -> Unit) =
     StructureBuilder(name).apply(block).build()

@@ -7,21 +7,24 @@ import org.mechdancer.ftclib.core.structure.MonomericStructure
 import org.mechdancer.ftclib.util.SmartLogger
 
 /**
- * 设备
- * @param name 名字
- * @param enable 使能
+ * Device wrapper
+ *
+ * Contains hardware device
+ *
+ * @param name name
+ * @param enable whether to enable
  */
 sealed class PackingDevice<in T : HardwareDevice>
 (name: String, val enable: Boolean) :
     MonomericStructure(name), SmartLogger {
 
     /**
-     * 对真实设备的引用
+     * Reference of hardware device
      */
     private var device: T? = null
 
     /**
-     * 绑定设备
+     * Binds through [hardwareMap]
      */
     internal fun bind(hardwareMap: HardwareMap, id: String) {
         @Suppress("UNCHECKED_CAST")
@@ -29,39 +32,39 @@ sealed class PackingDevice<in T : HardwareDevice>
     }
 
     /**
-     * 解除设备绑定
+     * Unbinds
      */
     internal fun unbind() {
         device = null
     }
 
     /**
-     * 配置操作
+     * Config operation
      */
     protected open fun T.config() = Unit
 
     /**
-     * 输入操作（传感器）
+     * Input operation (Sensor)
      */
     protected abstract fun T.input()
 
     /**
-     * 输出操作（动力设备、灯）
+     * Output operation (Effector)
      */
     protected abstract fun T.output()
 
     /**
-     * 重置操作（重置设备）
+     * Reset operation (Device)
      */
     protected abstract fun T.reset()
 
     /**
-     * 重置操作（清除数据）
+     * Reset operation (Data)
      */
     protected open fun resetData() = Unit
 
     /**
-     * 重置操作
+     * Resets this device
      */
     fun reset() {
         device?.input()
@@ -70,7 +73,7 @@ sealed class PackingDevice<in T : HardwareDevice>
     }
 
     /**
-     * 执行所有传递指令的操作
+     * Runs this device
      */
     final override fun run() {
         device?.config()
@@ -81,7 +84,9 @@ sealed class PackingDevice<in T : HardwareDevice>
 }
 
 /**
- * 输出设备
+ * Effector
+ *
+ * Only has [output]
  */
 abstract class Effector<in T : HardwareDevice>
 (name: String, enable: Boolean)
@@ -91,7 +96,9 @@ abstract class Effector<in T : HardwareDevice>
 }
 
 /**
- * 传感器
+ * Sensor
+ *
+ * Only has [input]
  */
 abstract class Sensor<in T : HardwareDevice>
 (name: String, enable: Boolean)
@@ -99,6 +106,9 @@ abstract class Sensor<in T : HardwareDevice>
     final override fun T.output() = Unit
 }
 
+/**
+ * Take all devices from a tree
+ */
 fun CompositeStructure.takeAllDevices(prefix: String = name): List<Pair<String, PackingDevice<*>>> =
     subStructures.fold(mutableListOf()) { acc, structure ->
         acc.addAll((structure as? CompositeStructure)?.let {

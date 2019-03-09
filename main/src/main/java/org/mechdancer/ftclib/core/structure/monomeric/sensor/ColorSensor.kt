@@ -4,27 +4,22 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * 颜色传感器
+ * Color sensor
  */
 interface ColorSensor : Structure {
+
     /**
-     * 颜色数值
+     * Data
      */
     val colorData: ColorData
 
     /**
-     * 是否开启 LED
+     * Whether to enable led on this sensor
      */
     var enableLed: Boolean
 
     /**
-     * 颜色数据类
-     *
-     * @property red 红
-     * @property green 绿
-     * @property blue 蓝
-     * @property alpha alpha 通道
-     * @property argb 全部数据组合
+     * Color data
      */
     data class ColorData(
         val red: Int,
@@ -36,10 +31,10 @@ interface ColorSensor : Structure {
     }
 
     /**
-     * 配置
+     * DSL config
      *
-     * @param name 名字
-     * @param enable 是否启用
+     * @param name name
+     * @param enable whether to enable
      */
     class Config(name: String, enable: Boolean = false) : DeviceConfig(name, enable)
 }

@@ -30,6 +30,6 @@ class VoltageSensorImpl : VoltageSensor, MonomericStructure("voltageSensor") {
         }
     }
 
-    override fun toString(): String = "电压传感器 | 电压: ${voltage.toInt()} V"
+    override fun toString(): String = "VoltageSensor | Voltage: ${voltage.toInt()} V"
 
 }

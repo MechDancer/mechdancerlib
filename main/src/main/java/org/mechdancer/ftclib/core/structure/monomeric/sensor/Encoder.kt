@@ -4,31 +4,31 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * 编码器
+ * Encoder
  */
 interface Encoder : Structure {
+
     /**
-     * 位置
-     * 弧度
+     * Current position (rad)
      */
     val position: Double
 
     /**
-     * 速度
+     * Current speed (rad/s)
      */
     val speed: Double
 
     /**
-     * 重置
+     * Resets this encoder to [off]
      */
     fun reset(off: Double)
 
     /**
-     * 配置
+     * DSL config
      *
-     * @param name 名字
-     * @param enable 是否启用
-     * @param cpr 编码器一圈的值
+     * @param name name
+     * @param enable whether to enable
+     * @param cpr pulses per second
      */
     class Config(
         name: String,

@@ -3,13 +3,15 @@ package org.mechdancer.ftclib.core.structure.monomeric.sensor
 import org.mechdancer.ftclib.core.structure.Structure
 
 /**
- * 电压传感器
- * 不可单独构造，若需使用，在 [org.mechdancer.ftclib.core.structure.composite.Robot] 中使用
-[org.mechdancer.ftclib.core.structure.injector.Inject] 注入即可。
+ * Voltage sensor
+ *
+ * Can't be constructed, can be inject by using [org.mechdancer.ftclib.core.structure.injector.Inject]
+ * in [org.mechdancer.ftclib.core.structure.composite.Robot].
  */
 interface VoltageSensor : Structure {
+
     /**
-     * 电压值
+     * voltage
      */
     val voltage: Double
 

@@ -1,12 +1,14 @@
-package org.mechdancer.ftclib.core.structure.composite.chassis.locator
+package org.mechdancer.ftclib.core.structure.composite.chassis
 
-import org.mechdancer.ftclib.core.structure.composite.chassis.Mecanum
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.internal.algorithm.PID
 import org.mechdancer.ftclib.internal.impl.MotorWithEncoderImpl
 
-open class MecanumWithLocator(name: String,
+/**
+ * Mecanum chassis with encoder
+ */
+open class MecanumWithEncoder(name: String,
                               motorCpr: Double,
                               enable: Boolean,
                               lfMotorDirection: Motor.Direction,
@@ -25,7 +27,7 @@ open class MecanumWithLocator(name: String,
     lfMotorName,
     lbMotorName,
     rfMotorName,
-    rbMotorName), Locator {
+    rbMotorName) {
 
     final override val subStructures: List<MotorWithEncoder> =
         arrayOf(lfMotorName, lbMotorName, rfMotorName, rbMotorName)
@@ -40,15 +42,12 @@ open class MecanumWithLocator(name: String,
                     }, PID.zero(), PID.zero())
             }
 
-    override var location = Location(.0, .0, .0)
+    var rawPositions = DoubleArray(4)
+        private set
 
     override fun run() {
         super.run()
-        location = Location(
-            subStructures[0].position + subStructures[1].position + subStructures[2].position + subStructures[3].position,
-            subStructures[0].position - subStructures[1].position - subStructures[2].position + subStructures[3].position,
-            -subStructures[0].position - subStructures[1].position + subStructures[2].position + subStructures[3].position
-        )
+        rawPositions = subStructures.map { it.position }.toDoubleArray()
     }
 
 }

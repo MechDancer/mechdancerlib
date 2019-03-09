@@ -9,6 +9,11 @@ import org.mechdancer.ftclib.util.warn
 import kotlin.math.abs
 import kotlin.math.sign
 
+/**
+ * Base of chassis
+ *
+ * Abstracts the generality between chassis — [powers] and [maxPower].
+ */
 abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
     : CompositeStructure("null_chassis"), AutoCallable, SmartLogger {
 
@@ -19,7 +24,7 @@ abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enabl
         get() = field.standardizeBy(maxPower)
         set(value) {
             if (value.size != field.size)
-                warn("电机功率输入与电机数量不符(${value.size} ≠ ${field.size})")
+                warn("Illegal size powers: ${value.size} ≠ ${field.size}")
             else
                 field = value
         }
@@ -27,16 +32,19 @@ abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enabl
     var maxPower = 1.0
         set(value) {
             if (value !in -1.0..1.0)
-                warn("电机功率限制不合理($maxPower ∉ [-1,1])")
+                warn("Illegal max power: $maxPower ∉ [-1,1]")
             else
                 field = value
         }
 
     /**
-     * 功率标准化
-     * 若传入的功率中存在大于传入的最大值约束的值，将最大值调整为约束值，其他值按比例缩小
+     * Standardizes powers
      *
-     * @param maxPower 最大功率约束∈[-1,1]
+     * If the input power has a value greater than the input maximum constraint,
+     * the maximum is adjusted to the constraint value,
+     * and the other values are scaled down.
+     *
+     * @param maxPower  maximum power constraint ∈ [-1,1]
      */
     private fun DoubleArray.standardizeBy(maxPower: Double) =
         map(::abs).max()!!.let {

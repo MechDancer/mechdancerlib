@@ -6,75 +6,58 @@ import org.mechdancer.ftclib.gamepad.component.Stick
 import org.mechdancer.ftclib.gamepad.component.Trigger
 
 /**
- * 手柄
+ * Gamepad
  */
 class Gamepad {
 
     //==============
-    // 上方区域
+    // Top area
     //==============
-    /**
-     * 左上条
-     */
+    /** Left bumper */
     val leftBumper = Button()
-    /**
-     * 右上条
-     */
+    /** Right bumper */
     val rightBumper = Button()
 
     //==============
-    // 按钮区域
+    // Button area
     //==============
+    /** Button a */
     val a = Button()
+    /** Button b */
     val b = Button()
+    /** Button x */
     val x = Button()
+    /** Button y */
     val y = Button()
 
     //==============
-    // 方向键区域
+    // Arrow area
     //==============
-    /**
-     * 上按钮
-     */
+    /** Arrow up */
     val up = Button()
-    /**
-     * 下按钮
-     */
+    /** Arrow down */
     val down = Button()
-    /**
-     * 左按钮
-     */
+    /** Arrow left */
     val left = Button()
-    /**
-     * 右按钮
-     */
+    /** Arrow right */
     val right = Button()
 
     //==============
-    // 摇杆区域
+    // Stick area
     //==============
-    /**
-     * 左摇杆
-     */
+    /** Left stick */
     val leftStick = Stick()
-    /**
-     * 右摇杆
-     */
+    /** Right stick */
     val rightStick = Stick()
 
     //==============
-    // 扳机区域
+    // Trigger area
     //==============
-    /**
-     * 左扳机
-     */
+    /** Left trigger */
     val leftTrigger = Trigger()
-    /**
-     * 右扳机
-     */
+    /** Right trigger */
     val rightTrigger = Trigger()
 
-    //===========================
     internal fun update(origin: Gamepad) {
         leftBumper.raw = origin.left_bumper
         rightBumper.raw = origin.right_bumper

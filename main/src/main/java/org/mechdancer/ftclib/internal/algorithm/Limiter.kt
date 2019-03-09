@@ -3,10 +3,10 @@ package org.mechdancer.ftclib.internal.algorithm
 import java.lang.Math.abs
 
 /**
- * 限幅器
+ * Limiter
  *
- * @param min 最小值
- * @param max 最大值
+ * Values grater than max will be reduced to max,
+ * smaller than min will be magnified to min.
  */
 class Limiter(min: Double, max: Double) {
     private val min: Double
@@ -16,10 +16,13 @@ class Limiter(min: Double, max: Double) {
         if (min <= max) {
             this.min = min
             this.max = max
-        } else throw IllegalArgumentException("最小值比最大值大！")
+        } else throw IllegalArgumentException("Min is grater that max")
     }
 
     constructor(max: Double = 1.0) : this(-abs(max), abs(max))
 
+    /**
+     * Runs limiter
+     */
     operator fun invoke(data: Double) = if (data < min) min else if (data > max) max else data
 }

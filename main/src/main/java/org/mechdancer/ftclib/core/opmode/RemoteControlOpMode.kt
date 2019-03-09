@@ -6,8 +6,9 @@ import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.gamepad.Gamepad
 
 /**
- * 遥控专用程序入口
- * 实现手柄数据同步，遥控程序应继承该类
+ * Base of remote control OpMode
+ *
+ * Teleop classes should extend this class.
  */
 @TeleOp
 @Disabled
@@ -16,15 +17,11 @@ abstract class RemoteControlOpMode<T : Robot>(opModeName: String? = null) : Base
     private val helper = Gamepad()
 
     final override fun loopTask() {
-        withMeasuringTime("刷新主手柄") {
-            master.update(gamepad1)
-        }
-        withMeasuringTime("刷新副手柄") {
-            helper.update(gamepad2)
-        }
-        withMeasuringTime("执行循环任务") {
-            loop(master, helper)
-        }
+
+        master.update(gamepad1)
+        helper.update(gamepad2)
+
+        loop(master, helper)
     }
 
     abstract fun loop(master: Gamepad, helper: Gamepad)

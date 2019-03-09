@@ -6,9 +6,10 @@ import org.mechdancer.ftclib.core.structure.StructureBuilder
 import org.mechdancer.ftclib.core.structure.injector.StructureInjector
 
 /**
- * 用于构造非匿名 Structure
- * 将一个现有的 structure 作为代理
- * @param delegate 匿名 structure
+ * Abstract structure
+ *
+ * Uses an existent structure as its delegate,
+ * in order to create a type for that anonymous structure.
  */
 @Suppress("LeakingThis")
 abstract class AbstractStructure(name: String = "Unnamed", block: StructureBuilder.() -> Unit = {}) : CompositeStructure(name) {

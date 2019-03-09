@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil
 
 /**
- * OpMode 工具类
+ * OpMode utils
  */
 object OpModeUtil {
 

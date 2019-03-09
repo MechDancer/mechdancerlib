@@ -3,23 +3,42 @@ package org.mechdancer.ftclib.core.structure.monomeric.effector
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
+/**
+ * Motor
+ *
+ * A simple device realized power output.
+ */
 interface Motor : Structure {
+
     /**
-     * 功率
-     * 范围: [-1, 1]
+     * Power
+     *
+     * Range: [-1, 1]
      */
     var power: Double
 
     /**
-     * 电机方向
+     * Logical direction.
+     *
+     * See [Direction].
      */
     var direction: Direction
 
+
     /**
-     * 配置
+     * Locks this motor
      *
-     * @param name 名字
-     * @param enable 是否启用
+     * Implemented through [com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior].
+     */
+    var lock: Boolean
+
+
+    /**
+     * DSL config
+     *
+     * @param name name
+     * @param enable whether to enable
+     * @param direction direction
      */
     class Config(
         name: String,
@@ -28,26 +47,27 @@ interface Motor : Structure {
     ) : DeviceConfig(name, enable)
 
     /**
-     * 电机方向枚举
+     * Motor directions
+     *
+     * This makes it easy to have drive train motors on two sides of a robot.
      */
     enum class Direction(internal val sign: Int) {
         /**
-         * 正向
-         * 逆时针
+         * Anti-clockwise
          */
         FORWARD(+1),
         /**
-         * 反向
-         * 顺时针
+         * Clockwise
          */
         REVERSE(-1);
 
         /**
-         * 求当前方向的逆
+         * Revers current direction
          */
         fun reverse(): Direction = when (this) {
             FORWARD -> REVERSE
             REVERSE -> FORWARD
         }
     }
+
 }

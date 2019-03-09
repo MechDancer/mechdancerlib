@@ -5,26 +5,27 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.RobotLog
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.mechdancer.ftclib.core.opmode.RobotFactory.createRobot
-import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
 import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.OpModeLifecycle
+import org.mechdancer.ftclib.util.SmartLogger
+import org.mechdancer.ftclib.util.debug
+import org.mechdancer.ftclib.util.info
 import java.io.PrintWriter
 import java.io.StringWriter
 
 /**
- * 程序入口
+ * Base of OpModes
  *
- * 所有 OpMode 应在该类的继承树下
- *
- * 注意: 类中成员若非 `lateinit` 可能会导致预料外的问题
+ * All OpModes should extends this class.
+ * > Notice that non-`lateinit` members may lead to unexpected problems.
  */
 @Suppress("UNCHECKED_CAST")
 @Disabled
 abstract class BaseOpMode<T : Robot>
-constructor(opModeName: String? = null) : OpMode() {
+constructor(opModeName: String? = null) : OpMode(), SmartLogger {
 
     protected val robot: T = createRobot()
     val opModeName: String = opModeName ?: javaClass.simpleName
@@ -46,7 +47,7 @@ constructor(opModeName: String? = null) : OpMode() {
         private set
 
     protected var exceptionHandler: (String, Throwable) -> Unit = { lifecycle: String, t: Throwable ->
-        RobotLog.setGlobalErrorMsg("用户代码在 <$lifecycle> 抛出了:\n" +
+        RobotLog.setGlobalErrorMsg("User code throw an Exception in <$lifecycle> :\n" +
             StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString())
     }
 
@@ -58,154 +59,109 @@ constructor(opModeName: String? = null) : OpMode() {
         }
 
 
-    private fun Structure.showName() = /*if (this is PackingDevice<*>)
-        devices.entries.find { this == it.value }!!.key
-    else*/ name
-
     final override fun init() {
-        withMeasuringTime("遍历绑定设备") {
-            devices.forEach {(name,device)->
-                withMeasuringTime("绑定 $name") {
-                    device.bind(hardwareMap, name)
-                    RobotLog.i("绑定设备: $name")
-                }
-            }
+        devices.forEach { (name, device) ->
+            info("Binding device: $name")
+            device.bind(hardwareMap, name)
         }
 
-        RobotLog.i("设备: $devices")
-
-        withMeasuringTime("遍历初始化结构") {
-            initializations.forEach {
-                withMeasuringTime("初始化结构 ${it.showName()}") {
-                    it.init(this)
-                }
-            }
-        }
-        withMeasuringTime("绑定电压传感器") {
-            //            voltageSensor.bind(hardwareMap)   TODO
-        }
+//        withMeasuringTime("绑定电压传感器") {
+//            voltageSensor.bind(hardwareMap) TODO
+//        }
 
         catchException("init") {
-            //ask for resources
-            withMeasuringTime("执行初始化任务") {
-                initTask()
+            initializations.forEach {
+                info("Calling init of ${it.name}")
+                it.init(this)
             }
+            info("Calling init task")
+            initTask()
+            info("Initialized")
         }
 
-        if (enableTimeMeasuring)
-            RobotLog.d("完成初始化")
     }
 
     final override fun init_loop() {
         catchException("init_loop") {
-            //adjust sensors (if needed)
-            //initialize devices
-            withMeasuringTime("执行初始化循环任务") {
-                initLoopTask()
-            }
+            debug("Calling initLoop task")
+            initLoopTask()
         }
-
-        if (enableTimeMeasuring)
-            RobotLog.d("完成一次初始化循环")
     }
 
     final override fun start() {
-        withMeasuringTime("遍历重置设备") {
-            devices.forEach {(name,device)->
-                withMeasuringTime("重置设备 $name") {
-                    device.reset()
-                }
-            }
-        }
         catchException("start") {
-            withMeasuringTime("重置 Robot") {
-                robot.reset()
+            devices.forEach { (name, device) ->
+                info("Calling reset of device: $name")
+                device.reset()
             }
-            withMeasuringTime("遍历执行开始结构") {
-                starts.forEach {
-                    withMeasuringTime("执行开始结构 ${it.showName()}") {
-                        it.start()
-                    }
-                }
-            }
-            withMeasuringTime("执行开始任务") {
-                startTask()
-            }
-        }
 
-        if (enableTimeMeasuring)
-            RobotLog.d("完成开始")
+            info("Calling reset of robot")
+            robot.reset()
+
+            starts.forEach {
+                info("Calling start of ${it.name}")
+                it.start()
+            }
+
+            info("Calling start task")
+            startTask()
+        }
+        info("Started")
     }
 
     final override fun loop() {
+
         catchException("loop") {
-            //calculate suggestions
-            //generate and execute commands
-            withMeasuringTime("执行循环任务") {
-                loopTask()
-            }
+            debug("Calling look task")
+            loopTask()
 
-            withMeasuringTime("遍历执行循环结构") {
-                actions.forEach {
-                    withMeasuringTime("执行循环结构 ${it.showName()}") {
-                        it.run()
-                    }
-                }
+            actions.forEach {
+                debug("Calling run of ${it.name}")
+                it.run()
             }
         }
 
-        withMeasuringTime("遍历执行循环设备") {
-            devices.forEach {(name,device)->
-                withMeasuringTime("执行循环设备 $name") {
-                    device.run()
-                }
-            }
+        devices.forEach { (name, device) ->
+            debug("Calling run of device: $name")
+            device.run()
         }
 
-//        withMeasuringTime("执行循环电压传感器") {
-//            voltageSensor.run()   TODO
-//        }
+/*        withMeasuringTime("执行循环电压传感器") {
+            voltageSensor.run()   TODO
+        }*/
 
         period = (System.currentTimeMillis() - lastPeriod).toInt()
         lastPeriod = System.currentTimeMillis()
-
-        if (enableTimeMeasuring)
-            RobotLog.d("完成一次循环")
+        debug("Finished loop, use $period milliseconds")
     }
 
     final override fun stop() {
-        catchException("stop") {
-            withMeasuringTime("遍历执行停止结构") {
-                stops.forEach {
-                    withMeasuringTime("执行停止结构 ${it.showName()}") {
-                        it.stop()
-                    }
-                }
-            }
-        }
-
-        withMeasuringTime("遍历解绑设备") {
-            devices.forEach {(name,device)->
-                withMeasuringTime("解绑设备 $name") {
-                    device.unbind()
-                }
-            }
-        }
-
-//
-//        withMeasuringTime("解绑电压传感器") {
-//            voltageSensor.unbind()    TODO
-//        }
 
         catchException("stop") {
-            //release resources
-            withMeasuringTime("执行停止任务") {
+
+            catchException("stop") {
+                info("Calling stop task")
                 stopTask()
             }
+
+
+            stops.forEach {
+                info("Calling stop of ${it.name}")
+                it.stop()
+            }
         }
 
-        if (enableTimeMeasuring)
-            RobotLog.d("完成停止")
+        devices.forEach { (name, device) ->
+            info("Unbinding device: $name")
+            device.unbind()
+        }
+
+        info("Stopped")
+
+        /*withMeasuringTime("解绑电压传感器") {
+            voltageSensor.unbind()    TODO
+        }*/
+
     }
 
     final override fun getRuntime(): Double {

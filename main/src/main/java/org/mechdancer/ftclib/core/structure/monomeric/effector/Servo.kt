@@ -4,24 +4,30 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * 舵机
+ * Servo
+ *
+ * A simple device realized position output using pwm.
  */
 interface Servo : Structure {
     /**
-     * 舵机位置
-     * 范围: [初始位置, 末位置]
+     * Position
+     *
+     * Range: [origin, ending]
      */
     var position: Double
 
+    /**
+     * Whether to enable pwm output
+     */
     var pwmOutput: Boolean
 
     /**
-     * 配置
+     * DSL config
      *
-     * @param name 名字
-     * @param enable 是否启用
-     * @param origin 初始位置（弧度）
-     * @param ending 末位置（弧度）
+     * @param name name
+     * @param enable whether to enable
+     * @param origin initial position (rad)
+     * @param ending ending position (rad)
      */
     class Config(
         name: String,

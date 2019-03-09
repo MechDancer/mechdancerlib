@@ -4,42 +4,39 @@ import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * 触控传感器
+ * Touch sensor
  */
 interface TouchSensor : Structure {
 
     /**
-     * 力
+     * Force
      *
-     * 若传感器不支持则永远为 `0` 或 `1`
+     * It will be `0` or `1` forever if
+     * this sensor doesn't support.
      */
     val force: Double
 
     /**
-     * 当前状态
-     **/
+     * Returns the current state of the button
+     */
     fun bePressed(): Boolean
 
     /**
-     * 是否被按下
-     *
-     * 仅当按钮被按下的第一个周期为 `true`
+     * Returns true when the first time the button be pressed
      */
     fun isPressing(): Boolean
 
     /**
-     * 是否释放
-     *
-     * 仅当按钮释放的第一个周期为 `true`
+     * Returns true when the first time the button be released
      */
     fun isReleasing(): Boolean
 
 
     /**
-     * 配置
+     * DSL config
      *
-     * @param name 名字
-     * @param enable 是否启用
+     * @param name name
+     * @param enable whether to enable
      */
     class Config(name: String, enable: Boolean = false) : DeviceConfig(name, enable)
 }

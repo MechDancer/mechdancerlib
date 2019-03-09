@@ -1,9 +1,12 @@
 package org.mechdancer.ftclib.core.structure.composite.chassis.locator
 
+/**
+ * Locator
+ */
 interface Locator {
 
     /**
-     * Absolute location
+     * See [Location]
      */
     val location: Location
 

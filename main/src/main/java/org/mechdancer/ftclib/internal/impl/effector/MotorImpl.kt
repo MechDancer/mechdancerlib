@@ -5,11 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.internal.FtcMotor
 import org.mechdancer.ftclib.internal.impl.Effector
+import kotlin.properties.Delegates
 
-/**
- * 电机
- * 输出设备
- */
 class MotorImpl(name: String,
                 enable: Boolean,
                 override var direction: Motor.Direction)
@@ -18,26 +15,28 @@ class MotorImpl(name: String,
     constructor(config: Motor.Config) : this(config.name, config.enable, config.direction)
 
 
-    /**
-     * 功率
-     * 范围：[-1, 1]
-     */
     override var power = .0
 
-    /**
-     * 运行模式
-     * [DcMotor.RunMode]
-     */
     var runMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
 
-    /**
-     * 零功率行为
-     * [DcMotor.ZeroPowerBehavior]
-     */
-    var zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+    var zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
 
+
+    private var lastZeroPowerBehavior = zeroPowerBehavior
+
+    override var lock: Boolean by Delegates.observable(false) { _, old, new ->
+        if (old == new) return@observable
+        if (new) {
+            lastZeroPowerBehavior = zeroPowerBehavior
+            zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        } else
+            zeroPowerBehavior = lastZeroPowerBehavior
+
+    }
 
     override fun DcMotorEx.output() {
+        if (lock)
+            this@MotorImpl.power = .0
         power = this@MotorImpl.power * this@MotorImpl.direction.sign
         zeroPowerBehavior = this@MotorImpl.zeroPowerBehavior
         mode = runMode
@@ -45,7 +44,7 @@ class MotorImpl(name: String,
 
 
     override fun toString() =
-        "电机[$name] | ${if (enable) "功率: ${100 * power}%" else "关闭"}"
+        "Motor[$name] | ${if (enable) "Power: ${100 * power}%" else "Disabled"}"
 
 
 }
