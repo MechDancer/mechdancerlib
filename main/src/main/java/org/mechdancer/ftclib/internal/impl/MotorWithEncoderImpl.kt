@@ -1,5 +1,6 @@
 package org.mechdancer.ftclib.internal.impl
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import org.mechdancer.ftclib.core.structure.CompositeStructure
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
@@ -54,6 +55,8 @@ class MotorWithEncoderImpl(name: String,
 
     override fun reset(off: Double) {
         encoder.reset(off)
+        motor.runMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
         pidPosition.reset()
         pidSpeed.reset()
     }
