@@ -24,9 +24,9 @@ class MotorWithEncoderImpl(name: String,
         config.cpr, config.direction, config.pidPosition, config.pidSpeed)
 
 
-    private val motor = MotorImpl(name, enable, direction)
+    val motor = MotorImpl(name, enable, direction)
 
-    private val encoder = EncoderImpl(name, enable, cpr)
+    val encoder = EncoderImpl(name, enable, cpr)
 
     override val subStructures: List<Structure> = listOf(motor, encoder)
 
