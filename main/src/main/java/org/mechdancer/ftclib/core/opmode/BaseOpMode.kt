@@ -11,7 +11,6 @@ import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
 import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.OpModeLifecycle
 import org.mechdancer.ftclib.util.SmartLogger
-import org.mechdancer.ftclib.util.debug
 import org.mechdancer.ftclib.util.info
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -83,7 +82,7 @@ constructor(opModeName: String? = null) : OpMode(), SmartLogger {
 
     final override fun init_loop() {
         catchException("init_loop") {
-            debug("Calling initLoop task")
+            //            debug("Calling initLoop task")
             initLoopTask()
         }
     }
@@ -112,17 +111,17 @@ constructor(opModeName: String? = null) : OpMode(), SmartLogger {
     final override fun loop() {
 
         catchException("loop") {
-            debug("Calling look task")
+            //            debug("Calling look task")
             loopTask()
 
             actions.forEach {
-                debug("Calling run of ${it.name}")
+                //                debug("Calling run of ${it.name}")
                 it.run()
             }
         }
 
         devices.forEach { (name, device) ->
-            debug("Calling run of device: $name")
+            //            debug("Calling run of device: $name")
             device.run()
         }
 
@@ -132,7 +131,7 @@ constructor(opModeName: String? = null) : OpMode(), SmartLogger {
 
         period = (System.currentTimeMillis() - lastPeriod).toInt()
         lastPeriod = System.currentTimeMillis()
-        debug("Finished loop, use $period milliseconds")
+//        debug("Finished loop, use $period milliseconds")
     }
 
     final override fun stop() {
