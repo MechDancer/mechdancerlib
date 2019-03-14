@@ -32,7 +32,9 @@ object MechDancerOpModeRegister : ClassFilterAdapter() {
                 clazz.newInstance() as BaseOpMode<*>
             val robot = BaseOpMode::class.java.getDeclaredField("robot")
                 .also { it.isAccessible = true }[opMode] as Robot
-            manager.register(OpModeMeta(opMode.opModeName, flavor, robot.name), opMode)
+            manager.register(OpModeMeta(opMode.opModeName, flavor, robot.name), clazz)
+            //TODO: Duplicated constructing to classify
+            //TODO: Trash code
         }
 
         teleops.forEach {
