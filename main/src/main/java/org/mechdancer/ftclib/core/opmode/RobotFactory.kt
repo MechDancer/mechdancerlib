@@ -14,7 +14,7 @@ object RobotFactory {
     /**
      * Create a [clazz] robot
      */
-    fun <T : Robot> createRobot(clazz: Class<BaseOpMode<T>>) =
+    fun <T : Robot> createRobot(clazz: Class<BaseOpMode<T>>): T =
         (clazz.genericSuperclass as? ParameterizedType)?.let { type ->
             type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
                 ?.let { it as Class<*> }
@@ -22,12 +22,13 @@ object RobotFactory {
                     try {
                         it.getConstructor().newInstance()
                     } catch (e: NoSuchMethodException) {
-                        throw IllegalArgumentException("未找到 Robot: ${it.name} 的公共无参构造器")
+                        throw IllegalArgumentException("Unable to find public non-parameters constructor of robot: ${it.name}.")
                     } catch (e: InstantiationException) {
-                        throw IllegalArgumentException("Robot 不能是抽象的")
+                        throw IllegalArgumentException("Robot can't be abstract.")
                     }
-                } ?: throw IllegalArgumentException("未找到 Robot 类型")
-        } as T
+                } ?: throw IllegalArgumentException("Unable to find robot type.")
+        } as? T ?: createRobot(clazz.superclass as Class<BaseOpMode<T>>)
+        ?: throw RuntimeException("Unable to create robot.")
 
     /**
      * Create a [T] robot
