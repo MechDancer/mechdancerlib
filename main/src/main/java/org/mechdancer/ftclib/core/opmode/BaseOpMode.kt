@@ -120,7 +120,7 @@ constructor(opModeName: String? = null) : OpMode(), SmartLogger {
             }
         }
 
-        devices.forEach { (name, device) ->
+        devices.forEach { (_, device) ->
             //            debug("Calling run of device: $name")
             device.run()
         }

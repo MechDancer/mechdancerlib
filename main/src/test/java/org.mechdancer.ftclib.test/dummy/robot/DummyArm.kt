@@ -29,9 +29,6 @@ class DummyArm : AbstractStructure("dummyArm",
             field = value
         }
 
-    fun lock() {
-        core.lock()
-    }
 
     override fun reset() {
         core.mode = MotorWithEncoder.Mode.POSITION_CLOSE_LOOP
