@@ -15,13 +15,12 @@ mechdancerlib is a FTC robot library written by Kotlin. It provides structurize 
 
 ### Add to your project
 
-Clone and build this project, you will get `main-debug` aar file in `/main/build/outputs/aar`, 
-add into `libs` folder in your *ftc_app* project. Afterwards, append: 
+Clone and build this project, you will get `mechdancerlib.aar` aar file and `mechdancerlib-sources.jar` sources jar in `/main/build/libs`, add them into `libs` folder in your *ftc_app* project. Afterwards, append: 
 
 ```groovy
-api(name: 'main-debug', ext: 'aar')
+implementation(name: 'mechdancerlib', ext: 'aar')
 ```
-to `build.release.gradle`.
+to `build.release.gradle` which lie in each module.
 
 ### Enable class filter and op mode register
 

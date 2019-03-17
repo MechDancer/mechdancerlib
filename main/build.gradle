@@ -12,18 +12,27 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 
 }
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    baseName "mechdancerlib"
+    from android.sourceSets.main.java.srcDirs
+}
+
+
+task artifcat(type: Copy) {
+    from "$buildDir/outputs/aar/main-debug.aar"
+    into "$buildDir/libs/"
+    rename("main-debug.aar","mechdancerlib.aar")
+
+    dependsOn sourcesJar
+}
+
+build.finalizedBy(artifcat)
+
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
