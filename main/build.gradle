@@ -33,14 +33,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 }
-//publish {
-//    userOrg = 'mechdancer'
-//    groupId = 'org.mechdancer'
-//    artifactId = 'mechdancerlib'
-//    publishVersion = '0.1.0'
-//    desc = 'ftc programming library by mechdancer'
-//    website = 'https://github.com/MechDancer/mechdancerlib'
-//}
 
 dokka {
     outputFormat = 'javdoc'
