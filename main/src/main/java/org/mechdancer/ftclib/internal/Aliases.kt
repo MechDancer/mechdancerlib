@@ -2,9 +2,9 @@ package org.mechdancer.ftclib.internal
 
 import com.qualcomm.robotcore.hardware.*
 
-internal typealias FtcMotor = DcMotorEx
-internal typealias FtcServo = Servo
-internal typealias FtcContinuousServo = CRServo
-internal typealias FtcVoltageSensor = VoltageSensor
-internal typealias FtcTouchSensor = TouchSensor
-internal typealias FtcColorSensor = ColorSensor
+typealias FtcMotor = DcMotorEx
+typealias FtcServo = Servo
+typealias FtcContinuousServo = CRServo
+typealias FtcVoltageSensor = VoltageSensor
+typealias FtcTouchSensor = TouchSensor
+typealias FtcColorSensor = ColorSensor

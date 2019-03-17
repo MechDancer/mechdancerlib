@@ -19,15 +19,13 @@ import java.io.StringWriter
  * Base of OpModes
  *
  * All OpModes should extends this class.
- * > Notice that non-`lateinit` members may lead to unexpected problems.
+ * > ~~Notice that non-`lateinit` members may lead to unexpected problems.~~ Fixed.
  */
 @Suppress("UNCHECKED_CAST")
 @Disabled
-abstract class BaseOpMode<T : Robot>
-constructor(opModeName: String? = null) : OpMode(), SmartLogger {
+abstract class BaseOpMode<T : Robot> : OpMode(), SmartLogger {
 
     protected val robot: T = createRobot()
-    val opModeName: String = opModeName ?: javaClass.simpleName
 
     private val initializations = robot.takeAll<OpModeLifecycle.Initialize<T>>()
     private val starts = robot.takeAll<OpModeLifecycle.Start>()

@@ -1,7 +1,5 @@
 package org.mechdancer.ftclib.core.opmode
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.gamepad.Gamepad
 
@@ -10,9 +8,7 @@ import org.mechdancer.ftclib.gamepad.Gamepad
  *
  * Teleop classes should extend this class.
  */
-@TeleOp
-@Disabled
-abstract class RemoteControlOpMode<T : Robot>(opModeName: String? = null) : BaseOpMode<T>(opModeName) {
+abstract class RemoteControlOpMode<T : Robot> : BaseOpMode<T>() {
     private val master = Gamepad()
     private val helper = Gamepad()
 

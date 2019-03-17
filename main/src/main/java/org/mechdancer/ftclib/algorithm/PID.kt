@@ -1,4 +1,4 @@
-package org.mechdancer.ftclib.internal.algorithm
+package org.mechdancer.ftclib.algorithm
 
 import java.lang.Math.abs
 

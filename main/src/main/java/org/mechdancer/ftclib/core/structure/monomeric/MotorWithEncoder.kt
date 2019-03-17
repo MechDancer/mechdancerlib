@@ -1,9 +1,9 @@
 package org.mechdancer.ftclib.core.structure.monomeric
 
+import org.mechdancer.ftclib.algorithm.PID
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.Encoder
-import org.mechdancer.ftclib.internal.algorithm.PID
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**

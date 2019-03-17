@@ -25,7 +25,7 @@ abstract class Robot(name: String, vararg subStruct: Structure)
      *
      * Structures marked with [Resettable] will be called.
      */
-    fun reset() {
+    open fun reset() {
         rests.forEach { it.reset() }
     }
 

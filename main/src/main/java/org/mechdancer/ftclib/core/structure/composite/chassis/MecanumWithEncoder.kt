@@ -1,8 +1,8 @@
 package org.mechdancer.ftclib.core.structure.composite.chassis
 
+import org.mechdancer.ftclib.algorithm.PID
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
 import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
-import org.mechdancer.ftclib.internal.algorithm.PID
 import org.mechdancer.ftclib.internal.impl.MotorWithEncoderImpl
 
 /**

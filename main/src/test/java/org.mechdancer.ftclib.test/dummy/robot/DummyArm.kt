@@ -1,10 +1,10 @@
 package org.mechdancer.ftclib.test.dummy.robot
 
+import org.mechdancer.ftclib.algorithm.PID
 import org.mechdancer.ftclib.core.structure.composite.AbstractStructure
 import org.mechdancer.ftclib.core.structure.injector.Inject
 import org.mechdancer.ftclib.core.structure.monomeric.DeviceFactory
 import org.mechdancer.ftclib.core.structure.monomeric.MotorWithEncoder
-import org.mechdancer.ftclib.internal.algorithm.PID
 import org.mechdancer.ftclib.util.Resettable
 import kotlin.math.PI
 
