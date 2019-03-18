@@ -36,15 +36,15 @@ object MechDancerOpModeRegister : ClassFilterAdapter() {
                 ?.takeIf { it.isNotEmpty() }
                 ?: clazz.simpleName
 
-            fun findRobotClass(clazz2: Class<*>): Class<out Robot> =
+            fun findRobotClass(clazz2: Class<*>): Class<out Robot>? =
                 (clazz2.genericSuperclass as? ParameterizedType)?.let { type ->
                     type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
                         ?.let { it as? Class<out Robot> }
-                } ?: findRobotClass(clazz2.superclass)
+                } ?: clazz2.superclass?.let { findRobotClass(it) }
 
             val robot = findRobotClass(clazz)
 
-            manager.register(OpModeMeta(name, flavor, robot.simpleName), clazz)
+            manager.register(OpModeMeta(name, flavor, robot?.simpleName ?: "GG"), clazz)
         }
 
         teleops.forEach {
