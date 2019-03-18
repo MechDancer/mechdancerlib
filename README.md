@@ -15,7 +15,7 @@ mechdancerlib is a FTC robot library written by Kotlin. It provides structurize 
 
 ### Add to your project
 
-Clone and build this project, you will get `mechdancerlib.aar` aar file and `mechdancerlib-sources.jar` sources jar in `/main/build/libs`, add them into `libs` folder in your *ftc_app* project. Afterwards, append: 
+Find latest version in [releases](https://github.com/MechDancer/mechdancerlib/releases) or clone and build this project, you will get `mechdancerlib.aar` aar file and `mechdancerlib-sources.jar` sources jar in `/main/build/libs`, add them into `libs` folder in your *ftc_app* project. Afterwards, append: 
 
 ```groovy
 implementation(name: 'mechdancerlib', ext: 'aar')

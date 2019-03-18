@@ -22,7 +22,7 @@ before_install:
   - chmod a+x gradlew
 
 script:
-  - "./gradlew assemble"
+  - "./gradlew build"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
