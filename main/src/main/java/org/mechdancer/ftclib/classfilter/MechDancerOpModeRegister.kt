@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
 import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
 import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 import org.mechdancer.ftclib.core.opmode.RemoteControlOpMode
+import org.mechdancer.ftclib.core.opmode.async.RemoteControlOpModeAsync
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.util.opModeName
 import java.lang.reflect.ParameterizedType
@@ -25,7 +26,8 @@ object MechDancerOpModeRegister : ClassFilterAdapter() {
             || clazz.isAnnotationPresent(TeleOp::class.java)
             || clazz.isAnnotationPresent(Autonomous::class.java)
         ) return
-        if (RemoteControlOpMode::class.java.isAssignableFrom(clazz))
+        if (RemoteControlOpMode::class.java.isAssignableFrom(clazz)
+            || RemoteControlOpModeAsync::class.java.isAssignableFrom(clazz))
             teleops.add(clazz as Class<out OpModeWithRobot<*>>)
         else autonomous.add(clazz as Class<out OpModeWithRobot<*>>)
     }
