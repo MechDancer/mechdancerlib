@@ -3,7 +3,7 @@ package org.mechdancer.ftclib.classfilter
 import com.qualcomm.robotcore.eventloop.opmode.*
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
 import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
-import org.mechdancer.ftclib.core.opmode.BaseOpMode
+import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 import org.mechdancer.ftclib.core.opmode.RemoteControlOpMode
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import java.lang.reflect.ParameterizedType
@@ -16,7 +16,7 @@ object MechDancerOpModeRegister : ClassFilterAdapter() {
     private val registered by lazy { RegisteredOpModes.getInstance().opModes }
 
     override fun filterClass(clazz: Class<*>) {
-        if (!BaseOpMode::class.java.isAssignableFrom(clazz)
+        if (!OpModeWithRobot::class.java.isAssignableFrom(clazz)
             || clazz.isAnnotationPresent(Disabled::class.java)
             || clazz.isAnnotationPresent(TeleOp::class.java)
             || clazz.isAnnotationPresent(Autonomous::class.java)

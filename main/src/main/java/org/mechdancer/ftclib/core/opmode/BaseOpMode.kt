@@ -1,16 +1,13 @@
 package org.mechdancer.ftclib.core.opmode
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.RobotLog
-import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.mechdancer.ftclib.core.opmode.RobotFactory.createRobot
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.core.structure.takeAll
 import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
 import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.OpModeLifecycle
-import org.mechdancer.ftclib.util.SmartLogger
 import org.mechdancer.ftclib.util.info
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -21,9 +18,8 @@ import java.io.StringWriter
  * All OpModes should extends this class.
  * > ~~Notice that non-`lateinit` members may lead to unexpected problems.~~ Fixed.
  */
-@Suppress("UNCHECKED_CAST")
 @Disabled
-abstract class BaseOpMode<T : Robot> : OpMode(), SmartLogger {
+abstract class BaseOpMode<T : Robot> : OpModeWithRobot<T>() {
 
     protected val robot: T = createRobot()
 
@@ -136,10 +132,8 @@ abstract class BaseOpMode<T : Robot> : OpMode(), SmartLogger {
 
         catchException("stop") {
 
-            catchException("stop") {
-                info("Calling stop task")
-                stopTask()
-            }
+            info("Calling stop task")
+            stopTask()
 
 
             stops.forEach {
@@ -159,30 +153,6 @@ abstract class BaseOpMode<T : Robot> : OpMode(), SmartLogger {
             voltageSensor.unbind()    TODO
         }*/
 
-    }
-
-    final override fun getRuntime(): Double {
-        return super.getRuntime()
-    }
-
-    final override fun updateTelemetry(telemetry: Telemetry?) {
-        super.updateTelemetry(telemetry)
-    }
-
-    final override fun internalPostInitLoop() {
-        super.internalPostInitLoop()
-    }
-
-    final override fun internalPreInit() {
-        super.internalPreInit()
-    }
-
-    final override fun internalPostLoop() {
-        super.internalPostLoop()
-    }
-
-    final override fun resetStartTime() {
-        super.resetStartTime()
     }
 
     abstract fun initTask()

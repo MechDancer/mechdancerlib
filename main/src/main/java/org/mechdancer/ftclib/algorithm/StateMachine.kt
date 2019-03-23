@@ -86,6 +86,12 @@ class Delay(delay: Long) : StateMachine {
 
     private val driver = StepStateMachine { timer.start(); waiting }
 
+    /**
+     * Time remains
+     */
+    val ramain
+        get() = timer.remain
+
     override fun invoke() = driver()
 }
 
@@ -237,6 +243,16 @@ class NamedStateMachine : StateMachine {
 }
 
 /**
+ * Linear state machine with a [core], which will run after each state
+ */
+open class LinearStateMachineWithCore(private val core: StateMember<Unit> = {}) : LinearStateMachine() {
+    override fun invoke(): Boolean {
+        core()
+        return super.invoke()
+    }
+}
+
+/**
  * Simple timer
  *
  * Provides a timing ability simply.
@@ -249,14 +265,19 @@ class MyTimer(private val delay: Long) {
      * If time is up
      */
     val isFinished: Boolean
-        get() = System.currentTimeMillis() - origin > delay
+        get() = value > delay
 
     /**
-     * Time to wen timer started
+     * Time to when timer started
      */
     val value: Long
         get() = System.currentTimeMillis() - origin
 
+    /**
+     * Time remains
+     */
+    val remain: Long
+        get() = delay - (System.currentTimeMillis() - origin)
 
     /**
      * Sets to [origin] and starts timer

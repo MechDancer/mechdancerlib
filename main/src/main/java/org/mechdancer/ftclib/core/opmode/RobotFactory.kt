@@ -14,7 +14,7 @@ object RobotFactory {
     /**
      * Create a [clazz] robot
      */
-    fun <T : Robot> createRobot(clazz: Class<BaseOpMode<T>>): T =
+    fun <T : Robot> createRobot(clazz: Class<OpModeWithRobot<T>>): T =
         (clazz.genericSuperclass as? ParameterizedType)?.let { type ->
             type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
                 ?.let { it as Class<*> }
@@ -27,11 +27,11 @@ object RobotFactory {
                         throw IllegalArgumentException("Robot can't be abstract.")
                     }
                 } ?: throw IllegalArgumentException("Unable to find robot type.")
-        } as? T ?: createRobot(clazz.superclass as Class<BaseOpMode<T>>)
+        } as? T ?: createRobot(clazz.superclass as Class<OpModeWithRobot<T>>)
         ?: throw RuntimeException("Unable to create robot.")
 
     /**
      * Create a [T] robot
      */
-    fun <T : Robot> BaseOpMode<T>.createRobot() = createRobot(javaClass)
+    fun <T : Robot> OpModeWithRobot<T>.createRobot() = createRobot(javaClass)
 }

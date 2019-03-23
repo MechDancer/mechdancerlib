@@ -1,6 +1,6 @@
 package org.mechdancer.ftclib.util
 
-import org.mechdancer.ftclib.core.opmode.BaseOpMode
+import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 import org.mechdancer.ftclib.core.structure.Structure
 import org.mechdancer.ftclib.core.structure.composite.Robot
 
@@ -15,7 +15,7 @@ object OpModeLifecycle {
      *参与 OpMode 的 `init()`
      */
     interface Initialize<T : Robot> : Structure {
-        fun init(opMode: BaseOpMode<T>)
+        fun init(opMode: OpModeWithRobot<T>)
     }
 
     /**
