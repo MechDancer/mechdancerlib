@@ -89,7 +89,7 @@ class Delay(delay: Long) : StateMachine {
     /**
      * Time remains
      */
-    val ramain
+    val remain
         get() = timer.remain
 
     override fun invoke() = driver()

@@ -1,17 +1,21 @@
 package org.mechdancer.ftclib.classfilter
 
-import com.qualcomm.robotcore.eventloop.opmode.*
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManager
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
 import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
 import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 import org.mechdancer.ftclib.core.opmode.RemoteControlOpMode
 import org.mechdancer.ftclib.core.structure.composite.Robot
+import org.mechdancer.ftclib.util.opModeName
 import java.lang.reflect.ParameterizedType
 
 @Suppress("UNCHECKED_CAST")
 object MechDancerOpModeRegister : ClassFilterAdapter() {
-    private val teleops = mutableSetOf<Class<out OpMode>>()
-    private val autonomous = mutableSetOf<Class<out OpMode>>()
+    private val teleops = mutableSetOf<Class<out OpModeWithRobot<*>>>()
+    private val autonomous = mutableSetOf<Class<out OpModeWithRobot<*>>>()
 
     private val registered by lazy { RegisteredOpModes.getInstance().opModes }
 
@@ -22,20 +26,13 @@ object MechDancerOpModeRegister : ClassFilterAdapter() {
             || clazz.isAnnotationPresent(Autonomous::class.java)
         ) return
         if (RemoteControlOpMode::class.java.isAssignableFrom(clazz))
-            teleops.add(clazz as Class<out OpMode>)
-        else autonomous.add(clazz as Class<out OpMode>)
+            teleops.add(clazz as Class<out OpModeWithRobot<*>>)
+        else autonomous.add(clazz as Class<out OpModeWithRobot<*>>)
     }
 
     fun register(manager: OpModeManager) {
 
-        fun reg(clazz: Class<out OpMode>, flavor: OpModeMeta.Flavor) {
-            val name = clazz
-                .takeIf { it.isAnnotationPresent(Naming::class.java) }
-                ?.let { it.getAnnotation(Naming::class.java) }
-                ?.name
-                ?.takeIf { it.isNotEmpty() }
-                ?: clazz.simpleName
-
+        fun reg(clazz: Class<out OpModeWithRobot<*>>, flavor: OpModeMeta.Flavor) {
             fun findRobotClass(clazz2: Class<*>): Class<out Robot>? =
                 (clazz2.genericSuperclass as? ParameterizedType)?.let { type ->
                     type.actualTypeArguments.find { aType -> aType is Class<*> && Robot::class.java.isAssignableFrom(aType) }
@@ -44,7 +41,7 @@ object MechDancerOpModeRegister : ClassFilterAdapter() {
 
             val robot = findRobotClass(clazz)
 
-            manager.register(OpModeMeta(name, flavor, robot?.simpleName ?: "GG"), clazz)
+            manager.register(OpModeMeta(clazz.opModeName, flavor, robot?.simpleName ?: "GG"), clazz)
         }
 
         teleops.forEach {

@@ -6,6 +6,8 @@ import org.firstinspires.ftc.robotcore.internal.opmode.OpModeManagerImpl
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
 import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil
+import org.mechdancer.ftclib.classfilter.Naming
+import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 
 /**
  * OpMode utils
@@ -59,3 +61,13 @@ fun Notifications(init: (OpMode) -> Unit = {},
         override fun onOpModePreStart(opMode: OpMode) = start(opMode)
 
     }
+
+val OpModeWithRobot<*>.name: String
+    get() = javaClass.opModeName
+
+val Class<out OpModeWithRobot<*>>.opModeName: String
+    get() = takeIf { it.isAnnotationPresent(Naming::class.java) }
+        ?.getAnnotation(Naming::class.java)
+        ?.name
+        ?.takeIf { it.isNotEmpty() }
+        ?: simpleName
