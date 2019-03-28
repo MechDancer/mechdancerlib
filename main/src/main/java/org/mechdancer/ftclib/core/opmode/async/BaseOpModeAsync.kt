@@ -7,6 +7,7 @@ import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 import org.mechdancer.ftclib.core.opmode.RobotFactory.createRobot
 import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.core.structure.takeAll
+import org.mechdancer.ftclib.internal.impl.sensor.VoltageSensorImpl
 import org.mechdancer.ftclib.internal.impl.takeAllDevices
 import org.mechdancer.ftclib.util.OpModeLifecycle
 import org.mechdancer.ftclib.util.info
@@ -30,9 +31,14 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
         it.first.dropWhile { name -> name != '.' }.removePrefix(".") to it.second
     }
 
-    private var lastPeriod = -1L
+    private val voltageSensor = robot.takeAll<VoltageSensorImpl>()[0]
 
-    var period = -1
+    private var lastAsyncPeriod = -1L
+    private var lastSyncPeriod = -1L
+
+    var asyncPeriod = -1
+        private set
+    var syncPeriod = -1
         private set
 
     protected var exceptionHandler: (String, Throwable) -> Unit = { lifecycle: String, t: Throwable ->
@@ -56,6 +62,8 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     info("Binding device: $name")
                     device.bind(hardwareMap, name)
                 }
+                info("Binding voltage sensor")
+                voltageSensor.bind(hardwareMap)
                 robot.reset()
                 info("Calling init task")
                 catchException("init") {
@@ -73,10 +81,11 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     devices.forEach { (_, device) ->
                         device.run()
                     }
+                    voltageSensor.run()
                     initLoopMachine.run()
                 }
-                period = (System.currentTimeMillis() - lastPeriod).toInt()
-                lastPeriod = System.currentTimeMillis()
+                asyncPeriod = (System.currentTimeMillis() - lastAsyncPeriod).toInt()
+                lastAsyncPeriod = System.currentTimeMillis()
             }
             .add(State.Starting) {
                 catchException("start") {
@@ -106,10 +115,11 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     devices.forEach { (_, device) ->
                         device.run()
                     }
+                    voltageSensor.run()
                     if (loopMachine.run() == FINISH) requestOpModeStop()
                 }
-                period = (System.currentTimeMillis() - lastPeriod).toInt()
-                lastPeriod = System.currentTimeMillis()
+                asyncPeriod = (System.currentTimeMillis() - lastAsyncPeriod).toInt()
+                lastAsyncPeriod = System.currentTimeMillis()
             }
             .add(State.Stopping) {
                 stopTask.runToFinish()
@@ -123,6 +133,7 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     devices.forEach { (_, device) ->
                         device.run()
                     }
+                    voltageSensor.run()
                     if (afterStopMachine.run() == FINISH) requestOpModeTerminate()
                 }
             }
@@ -142,6 +153,8 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     info("Unbinding device: $name")
                     device.unbind()
                 }
+                info("Unbinding voltage sensor")
+                voltageSensor.unbind()
 
                 info("Terminated")
                 jumpQueue.offer(State.Terminated)
@@ -183,6 +196,8 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
 
     final override fun init_loop() {
         if (state == State.InitLoop) displayTask.runToFinish()
+        syncPeriod = (System.currentTimeMillis() - lastSyncPeriod).toInt()
+        lastSyncPeriod = System.currentTimeMillis()
     }
 
     final override fun start() {
@@ -191,6 +206,8 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
 
     final override fun loop() {
         if (state == State.Loop) displayTask.runToFinish()
+        syncPeriod = (System.currentTimeMillis() - lastSyncPeriod).toInt()
+        lastSyncPeriod = System.currentTimeMillis()
     }
 
     final override fun stop() {

@@ -29,6 +29,8 @@ class MotorWithEncoderImpl(name: String,
 
     val encoder = EncoderImpl(name, enable, cpr)
 
+    private var lockPosition = .0
+
     override val subStructures: List<Structure> = listOf(motor, encoder)
 
     override var power = .0
@@ -52,26 +54,29 @@ class MotorWithEncoderImpl(name: String,
         get() = encoder.speed * direction.sign
 
     override var lock: Boolean = false
+        set(value) {
+            lockPosition = position
+            field = value
+        }
 
     override fun reset(off: Double) {
         encoder.reset(off)
         motor.runMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT
+        mode = Mode.OPEN_LOOP
         pidPosition.reset()
         pidSpeed.reset()
     }
 
     override fun reset() {
         reset(.0)
-        mode = Mode.OPEN_LOOP
     }
-
 
     override fun run() {
         if (lock) {
             motor.lock = speed >= 0.05
             mode = Mode.POSITION_CLOSE_LOOP
-            targetPosition = position
+            targetPosition = lockPosition
         }
 
         power = when (mode) {

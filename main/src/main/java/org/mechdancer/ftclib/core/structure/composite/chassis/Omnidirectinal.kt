@@ -52,6 +52,9 @@ abstract class Omnidirectinal
     private val descartes = Descartes(.0, .0, .0)
     private val weights = Descartes(1.0, 1.0, 1.0)
 
+    private val polar by lazy { Polar() }
+    private val tank by lazy { TankMode() }
+
     /**
      * Descartes control
      */
@@ -62,13 +65,13 @@ abstract class Omnidirectinal
      * Polar control
      */
     fun polar(block: Polar.() -> Unit) =
-        descartes.run(Polar().apply(block).block)
+        descartes.run(polar.apply(block).block)
 
     /**
      * Tank control
      */
     fun tank(block: TankMode.() -> Unit) =
-        descartes.run(TankMode().apply(block).block)
+        descartes.run(tank.apply(block).block)
 
     /**
      * Sets wights

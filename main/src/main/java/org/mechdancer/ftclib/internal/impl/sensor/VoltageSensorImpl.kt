@@ -25,8 +25,7 @@ class VoltageSensorImpl : VoltageSensor, MonomericStructure("voltageSensor") {
             voltage = voltages.minBy {
                 if (it.voltage < 0)
                     Double.POSITIVE_INFINITY else it.voltage
-            }?.voltage
-                ?: Double.POSITIVE_INFINITY
+            }?.voltage ?: Double.POSITIVE_INFINITY
         }
     }
 

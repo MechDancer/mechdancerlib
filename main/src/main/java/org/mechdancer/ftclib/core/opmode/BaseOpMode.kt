@@ -58,9 +58,9 @@ abstract class BaseOpMode<T : Robot> : OpModeWithRobot<T>() {
             device.bind(hardwareMap, name)
         }
 
-//        withMeasuringTime("绑定电压传感器") {
-//            voltageSensor.bind(hardwareMap) TODO
-//        }
+        withMeasuringTime("Binding voltage sensor") {
+            voltageSensor.bind(hardwareMap)
+        }
 
         catchException("init") {
             initializations.forEach {
@@ -76,7 +76,6 @@ abstract class BaseOpMode<T : Robot> : OpModeWithRobot<T>() {
 
     final override fun init_loop() {
         catchException("init_loop") {
-            //            debug("Calling initLoop task")
             initLoopTask()
         }
     }
@@ -105,27 +104,23 @@ abstract class BaseOpMode<T : Robot> : OpModeWithRobot<T>() {
     final override fun loop() {
 
         catchException("loop") {
-            //            debug("Calling look task")
             loopTask()
 
             actions.forEach {
-                //                debug("Calling run of ${it.name}")
                 it.run()
             }
         }
 
         devices.forEach { (_, device) ->
-            //            debug("Calling run of device: $name")
             device.run()
         }
 
-/*        withMeasuringTime("执行循环电压传感器") {
-            voltageSensor.run()   TODO
-        }*/
+        withMeasuringTime("Running voltage sensor") {
+            voltageSensor.run()
+        }
 
         period = (System.currentTimeMillis() - lastPeriod).toInt()
         lastPeriod = System.currentTimeMillis()
-//        debug("Finished loop, use $period milliseconds")
     }
 
     final override fun stop() {
@@ -149,9 +144,9 @@ abstract class BaseOpMode<T : Robot> : OpModeWithRobot<T>() {
 
         info("Stopped")
 
-        /*withMeasuringTime("解绑电压传感器") {
-            voltageSensor.unbind()    TODO
-        }*/
+        withMeasuringTime("Unbinding voltage sensor") {
+            voltageSensor.unbind()
+        }
 
     }
 

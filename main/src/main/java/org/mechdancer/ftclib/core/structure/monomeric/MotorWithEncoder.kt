@@ -7,57 +7,60 @@ import org.mechdancer.ftclib.core.structure.monomeric.sensor.Encoder
 import org.mechdancer.ftclib.internal.impl.DeviceConfig
 
 /**
- * 电机编码器组合
- *
- * 具有电机和编码器一切性质。其不应具有多态性，但为约定行为，实现 [Motor], [Encoder]。
- * 在拥有编码器的同时为电机提供了闭环功能。
+ * A combination of [Motor] and [Encoder]
  */
 interface MotorWithEncoder : Motor, Encoder, Structure {
 
     /**
-     * 电机模式
+     * Mode of the motor
      */
     var mode: Mode
 
     /**
-     * 目标速度
+     * Target speed
      *
-     * 在 [mode] 为 [Mode.SPEED_CLOSE_LOOP] 时有效
+     * Available when [mode] equals to [Mode.SPEED_CLOSE_LOOP]
      */
     var targetSpeed: Double
 
     /**
-     * 目标位置
+     * Target speed
      *
-     * 在 [mode] 为 [Mode.POSITION_CLOSE_LOOP] 时有效
+     * Available when [mode] equals to [Mode.POSITION_CLOSE_LOOP]
      */
     var targetPosition: Double
 
     /**
-     * 锁定电机
+     * Lock this motor
      *
-     * 通过闭位置环实现
+     * Implemented through position-close-loop control
      */
     override var lock: Boolean
 
     /**
-     * 电机模式枚举
+     * Motor mode
      */
     enum class Mode {
         /**
-         * 闭速度环
+         * Speed-close-loop control
+         *
+         * See [targetSpeed]
          */
         SPEED_CLOSE_LOOP,
         /**
-         * 开环
+         * Open loop
+         *
+         * See [power]
          */
         OPEN_LOOP,
         /**
-         * 闭位置环
+         * Position-close-loop control
+         *
+         * See [targetPosition]
          */
         POSITION_CLOSE_LOOP,
         /**
-         * 停止
+         * Stop
          */
         STOP
     }
