@@ -7,7 +7,7 @@ import org.mechdancer.ftclib.core.structure.monomeric.DeviceFactory
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.ColorSensor
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 
-class DummyRobot : Robot("dummyRobot", Mecanum(enable = true), DummyArm(),
+class DummyRobot : Robot("dummyRobot", false, Mecanum(enable = true), DummyArm(),
     DeviceFactory.colorSensor("colorSensor") {
         enable = true
     }

@@ -5,7 +5,7 @@ import org.mechdancer.ftclib.core.structure.MonomericStructure
 import org.mechdancer.ftclib.core.structure.monomeric.sensor.VoltageSensor
 import org.mechdancer.ftclib.internal.FtcVoltageSensor
 
-class VoltageSensorImpl : VoltageSensor, MonomericStructure("voltageSensor") {
+class VoltageSensorImpl(val enable: Boolean) : VoltageSensor, MonomericStructure("voltageSensor") {
 
     override var voltage: Double = Double.POSITIVE_INFINITY
         private set
@@ -13,14 +13,17 @@ class VoltageSensorImpl : VoltageSensor, MonomericStructure("voltageSensor") {
     private var sensors: HardwareMap.DeviceMapping<FtcVoltageSensor>? = null
 
     internal fun bind(hardwareMap: HardwareMap) {
+        if (!enable) return
         sensors = hardwareMap.voltageSensor
     }
 
     internal fun unbind() {
+        if (!enable) return
         sensors = null
     }
 
     override fun run() {
+        if (!enable) return
         sensors?.let { voltages ->
             voltage = voltages.minBy {
                 if (it.voltage < 0)
@@ -29,6 +32,6 @@ class VoltageSensorImpl : VoltageSensor, MonomericStructure("voltageSensor") {
         }
     }
 
-    override fun toString(): String = "VoltageSensor | Voltage: ${voltage.toInt()} V"
+    override fun toString(): String = "VoltageSensor | Voltage: $voltage V"
 
 }

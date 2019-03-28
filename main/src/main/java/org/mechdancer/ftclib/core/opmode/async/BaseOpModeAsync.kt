@@ -53,6 +53,13 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
             exceptionHandler(lifecycle, t)
         }
 
+    private fun runDevices() {
+        devices.forEach { (_, device) ->
+            device.run()
+        }
+        voltageSensor.run()
+    }
+
     internal val core =
         StellateStateMachine {
             jumpQueue.poll()?.also { state = it } ?: state
@@ -78,10 +85,6 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     actions.forEach {
                         it.run()
                     }
-                    devices.forEach { (_, device) ->
-                        device.run()
-                    }
-                    voltageSensor.run()
                     initLoopMachine.run()
                 }
                 asyncPeriod = (System.currentTimeMillis() - lastAsyncPeriod).toInt()
@@ -112,10 +115,6 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     actions.forEach {
                         it.run()
                     }
-                    devices.forEach { (_, device) ->
-                        device.run()
-                    }
-                    voltageSensor.run()
                     if (loopMachine.run() == FINISH) requestOpModeStop()
                 }
                 asyncPeriod = (System.currentTimeMillis() - lastAsyncPeriod).toInt()
@@ -130,10 +129,7 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                     actions.forEach {
                         it.run()
                     }
-                    devices.forEach { (_, device) ->
-                        device.run()
-                    }
-                    voltageSensor.run()
+                    runDevices()
                     if (afterStopMachine.run() == FINISH) requestOpModeTerminate()
                 }
             }
@@ -161,7 +157,7 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
             }
 
 
-    protected var state = State.Initializing
+    internal var state = State.Initializing
         private set
 
     protected val displayTask = RepeatingLinearStateMachine()
@@ -195,7 +191,10 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
     }
 
     final override fun init_loop() {
-        if (state == State.InitLoop) displayTask.runToFinish()
+        if (state == State.InitLoop) {
+            runDevices()
+            displayTask.runToFinish()
+        }
         syncPeriod = (System.currentTimeMillis() - lastSyncPeriod).toInt()
         lastSyncPeriod = System.currentTimeMillis()
     }
@@ -205,7 +204,10 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
     }
 
     final override fun loop() {
-        if (state == State.Loop) displayTask.runToFinish()
+        if (state == State.Loop) {
+            runDevices()
+            displayTask.runToFinish()
+        }
         syncPeriod = (System.currentTimeMillis() - lastSyncPeriod).toInt()
         lastSyncPeriod = System.currentTimeMillis()
     }
