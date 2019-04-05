@@ -9,7 +9,7 @@ class PID(var k: Double,
           var ki: Double,
           var kd: Double,
           var integrateArea: Double,
-          var deadArea: Double) {
+          var deadArea: Double) : Controller<Double> {
 
     companion object {
         /**
@@ -24,7 +24,7 @@ class PID(var k: Double,
     /**
      * Run pid controller
      */
-    operator fun invoke(data: Double): Double {
+    override operator fun invoke(data: Double): Double {
         val value = abs(data)
         sum = if (value > integrateArea) .0 else sum + data
         val result = data + kd * (data - last) + ki * sum

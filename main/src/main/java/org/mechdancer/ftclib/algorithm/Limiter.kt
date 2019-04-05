@@ -8,7 +8,7 @@ import java.lang.Math.abs
  * Values grater than max will be reduced to max,
  * smaller than min will be magnified to min.
  */
-class Limiter(min: Double, max: Double) {
+class Limiter(min: Double, max: Double) : Controller<Double> {
     private val min: Double
     private val max: Double
 
@@ -24,5 +24,5 @@ class Limiter(min: Double, max: Double) {
     /**
      * Runs limiter
      */
-    operator fun invoke(data: Double) = if (data < min) min else if (data > max) max else data
+    override operator fun invoke(data: Double) = if (data < min) min else if (data > max) max else data
 }

@@ -5,13 +5,13 @@ package org.mechdancer.ftclib.algorithm
  *
  * Usually used to estimate whether a condition is stable.
  */
-class Counter(private val limit: Long) {
+class Counter(private val limit: Long) : Controller<Boolean> {
     private var count: Long = 0
 
     /**
      * Returns `true` when condition satisfied [limit] times continuously.
      */
-    operator fun invoke(condition: Boolean): Boolean {
+    override operator fun invoke(condition: Boolean): Boolean {
         if (condition)
             count++
         else
