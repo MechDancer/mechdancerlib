@@ -35,7 +35,7 @@ If you want to use op mode auto register and class filter, something you have to
 		....
 		
 		ClassManagerFactory.registerFilters();
-         // You should add ↓
+         // You should add following two lines ↓
 		ClassManager.getInstance().registerFilter(MechDancerOpModeRegister.INSTANCE);
 		ClassManager.getInstance().registerFilter(ClassFilterProvider.INSTANCE); 
 		ClassManagerFactory.processAllClasses();
@@ -61,7 +61,8 @@ If you want to use op mode auto register and class filter, something you have to
 
 ## Documentation
 
-For design documentation, please see [here](https://www.mechdancer.org/Documentation/mechdancerlib/).
+For design documentation, please see [here](https://www.mechdancer.org/Documentation/mechdancerlib/).  
+中文版本在[这里](https://docs.mechdancer.org/ftc/mechdancerlib/)。
 
 ## Contribution
 
