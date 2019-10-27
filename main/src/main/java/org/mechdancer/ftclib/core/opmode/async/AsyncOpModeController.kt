@@ -7,6 +7,9 @@ import org.mechdancer.ftclib.util.info
 import org.mechdancer.ftclib.util.name
 import kotlin.concurrent.thread
 
+/**
+ * Dispatcher of [BaseOpModeAsync]
+ */
 internal object AsyncOpModeController : SmartLogger {
 
     @Volatile

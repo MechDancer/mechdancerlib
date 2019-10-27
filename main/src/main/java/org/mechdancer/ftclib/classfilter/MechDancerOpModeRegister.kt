@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeManager
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta
 import org.firstinspires.ftc.robotcore.internal.opmode.RegisteredOpModes
+import org.mechdancer.ftclib.classfilter.MechDancerOpModeRegister.register
 import org.mechdancer.ftclib.core.opmode.OpModeWithRobot
 import org.mechdancer.ftclib.core.opmode.RemoteControlOpMode
 import org.mechdancer.ftclib.core.opmode.async.RemoteControlOpModeAsync
@@ -13,6 +14,13 @@ import org.mechdancer.ftclib.core.structure.composite.Robot
 import org.mechdancer.ftclib.util.opModeName
 import java.lang.reflect.ParameterizedType
 
+/**
+ * MechDancerOpModeRegister
+ *
+ * This object helps to register OpModes inherited from [OpModeWithRobot] into [OpModeManager].
+ *
+ * Users should call [register] in `FtcRobotControllerActivity`
+ */
 @Suppress("UNCHECKED_CAST")
 object MechDancerOpModeRegister : ClassFilterAdapter() {
     private val teleops = mutableSetOf<Class<out OpModeWithRobot<*>>>()
