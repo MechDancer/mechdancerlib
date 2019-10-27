@@ -23,6 +23,7 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
     protected val robot = createRobot()
 
     private val initializations = robot.takeAll<OpModeLifecycle.Initialize<T>>()
+    private val initializationLoops = robot.takeAll<OpModeLifecycle.InitializeLoop>()
     private val starts = robot.takeAll<OpModeLifecycle.Start>()
     private val actions = robot.takeAll<OpModeLifecycle.Run>()
     private val stops = robot.takeAll<OpModeLifecycle.Stop>()
@@ -84,6 +85,9 @@ abstract class BaseOpModeAsync<T : Robot> : OpModeWithRobot<T>() {
                 catchException("init_loop") {
                     actions.forEach {
                         it.run()
+                    }
+                    initializationLoops.forEach {
+                        it.initLoop()
                     }
                     initLoopMachine.run()
                 }

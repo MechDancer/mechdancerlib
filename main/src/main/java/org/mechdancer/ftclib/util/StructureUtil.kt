@@ -12,10 +12,17 @@ import org.mechdancer.ftclib.core.structure.composite.Robot
  */
 object OpModeLifecycle {
     /**
-     *参与 OpMode 的 `init()`
+     * 参与 OpMode 的 `init()`
      */
     interface Initialize<T : Robot> : Structure {
         fun init(opMode: OpModeWithRobot<T>)
+    }
+
+    /**
+     * 参与 OpMode 的 `init_loop()`
+     */
+    interface InitializeLoop : Structure {
+        fun initLoop()
     }
 
     /**
