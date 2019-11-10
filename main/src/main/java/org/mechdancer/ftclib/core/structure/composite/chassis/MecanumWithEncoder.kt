@@ -10,7 +10,7 @@ import org.mechdancer.ftclib.internal.impl.MotorWithEncoderImpl
  */
 open class MecanumWithEncoder(name: String,
                               motorCpr: Double,
-                              enable: Boolean,
+                              enable: Boolean = false,
                               lfMotorDirection: Motor.Direction,
                               lbMotorDirection: Motor.Direction,
                               rfMotorDirection: Motor.Direction,

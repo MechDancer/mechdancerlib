@@ -14,7 +14,7 @@ import kotlin.math.sign
  *
  * Abstracts the generality between chassis — [powers] and [maxPower].
  */
-abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
+abstract class Chassis(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean = false)
     : CompositeStructure("null_chassis"), AutoCallable, SmartLogger {
 
     override val subStructures: List<Motor> =

@@ -6,7 +6,7 @@ import org.mechdancer.ftclib.core.structure.monomeric.effector.Motor
  * Mecanum chassis
  */
 open class Mecanum(override val name: String = "chassis",
-                   enable: Boolean,
+                   enable: Boolean = false,
                    lfMotorDirection: Motor.Direction = Motor.Direction.REVERSE,
                    lbMotorDirection: Motor.Direction = Motor.Direction.REVERSE,
                    rfMotorDirection: Motor.Direction = Motor.Direction.FORWARD,

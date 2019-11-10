@@ -12,7 +12,7 @@ internal fun CompositeStructure.flatten(): List<Structure> =
  * 找到所有符合类型参数的结构
  */
 internal inline fun <reified T> CompositeStructure.takeAll(): List<T> =
-    this.flatten().filter { it is T }.map { it as T }
+    this.flatten().filterIsInstance<T>().map { it }
 
 /**
  * Too tree view

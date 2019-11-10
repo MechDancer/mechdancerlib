@@ -10,7 +10,7 @@ import kotlin.math.sin
  * Provides polar, tank and descartes control.
  */
 abstract class Omnidirectinal
-(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean)
+(motorsConfig: Array<Pair<String, Motor.Direction>>, enable: Boolean = false)
     : Chassis(motorsConfig, enable) {
 
     /**

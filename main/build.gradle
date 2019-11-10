@@ -1,17 +1,21 @@
 apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.dokka'
-//apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.dokka'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 3
         versionName "0.1.2"
 
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
