@@ -22,8 +22,8 @@ open class Mecanum(override val name: String = "chassis",
 
     override fun Descartes.transform() =
         doubleArrayOf(
-            +x + y - w,
             +x - y - w,
-            +x - y + w,
-            +x + y + w)
+            +x + y - w,
+            +x + y + w,
+            +x - y + w)
 }

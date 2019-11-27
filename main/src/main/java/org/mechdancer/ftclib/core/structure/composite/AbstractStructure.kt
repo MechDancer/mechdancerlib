@@ -12,10 +12,12 @@ import org.mechdancer.ftclib.core.structure.injector.StructureInjector
  * in order to create a type for that anonymous structure.
  */
 @Suppress("LeakingThis")
-abstract class AbstractStructure(name: String = "Unnamed", block: StructureBuilder.() -> Unit = {}) : CompositeStructure(name) {
+abstract class AbstractStructure(name: String = "Unnamed", recursiveInject: Boolean = true, block: StructureBuilder.() -> Unit = {}) : CompositeStructure(name) {
 
 
-    constructor(name: String, vararg subStructures: Structure) : this(name, { subStructures.forEach { subStructure(it) } })
+    constructor(name: String, vararg subStructures: Structure) : this(name, true, { subStructures.forEach { subStructure(it) } })
+    constructor(name: String, recursiveInject: Boolean = true, vararg subStructures: Structure) : this(name, recursiveInject, { subStructures.forEach { subStructure(it) } })
+    constructor(name: String, block: StructureBuilder.() -> Unit = {}) : this(name, true, block)
 
 
     private val delegate = StructureBuilder(name).apply(block)
@@ -23,7 +25,7 @@ abstract class AbstractStructure(name: String = "Unnamed", block: StructureBuild
     final override val subStructures: List<Structure> = delegate.subStructures
 
     init {
-        StructureInjector.inject(this)
+        StructureInjector.inject(this, recursiveInject)
     }
 
     override fun run() {

@@ -1,6 +1,7 @@
 package org.mechdancer.ftclib.core.opmode
 
 import org.mechdancer.ftclib.core.structure.composite.Robot
+import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
 
 @Suppress("UNCHECKED_CAST")
@@ -25,6 +26,8 @@ object RobotFactory {
                         throw IllegalArgumentException("Unable to find public non-parameters constructor of robot: ${it.name}.")
                     } catch (e: InstantiationException) {
                         throw IllegalArgumentException("Robot can't be abstract.")
+                    } catch (e: InvocationTargetException) {
+                        throw e.targetException
                     }
                 } ?: throw IllegalArgumentException("Unable to find robot type.")
         } as? T ?: createRobot(clazz.superclass as Class<OpModeWithRobot<T>>)

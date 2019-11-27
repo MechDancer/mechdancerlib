@@ -19,6 +19,9 @@ abstract class Robot(name: String,
                      vararg subStruct: Structure)
     : AbstractStructure(name, *subStruct, VoltageSensorImpl(enableVoltageSensor)), AutoCallable {
 
+
+    constructor(name: String, vararg subStruct: Structure) : this(name, false, *subStruct)
+
     private val rests = takeAll<Resettable>()
 
 
