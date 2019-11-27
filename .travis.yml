@@ -6,6 +6,7 @@ android:
     - build-tools-28.0.2
     - build-tools-28.0.3
     - android-27
+    - android-28
     - extra
     - tools
     - platform-tools
