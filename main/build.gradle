@@ -43,8 +43,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation(name: 'RobotCore-release', ext: 'aar')
-
-    testImplementation 'junit:junit:4.12'
 }
 
 dokka {

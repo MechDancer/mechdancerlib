@@ -213,34 +213,6 @@ class StandardStateMachine<T>(private var currentKey: T?) : StateMachine {
     }
 }
 
-/**
- * Named state machine
- *
- * Each state has a specific name, but transfer according to sequentially index.
- */
-@Deprecated("Doesn't seem to make sense.", replaceWith = ReplaceWith("LinearSateMachine()"))
-class NamedStateMachine : StateMachine {
-    private var index = 0
-
-    private val states = HashMap<String, StateMember<Boolean>>()
-    private val names = mutableListOf<String>()
-
-    /**
-     * Adds a [state] with a [name]
-     */
-    fun add(name: String, state: StateMember<Boolean>): NamedStateMachine =
-        apply {
-            names.add(name)
-            states[name] = state
-        }
-
-    override fun invoke(): Boolean {
-        val current = states[names.getOrNull(index)]
-        if (current?.run() == true)
-            index++
-        return if (names.getOrNull(index) == null) NEXT else REPEAT
-    }
-}
 
 /**
  * Linear state machine with a [core], which will run after each state
